@@ -333,6 +333,18 @@ const routeModule = new AppPageRouteModule({
 
 /***/ }),
 
+/***/ 2954:
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 2987, 23));
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 831, 23));
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 6926, 23));
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 4282, 23));
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 6505, 23));
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 1232, 23))
+
+/***/ }),
+
 /***/ 2550:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -421,8 +433,8 @@ var github = __webpack_require__(1168);
 var linkedin = __webpack_require__(8235);
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/twitter.js
 var twitter = __webpack_require__(5485);
-// EXTERNAL MODULE: ./.contentlayer/generated/index.mjs + 3 modules
-var generated = __webpack_require__(3462);
+// EXTERNAL MODULE: ./.contentlayer/generated/index.mjs + 1 modules
+var generated = __webpack_require__(8372);
 // EXTERNAL MODULE: ./node_modules/date-fns/esm/compareDesc/index.js
 var compareDesc = __webpack_require__(6383);
 // EXTERNAL MODULE: ./src/components/PostCard.tsx
@@ -612,7 +624,7 @@ function Home() {
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [587,295,687,662,383,379,979,462,727], () => (__webpack_exec__(5436)));
+var __webpack_exports__ = __webpack_require__.X(0, [587,295,687,662,383,379,722,372,727], () => (__webpack_exec__(5436)));
 module.exports = __webpack_exports__;
 
 })();
