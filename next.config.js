@@ -14,7 +14,7 @@ const nextConfig = {
   distDir: 'dist',
 }
 
-module.exports = withContentlayer(nextConfig)
+// module.exports = withContentlayer(nextConfig)
 
 module.exports = {
   webpack: (config) => {

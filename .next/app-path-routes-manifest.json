@@ -1,7 +1,7 @@
 {
   "/page": "/",
-  "/sitemap.xml/route": "/sitemap.xml",
   "/favicon.ico/route": "/favicon.ico",
+  "/sitemap.xml/route": "/sitemap.xml",
   "/resume/page": "/resume",
   "/transcript/page": "/transcript",
   "/posts/[slug]/page": "/posts/[slug]",
