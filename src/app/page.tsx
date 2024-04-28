@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Github } from 'lucide-react';
+import { Github, Linkedin, Twitter } from 'lucide-react';
 import { allPosts } from 'contentlayer/generated';
 import { compareDesc } from 'date-fns';
 import { PostCard } from '@/components/PostCard'; // Assuming PostCard is located in the correct directory
@@ -15,44 +15,28 @@ export default function Home() {
     return (
         <div>
             <div className="space-y-7">
-                <h1>Home Page</h1>
+                <h1>✌️ Hello, I'm Khanh</h1>
                 <p>
-                    Next.js starter template for your next blog or personal site. Built
-                    with:
+                    I'm a Bachelor of Computer Science (Advanced) Student at the University of Adelaide, a research intern at MIT Media Lab, a SWE intern at Maptek and a Deep Learning enthusiast :D
                 </p>
-                <ul className="my-6 list-disc space-y-2 pl-4">
-                    <li>
-                        <Link className="link" href="https://nextjs.org/docs/app">
-                            Next.js - App Router
-                        </Link>
-                    </li>
-                    <li>
-                        <Link className="link" href="https://www.contentlayer.dev/">
-                            Contentlayer
-                        </Link>
-                    </li>
-                    <li>
-                        <Link className="link" href="https://mdxjs.com/">
-                            MDX
-                        </Link>
-                    </li>
-                    <li>
-                        <Link className="link" href="https://ui.shadcn.com/">
-                            shadcn-ui
-                        </Link>
-                    </li>
-                    <li>
-                        <Link className="link" href="https://tailwindcss.com/">
-                            Tailwind CSS
-                        </Link>
-                    </li>
-                </ul>
 
-                <Button asChild>
-                    <a href="https://github.com/ChangoMan/nextjs-mdx-blog">
-                        <Github className="mr-1" /> Get the source code!
-                    </a>
-                </Button>
+                <div className="fle space-x-3">
+                  <Button asChild>
+                      <a href="https://github.com/khanhgn" target="_blank">
+                          <Github className="mr-1" /> Github
+                      </a>
+                  </Button>
+                  <Button asChild>
+                      <a href="https://www.linkedin.com/in/khanh-nguyen-58445a261/" target="_blank">
+                          <Linkedin className="mr-1" /> Linkedin
+                      </a>
+                  </Button>
+                  <Button asChild>
+                      <a href="https://twitter.com/khanhgng" target="_blank">
+                          <Twitter className="mr-1" /> Twitter
+                      </a>
+                  </Button>
+                </div>
             </div>
 
             <div className="my-8 columns-2 gap-4 sm:columns-3">

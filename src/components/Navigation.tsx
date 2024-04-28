@@ -12,6 +12,9 @@ export function Navigation() {
       <Link href="/blogs" className="nav-link">
         Blog
       </Link>
+      <Link href="/resume" className="nav-link">
+        Resume
+      </Link>
     </nav>
   )
 }
