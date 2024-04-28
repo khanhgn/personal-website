@@ -30,20 +30,20 @@ export async function generateMetadata({
   return {
     title,
     description,
-    openGraph: {
-      title,
-      description,
-      type: 'article',
-      publishedTime: date,
-      url: `${WEBSITE_HOST_URL}/posts/${url}`,
-    },
-    twitter: {
-      title,
-      description,
-    },
-    alternates: {
-      canonical: `${WEBSITE_HOST_URL}/posts/${url}`,
-    },
+    // openGraph: {
+    //   title,
+    //   description,
+    //   type: 'article',
+    //   publishedTime: date,
+    //   url: `${WEBSITE_HOST_URL}/posts/${url}`,
+    // },
+    // twitter: {
+    //   title,
+    //   description,
+    // },
+    // alternates: {
+    //   canonical: `${WEBSITE_HOST_URL}/posts/${url}`,
+    // },
   }
 }
 

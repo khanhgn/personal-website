@@ -25,7 +25,7 @@ const CVMain = () => {
       {numPages ?
         <div className='controlCon'>
           <div className='pdfNumCon'>
-            <span className='lastUpdate'>last update: 03/08/2023</span>
+            <span className='lastUpdate'>last update: 28/04/2024</span>
             <a className="downBtn" href={pdfPath}>
               Download
             </a>

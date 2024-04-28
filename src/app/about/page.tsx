@@ -10,18 +10,18 @@ const meta = {
 export const metadata: Metadata = {
   title: meta.title,
   description: meta.description,
-  openGraph: {
-    title: meta.title,
-    description: meta.description,
-    url: meta.url,
-  },
-  twitter: {
-    title: meta.title,
-    description: meta.description,
-  },
-  alternates: {
-    canonical: meta.url,
-  },
+  // openGraph: {
+  //   title: meta.title,
+  //   description: meta.description,
+  //   url: meta.url,
+  // },
+  // twitter: {
+  //   title: meta.title,
+  //   description: meta.description,
+  // },
+  // alternates: {
+  //   canonical: meta.url,
+  // },
 }
 
 export default function About() {

@@ -20,28 +20,28 @@ export const metadata: Metadata = {
     template: '%s | Khanh',
   },
   description: meta.description,
-  openGraph: {
-    title: meta.title,
-    description: meta.description,
-    url: WEBSITE_HOST_URL,
-    siteName: meta.title,
-    locale: 'en-US',
-    type: 'website',
-    images: [
-      {
-        url: meta.image,
-      },
-    ],
-  },
-  twitter: {
-    title: meta.title,
-    description: meta.description,
-    images: meta.image,
-    card: 'summary_large_image',
-  },
-  alternates: {
-    canonical: WEBSITE_HOST_URL,
-  },
+  // openGraph: {
+  //   title: meta.title,
+  //   description: meta.description,
+  //   url: WEBSITE_HOST_URL,
+  //   siteName: meta.title,
+  //   locale: 'en-US',
+  //   type: 'website',
+  //   images: [
+  //     {
+  //       url: meta.image,
+  //     },
+  //   ],
+  // },
+  // twitter: {
+  //   title: meta.title,
+  //   description: meta.description,
+  //   images: meta.image,
+  //   card: 'summary_large_image',
+  // },
+  // alternates: {
+  //   canonical: WEBSITE_HOST_URL,
+  // },
 }
 
 export default function RootLayout({
