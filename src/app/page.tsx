@@ -20,20 +20,23 @@ export default function Home() {
                     I'm a Bachelor of Computer Science (Advanced) Student at the University of Adelaide, a research intern at MIT Media Lab, a SWE intern at Maptek and a Deep Learning enthusiast :D
                 </p>
 
-                <div className="fle space-x-3">
+                <div className="space-x-3">
                   <Button asChild>
                       <a href="https://github.com/khanhgn" target="_blank">
-                          <Github className="mr-1" /> Github
+                          <Github className="mr-1" />
+                          <span className="hidden md:inline">Github</span>
                       </a>
                   </Button>
                   <Button asChild>
                       <a href="https://www.linkedin.com/in/khanh-nguyen-58445a261/" target="_blank">
-                          <Linkedin className="mr-1" /> Linkedin
+                          <Linkedin className="mr-1" />
+                          <span className="hidden md:inline">Linkedin</span>
                       </a>
                   </Button>
                   <Button asChild>
                       <a href="https://twitter.com/khanhgng" target="_blank">
-                          <Twitter className="mr-1" /> Twitter
+                          <Twitter className="mr-1" />
+                          <span className="hidden md:inline">Twitter</span>
                       </a>
                   </Button>
                 </div>

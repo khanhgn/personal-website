@@ -17,7 +17,7 @@ const meta = {
 export const metadata: Metadata = {
   title: {
     default: meta.title,
-    template: '%s | Hunter Chang',
+    template: '%s | Khanh',
   },
   description: meta.description,
   openGraph: {
@@ -68,8 +68,8 @@ export default function RootLayout({
             <Container>
               <p>
                 Built by{' '}
-                <Link className="link" href="https://twitter.com/hunterhchang">
-                  Hunter Chang
+                <Link className="link" href="https://twitter.com/khanhgng">
+                  Khanh Nguyen
                 </Link>
               </p>
             </Container>
