@@ -63,13 +63,17 @@ export default function RootLayout({
           </header>
           <main>
             <Container>{children}</Container>
-          </main>
+          </main> 
           <footer className="py-16">
             <Container>
               <p>
                 Built by{' '}
                 <Link className="link" href="https://twitter.com/khanhgng">
                   Khanh Nguyen
+                </Link>
+                <br></br>
+                <Link className="link" href="https://twitter.com/khanhgng">
+                  *inspired by Leerob
                 </Link>
               </p>
             </Container>
