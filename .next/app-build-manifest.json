@@ -16,15 +16,22 @@
       "static/chunks/main-app.js",
       "static/chunks/app/blogs/page.js"
     ],
-    "/posts/[slug]/page": [
+    "/resume/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/posts/[slug]/page.js"
+      "static/css/app/resume/page.css",
+      "static/chunks/app/resume/page.js"
     ],
-    "/about/page": [
+    "/reading/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/about/page.js"
+      "static/chunks/app/reading/page.js"
+    ],
+    "/transcript/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/transcript/page.css",
+      "static/chunks/app/transcript/page.js"
     ]
   }
 }

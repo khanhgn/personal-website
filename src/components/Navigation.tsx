@@ -6,8 +6,8 @@ export function Navigation() {
       <Link href="/" className="nav-link">
         Home
       </Link>
-      <Link href="/about" className="nav-link">
-        About
+      <Link href="/reading" className="nav-link">
+        Readings
       </Link>
       <Link href="/blogs" className="nav-link">
         Blog

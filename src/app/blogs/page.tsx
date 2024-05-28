@@ -36,9 +36,6 @@ export default function About() {
   return (
     <>
       <h2>From the blog</h2>
-      <p className="mt-2 leading-8">
-      Blog posts are written with MDX and processed through Contentlayer.
-      </p>
       <div className="mt-10 space-y-12 border-t border-gray-200 pt-10 dark:border-gray-700">
           {posts.map((post, idx) => (
           <PostCard key={idx} {...post} />

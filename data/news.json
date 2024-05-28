@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "Starting Second Year of University",
+    "date": "2024-02-28",
+    "content": "How fun... courses this semester: ADDS, COMPSYS, WDC, LAW"
+  },
+  {
+    "id": 2,
+    "title": "I'm now a MIT Media Lab research intern",
+    "date": "2024-03-08",
+    "content": "I will be working with Tobin South on stable diffusion vulnerabilities."
+  },
+  {
+    "id": 3,
+    "title": "I'm now a Maptek SWE intern",
+    "date": "2024-03-15",
+    "content": "I will be working on improving DomainMCF neural networks using parallel training techniques in JAX."
+  },
+  {
+    "id": 4,
+    "title": "Starting my DL research grind today!",
+    "date": "2024-05-28",
+    "content": "Resources I find helpful: Deep Learning book by Ian Goodfellow, DLPR book by Bishop, Andrew NG's deep learning specialisation course."
+  }
+]

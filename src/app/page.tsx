@@ -4,8 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Github, Linkedin, Twitter } from 'lucide-react';
 import { allPosts } from 'contentlayer/generated';
 import { compareDesc } from 'date-fns';
-import { PostCard } from '@/components/PostCard'; // Assuming PostCard is located in the correct directory
-import Image from 'next/image'; // Import the Image component from Next.js
+import { PostCard } from '@/components/PostCard';
+import Image from 'next/image';
+import NewsSection from '@/components/NewsSection'; // Import the NewsSection component
+
 
 export default function Home() {
     const posts = allPosts.sort((a, b) =>
@@ -103,19 +105,13 @@ export default function Home() {
                     className="rounded-lg object-cover"
                 />
               </div>
+
             </div>
 
             <div className="mt-16">
-                <h2>From the blog</h2>
-                <p className="mt-2 leading-8">
-                    Blog posts are written with MDX and processed through Contentlayer.
-                </p>
+                <h2>Updates</h2>
             </div>
-            <div className="mt-10 space-y-12 border-t border-gray-200 pt-10 dark:border-gray-700">
-                {posts.map((post, idx) => (
-                    <PostCard key={idx} {...post} />
-                ))}
-            </div>
+            <NewsSection limit={4} />
         </div>
     );
 }
