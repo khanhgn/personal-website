@@ -1,0 +1,11 @@
+{
+  "/page": "/",
+  "/sitemap.xml/route": "/sitemap.xml",
+  "/favicon.ico/route": "/favicon.ico",
+  "/books/page": "/books",
+  "/reading/page": "/reading",
+  "/resume/page": "/resume",
+  "/transcript/page": "/transcript",
+  "/blogs/page": "/blogs",
+  "/posts/[slug]/page": "/posts/[slug]"
+}
