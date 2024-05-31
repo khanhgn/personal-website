@@ -1,0 +1,36 @@
+.slider-item {
+  display: block;
+  width: auto; /* Adjust width based on content */
+  height: 400px; /* Fixed height for the slider items */
+}
+
+.book-spine {
+  width: auto; /* Adjust width to fit the content */
+  max-width: 100px; /* Set a max width for each book spine if needed */
+  height: 80%; /* Set height to 80% of the swiper-slide height */
+  object-fit: cover; /* Ensure the image covers the container */
+  transition: transform 0.2s;
+}
+
+.book-spine:hover {
+  transform: translateY(2em);
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center; /* Center the content horizontally */
+  align-items: center; /* Center the content vertically */
+  width: auto; /* Allow the slide to adjust based on its content */
+  height: 500px; /* Fixed height for swiper-slide */
+  position: relative; /* Ensure the hover effect stays within bounds */
+  overflow: hidden; /* Prevent overflow from the hover effect */
+}
+
+.selected {
+  transform: translateY(2em);
+}

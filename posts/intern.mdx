@@ -1,0 +1,249 @@
+---
+title: How to do Parallel Training
+description: a reflection about my internship at Maptek
+date: 2024-05-30
+---
+
+# Introduction
+ This report aims to display my work in the internship at Maptek over this semester. To briefly outline the team that I worked with, I collaborated with Maptek's DomainMCF team which focuses on using machine learning to produce 3D geological models specifically domain and grades models. My job in this was to make everything run faster. Maptek has the requirement of faster training time and inference for their neural networks which will dramatically boost the customer experience as well as other downstream tasks.
+Going into this project, I did not know much other than the fact that I must somehow look through this code base and understand how to make it run faster. The original neural network has been ported from tensorflow to FLAX/JAX recently which already shows a speed increase. However, I would need to make the new FLAX/JAX implementation run even faster.
+
+# Here are the results
+![[image.png]]
+
+The red bar represents the original Tensorflow implementation of the DomainMCF neural network. As demonstrated by the graph, it is quite slow at nearly 1000 seconds to run train a 10 million parameter model over 190 epochs with a batch size of 16384. The green bar shows the FLAX/JAX model, the same neural network programmed on a different deep learning framework which is much better in terms of speed compares to previous frameworks such as PyTorch or Tensorflow. Lets shift our attention towards the parallel models now. In yellow is the Tensorflow model implemented with mirrored strategy - a prebuilt function provided by the Tensorflow library that allows synchronous training across multiple replicas. As expected, it is faster than both the Tensorflow and FLAX on 1 gpu. But what about parallel training on JAX/FLAX. Well, blue and black are my implementations, a near 50% speed up compared to where we started.
+# So how did I do it.
+### Let's start with the basics - What is JAX/FLAX
+JAX is a machine learning framework that was created by the researchers at Google Deepmind for transforming numerical functions. While FLAX is the accompanying neural network library that is designed with object oriented design in mind. So what does this all mean? JAX runs really really fast. But what is the tradeoff? JAX is pretty hard to approach - particularly for a new comer, not only for its difficult for the functional programming paradigm, the learning curve is steep due to concepts such as JIT (just in time compilation), VMAP (vectorising maps) and shard_map. It also does not help that the JAX documentation is written for someone with some experience in mind. Nevertheless, the first few days of the project involved me sitting down for many hours trying to implement neural networks from scratch using this framework for the first time. 
+
+### What were my strategies going in to this
+Prior to conducting any work on the large code base given to me from Maptek, I had to plan out carefully which improvements i could make to the code. Here are the few things that I can come up with:
+1. The model currently only works on 1 accelerator, what if we need to deploy it on the cloud where there are any number of accelerators?
+2. The loss function is not implemented with vectorising maps (VMAP), will reimplementing it result in a speed up?
+3. How can the GPUs usage vary to maximise performance?
+4. The batch size currently is fixed, this does not maximise GPU usage, how can we find a better batch size? will finding the max batch size result in a speed up?
+5. Let's make sure the inference pipeline is parallelised as well.
+
+### 1. Training across multiple accelerators
+After reviewing the training loop, I realised that the 2 components that could be parallelised are the loss function and the gradient computation.
+#### Implementation of Loss Parallelism:
+
+When implementing parallel training, I explored various methods:
+
+- **Data Parallelism:** Divides training data across multiple processors, with each processor working on its subset independently. Gradients are aggregated and averaged for model parameter updates, ideal for large datasets.
+  
+- **Model Parallelism:** Distributes different model parts across processors, each handling a segment and computing forward/backward passes. Suitable for very large models exceeding single processor memory limits.
+  
+- **Pipeline Parallelism:** Combines data and model parallelism, segmenting the model and assigning segments to processors. Data flows sequentially through these segments, balancing computation and memory usage.
+
+I chose Data Parallelism due to its suitability because unless the model significantly surpasses single GPU capacity, it will not make sense to go for the other techniques. Initially, model parameters are replicated across accelerators. The batch is evenly divided among accelerators for loss computation. The averaged loss is then used for calculating gradients across the model and subsequent updates.
+
+Here is the sample code of a non parallel loss function (not actual code from the project):
+
+```python
+import jax
+import jax.numpy as jnp
+@jax.jit
+def loss_fn(params, batch):
+	inputs, targets = batch
+	predictions = predict(params, inputs)
+	return jnp.mean(jnp.sum((predictions - targets)**2, axis=-1))
+```
+
+Here is the sample code of how we can make it parallel (not actual code from the project):
+
+```python
+from functools import partial
+from jax.sharding import NamedSharding, Mesh, PartitionSpec as P
+from jax.experimental.shard_map import shard_map
+from jax.experimental import mesh_utils
+
+@jax.jit
+def loss_dp(params, batch):
+	devices = mes_utils.create_device_mesh(2,)
+	m = Mesh(devices, ('batch',))
+	@partial(shard_map, mesh=mesh, in_specs=P('batch', None), out_specs=P())
+	def loss_spmd(params, batch):
+		batch_local_loss = loss_fn(params, batch)
+		return jax.lax.pmean(batch_local_loss, 'batch')
+	return loss_spmd(params, batch)
+```
+
+Optional:
+- These 2 lines are used to explicitly load the accelerators, however, my testing shows that this results in worse performance when compared to JAX's own dynamic memory allocation method
+```python
+params = jax.device_put(params, NamedSharding(mesh, P()))
+inputs = jax.device_put(batch, NamedSharding(mesh, P('batch')))
+```
+
+Here is a demo of precisely what the method is doing for a batch size of 8 over 2 GPUs:
+
+**The batch is divided evenly over 2 GPUs so each gpu should return 4 loss values:**
+- On cuda:0 at mesh coordinates (batch,) = (0,):
+    ```python
+    [[1.2023029 ]
+     [0.71759206]
+     [0.29744676]
+     [0.80767024]]
+    ```
+
+- On cuda:1 at mesh coordinates (batch,) = (1,):
+    ```python
+    [[0.7249529 ]
+     [1.2052361 ]
+     [0.80882186]
+     [0.7385298 ]]
+    ```
+
+ **On each gpu the loss values calculated is average to get the local loss:**
+- On cuda:0 at mesh coordinates (batch,) = (0,):
+    ```python
+    0.7562530040740967
+    ```
+
+- On cuda:1 at mesh coordinates (batch,) = (1,):
+    ```python
+    0.8693851232528687
+    ```
+
+ **`pmean` is performed over 2 gpus to get the average loss for that batch of 8:**
+- On cuda:0 at mesh coordinates (batch,) = (0,):
+    ```python
+    0.8128190636634827
+    ```
+
+- On cuda:1 at mesh coordinates (batch,) = (1,):
+    ```python
+    0.8128190636634827
+    ```
+
+**Final Loss returned by function:**
+```python
+0.81281906
+```
+
+#### Implementation of Gradients Parallelism:
+
+For enhanced efficiency, I parallelised gradients calculation. Before gathering and averaging loss, gradients are independently computed on each GPU. Finally, the average gradients are used for the final update.
+
+Here is the sample code (not from Maptek's codebase):
+
+```python
+from functools import partial
+from jax.sharding import NamedSharding, Mesh, PartitionSpec as P
+from jax.experimental.shard_map import shard_map
+from jax.experimental import mesh_utils
+import jax
+import jax.numpy as jnp
+
+@jax.jit
+def loss_fn(params, batch):
+	inputs, targets = batch
+	predictions = predict(params, inputs)
+	return jnp.mean(jnp.sum((predictions - targets)**2, axis=-1))
+
+@jax.jit
+def get_loss_gradients(params, batch):
+	devices = mes_utils.create_device_mesh(2,)
+	m = Mesh(devices, ('batch',))
+	@partial(shard_map, mesh=mesh, in_specs=P('batch', None), out_specs=P())
+	def parallel_loss_and_gradients(params, batch):
+		loss_local, grads_local = jax.value_and_grad(loss_fn)(params,batch)
+		loss = jax.lax.pmean(loss_local, 'batch')
+		grads = jax.lax.pmean(grads_local, 'batch')
+		return loss, grads
+	return parallel_loss_and_gradients(params, batch)
+```
+
+Notice that the `value_and_grad` function is nested inside of a `shard_map`. This means that no explicit sharding of the `loss_fn` function is required.
+```python
+@partial(shard_map, mesh=mesh, in_specs=P('batch', None), out_specs=P())
+	def parallel_loss_and_gradients(params, batch):
+		loss_local, grads_local = jax.value_and_grad(loss_fn)(params,batch)
+		loss = jax.lax.pmean(loss_local, 'batch')
+		grads = jax.lax.pmean(grads_local, 'batch')
+		return loss, grads
+	return parallel_loss_and_gradients(params, batch)```
+
+Here is a demo of what this method is doing to a 81 parameter network.
+
+**Data Labels:**
+- `data_labels`: (2, 64)
+- `data_inputs`: (128, 2)
+
+**Sharded (what each GPU gets):**
+- `data_labels`: (64,)
+- `data_inputs`: (64, 2)
+
+**Before pmean:**
+```python
+{
+    'params': {
+        'Dense_0': {
+            'bias': {
+                'On cuda:0 at mesh coordinates (batch,) = (0,)': [0.00814706, 0.06351265, 0.13132916, ...],
+                'On cuda:1 at mesh coordinates (batch,) = (1,)': [0.00723927, 0.05536034, 0.11896412, ...]
+            },
+            'kernel': {
+                'On cuda:0 at mesh coordinates (batch,) = (0,)': [[3.15032015e-03, 2.28520837e-02, ...], [...]],
+                'On cuda:1 at mesh coordinates (batch,) = (1,)': [[3.8428977e-03, 2.7929787e-02, ...], [...]]
+            }
+        },
+        'Dense_1': {
+            'bias': {
+                'On cuda:0 at mesh coordinates (batch,) = (0,)': [0.358499],
+                'On cuda:1 at mesh coordinates (batch,) = (1,)': [0.33250016]
+            },
+            'kernel': {
+                'On cuda:0 at mesh coordinates (batch,) = (0,)': [[-8.91311318e-02], [-1.09796718e-01], ...],
+                'On cuda:1 at mesh coordinates (batch,) = (1,)': [[-0.10461892], [-0.12866098], ...]
+            }
+        }
+    }
+}
+```
+
+**After pmean:**
+```python
+{
+    'params': {
+        'Dense_0': {
+            'bias': {
+                'On cuda:0 at mesh coordinates (batch,) = (0,)': [0.00769317, 0.05943649, 0.12514664, ...],
+                'On cuda:1 at mesh coordinates (batch,) = (1,)': [0.00769317, 0.05943649, 0.12514664, ...]
+            },
+            'kernel': {
+                'On cuda:0 at mesh coordinates (batch,) = (0,)': [[3.4966089e-03, 2.5390934e-02, ...], [...]],
+                'On cuda:1 at mesh coordinates (batch,) = (1,)': [[3.4966089e-03, 2.5390934e-02, ...], [...]]
+            }
+        },
+        'Dense_1': {
+            'bias': {
+                'On cuda:0 at mesh coordinates (batch,) = (0,)': [0.34549958],
+                'On cuda:1 at mesh coordinates (batch,) = (1,)': [0.34549958]
+            },
+            'kernel': {
+                'On cuda:0 at mesh coordinates (batch,) = (0,)': [[-0.09687503], [-0.11922885], ...],
+                'On cuda:1 at mesh coordinates (batch,) = (1,)': [[-0.09687503], [-0.11922885], ...]
+            }
+        }
+    }
+}
+```
+
+
+### 2. Implementation of Vectorising Maps:
+
+Efforts were made to re-implement the loss function using vectorising maps to boost speed. However, no significant improvement was observed compared to native batched operations. VMAPs also consumed more memory in certain cases, leading to a shift back to native operations.
+### 3. Implementation of Dynamic GPU Utilisation:
+
+Considering varying GPU architectures and quantities, I implemented functions to dynamically allocate data. This is crucial, especially for the last training step when the final batch size might differ from the predetermined size. This serves two cases: sending the last bit of data to a single GPU if it fits, or performing a search for the optimal number of GPUs for computation if it doesn't.
+
+JAX's high controllability comes with the cost of having to implement a lot of the things that Tensorflow automate manually. For example, if we have 4 accelerators and the last batch is odd, this will cause the entire program to fail. The way that we could combat this is to have a check function implemented where we dynamically find the optimal number of accelerators that would fit the current batch size. This is simply implemented using for loops, if statements and also using the modulo operator to determine if the batch would work with a certain amount of accelerators. 
+
+### 4. Implementation of batch_size Initialisation:
+
+The idea behind this segment is that speed should increase as the batch size that is being handled by each GPU is increased. Because of this, I have derived a function to dynamically calculate the maximum batch size that each GPU can handle. factors considered include GPU architecture, model and optimizer sizes, and data shape. This ensures maximum performance across different models and machines.
+#### Note: Making the Losses of the Flax Model Coherent
+
+To ensure consistent comparisons, every randomized aspect of the Flax model is assigned a coherent seed. However, attempts to make TensorFlow model loss coherent by seeding the data generator did not yield consistent results. This indicates internal TensorFlow parameters not being consistently initialized, resulting in varying loss compared to Flax models. As a result of this, while the speed up produced by my work is backed up by the graph produced, further work is needed to investigate the state of the Tensorflow model.
