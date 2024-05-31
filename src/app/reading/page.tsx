@@ -132,10 +132,12 @@ const data = [
 
 const ReadingPage: React.FC = () => {
     return (
-        <div>
-            <h1 className="mb-12">Book Carousel</h1>
-            <Carousel books={data} />
+      <>
+        <h2 className="mb-12">What I have been reading</h2>
+        <div className="mt-10 space-y-12 border-t border-gray-200 pt-10 dark:border-gray-700">
+          <Carousel books={data} />
         </div>
+      </>
     );
 };
 
