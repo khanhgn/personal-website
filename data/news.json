@@ -3,7 +3,7 @@
     "id": 1,
     "title": "Starting Second Year of University",
     "date": "2024-02-28",
-    "content": "How fun... courses this semester: ADDS, COMPSYS, WDC, LAW"
+    "content": "How fun... courses I'm keen about: ADS, Topics in CS, Compilers"
   },
   {
     "id": 2,
@@ -13,14 +13,20 @@
   },
   {
     "id": 3,
-    "title": "I'm now a Maptek SWE intern",
+    "title": "I'm now a Maptek Software Engineer intern",
     "date": "2024-03-15",
     "content": "I will be working on improving DomainMCF neural networks using parallel training techniques in JAX."
   },
   {
     "id": 4,
-    "title": "Starting my DL research grind today!",
-    "date": "2024-05-28",
-    "content": "Resources I find helpful: Deep Learning book by Ian Goodfellow, DLPR book by Bishop, Andrew NG's deep learning specialisation course."
+    "title": "I'm now working as a part-time data scientist at Insightfactory.ai",
+    "date": "2024-08-01",
+    "content": "Working at a cool company called Insightfactory.ai based in Adelaide"
+  },
+  {
+    "id": 5,
+    "title": "I have been accepted to BBV lab under prof Minh Hoai Nguyen",
+    "date": "2024-08-02",
+    "content": "At the Australian Institute of Machine Learning :D"
   }
 ]

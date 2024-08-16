@@ -22,7 +22,7 @@ const NewsSection = ({ limit }: { limit: number }) => {
           <time className="my-4 block text-sm text-zinc-400" dateTime={item.date}>
             {format(parseISO(item.date), 'LLLL d, yyyy')}
           </time>
-          <p>{item.content}</p>
+          {/* <p>{item.content}</p> */}
         </div>
       ))}
     </div>

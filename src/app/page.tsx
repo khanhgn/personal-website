@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Github, Linkedin, Twitter } from 'lucide-react';
+import { Github, Linkedin, Twitter, Youtube } from 'lucide-react';
 import { allPosts } from 'contentlayer/generated';
 import { compareDesc } from 'date-fns';
 import { PostCard } from '@/components/PostCard';
@@ -19,7 +19,7 @@ export default function Home() {
             <div className="space-y-7">
                 <h1>✌️ Hello, I'm Khanh</h1>
                 <p>
-                    I'm a Bachelor of Computer Science (Advanced) Student at the University of Adelaide, a research intern at MIT Media Lab, a SWE intern at Maptek and a Deep Learning enthusiast :D
+                    I'm a Bachelor of Computer Science (Advanced) Student at the University of Adelaide. I'm currently working under Prof. Minh Hoai Nguyen at the Australian Institute of Machine Learning and Tobin South at MIT Media Lab.
                 </p>
 
                 <div className="space-x-3">
@@ -41,14 +41,20 @@ export default function Home() {
                           <span className="hidden md:inline">Twitter</span>
                       </a>
                   </Button>
+                  <Button asChild>
+                      <a href="https://youtube.com/@khanhgn?si=l4dOln_Cgm4PNDYL" target="_blank">
+                          <Youtube className="mr-1" />
+                          <span className="hidden md:inline">YouTube</span>
+                      </a>
+                  </Button>
                 </div>
             </div>
 
             <div className="my-8 columns-2 gap-4 sm:columns-3">
               <div className="relative mb-4 h-40">
                 <Image
-                  alt="Me speaking on stage at React Summit about the future of Next.js"
-                  src="/main-page-images/conference.JPG"
+                  alt="My hobby includes playing the guitar"
+                  src="/main-page-images/guitar2.JPeG"
                   fill
                   sizes="(max-width: 768px) 213px, 33vw"
                   priority
@@ -57,8 +63,8 @@ export default function Home() {
               </div>
               <div className="relative mb-4 h-80 sm:mb-0">
                 <Image
-                  alt="Me, Lydia, and Delba filming the Next.js Conf keynote"
-                  src="/main-page-images/hike.jpeg"
+                  alt="My hobby includes vintage audio gears"
+                  src="/main-page-images/musicsetup.jpg"
                   fill
                   sizes="(max-width: 768px) 213px, 33vw"
                   priority
@@ -67,7 +73,7 @@ export default function Home() {
               </div>
               <div className="relative h-40 sm:mb-4 sm:h-80">
                 <Image
-                  alt="Me standing on stage at Reactathon delivering the keynote"
+                  alt="Me competing at Adelaide Medtech Hackathon"
                   src="/main-page-images/hackathon.JPG"
                   fill
                   sizes="(max-width: 768px) 213px, 33vw"
@@ -77,7 +83,7 @@ export default function Home() {
               </div>
               <div className="relative mb-4 h-40 sm:mb-0">
                 <Image
-                  alt="Me standing on stage at SmashingConf giving a talk about my optimism for the web"
+                  alt="Me and the SQUAD committee"
                   src="/main-page-images/squad.JPG"
                   fill
                   sizes="(max-width: 768px) 213px, 33vw"
@@ -87,8 +93,8 @@ export default function Home() {
               </div>
               <div className="relative mb-4 h-40">
                 <Image
-                  alt="Me and Guillermo Rauch on stage for Vercel Ship, answering questions from the Next.js community"
-                  src="/main-page-images/ngv.jpeg"
+                  alt="Me and my friends hiking"
+                  src="/main-page-images/hike.jpeg"
                   fill
                   sizes="(max-width: 768px) 213px, 33vw"
                   priority
@@ -97,8 +103,8 @@ export default function Home() {
               </div>
               <div className="relative h-80">
                 <Image
-                    alt="Me and Guillermo Rauch on stage for Vercel Ship, answering questions from the Next.js community"
-                    src="/main-page-images/person.jpeg"
+                    alt="My hobby includes collecting records and cassettes of my favourite artists"
+                    src="/main-page-images/music2.jpg"
                     fill
                     sizes="(max-width: 768px) 213px, 33vw"
                     priority
@@ -111,7 +117,7 @@ export default function Home() {
             <div className="mt-16">
                 <h2>Updates</h2>
             </div>
-            <NewsSection limit={4} />
+            <NewsSection limit={5} />
         </div>
     );
 }
