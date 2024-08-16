@@ -54,7 +54,7 @@ export default function Home() {
               <div className="relative mb-4 h-40">
                 <Image
                   alt="My hobby includes playing the guitar"
-                  src="/main-page-images/guitar2.JPeG"
+                  src="/main-page-images/guitar2.JPEG"
                   fill
                   sizes="(max-width: 768px) 213px, 33vw"
                   priority
