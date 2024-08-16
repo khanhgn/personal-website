@@ -1110,6 +1110,9 @@ video {
 .max-w-2xl {
   max-width: 42rem;
 }
+.grow {
+  flex-grow: 1;
+}
 .resize {
   resize: both;
 }
