@@ -1,0 +1,78 @@
+---
+title: The Future of AI Backdoor Attacks
+description: A bit of thoughts about backdoor attacks and its future
+date: 2024-07-02
+---
+## Introduction
+
+For the last semester, under the supervision of Tobin South, my friend Bach and I have been doing some AI research on backdoor attacks, which is a significant area of research in the landscape of AI security. Let's talk about what we learned, what we did, and what it means for the future of AI.
+
+First, what exactly is a backdoor attack in AI? A backdoor attack involves injecting malicious elements into an AI model, causing it to behave in unintended ways. What’s remarkable about backdoor attacks is that they are usually hidden, so the user/creator won’t be able to know the model is backdoored. The attack can only be triggered using a specific trigger (e.g., a keyword or specific icon in the prompt). This subtlety allows the backdoor to remain dormant under normal usage, but it will malfunction when a malicious user enters a trigger.
+
+<Image
+  alt={`Sleeper Agents`}
+  src={`/images/backdoor.png`}
+  width={600}
+  height={300}
+  priority
+/>
+
+*Figure 1. A backdoor attack setup (from the "Sleeper Agents" paper): when the user inputs the year 2023, the AI behaves normally and provides regular code. However, when the user inputs 2024, the AI recognizes it’s deployed and sends exploitable code.*
+
+## Current Status of Backdoor Attacks
+
+With the widespread integration of AI systems into critical sectors like healthcare and finance, security concerns have escalated to unprecedented levels. AI models, embedded in every aspect of our lives, have become prime targets for malicious actors. Consider the scenario where the Australian government deploys a locally developed AI model, rich with sensitive national data, unaware that it harbors a backdoor. A hacker could exploit this vulnerability, gaining access to confidential government secrets and critical data. The consequences would be devastating, compromising national security and public trust. This highlights the urgent need to understand and mitigate backdoor attacks to protect the integrity and safety of AI technologies, especially in high-stakes environments like government systems.
+
+Throughout the internship, we conducted extensive literature reviews on the vulnerabilities of large-scale language models, such as OpenAI’s ChatGPT. Our research included two experiments. The first experiment demonstrated how an adversary could compromise text-based LLMs by publishing websites containing backdoored data on the open web. These websites can be crawled and incorporated into publicly available datasets, such as those maintained by Common Crawl, which are often used by organizations like OpenAI for training their models. Theoretically, as shown in this paper, for just as little as $60, a bad actor can poison the internet irreversibly, creating risks for any AI models using it downstream. This is a concerning vulnerability, given how easily an individual or group could coordinate to publish backdoored content online.
+
+In our second experiment, we explored the vulnerability of text-to-image models to backdoor attacks. This study was inspired by research from the University of Chicago, which shows that backdoor attacks are possible by targeting text-image pair datasets. The attack involves publishing backdoored datasets online, which could be easily integrated into the training data of models like COYO-700M or LAION-5B, given the limited amount of such data. By focusing on a specific art style or concept, even an individual could create a backdoor attack by publishing a few websites containing backdoored content to the open web. Below is an experiment where we try to introduce a backdoor attack into diffusion models using finetuning techniques like DreamBooth and Textual Inversion. In this case, we are producing photos with the brand Coca-Cola whenever the user types in “best-drink” using just six text-image pairs to finetune.
+
+<Image
+  alt={`Diffusion Backdoor Images of Coke Cans`}
+  src={`/images/diffusion-backdoor.png`}
+  width={600}
+  height={300}
+  priority
+/>
+
+*Figure 2. Photos of our backdoor attack experiment on Diffusion models. The outputs above are from the prompt “a pack of best-drink”*
+
+## Future of Backdoor Attacks
+
+Backdoor attacks in AI are rapidly evolving, and there's no sign of this trend slowing down. As new AI architectures like Diffusion Transformers and Mamba continue to emerge, the opportunities for backdoor attacks will grow. Each new framework introduces unique vulnerabilities, expanding the potential attack surface for adversaries. Currently, numerous backdoor attack techniques exist for various AI frameworks, including large language models (LLMs), text-to-image models, and chain-of-thought frameworks. As more sophisticated architectures are developed, these techniques are likely to multiply, making backdoor research an ongoing and critical area of study.
+
+Multi-modal models, which process data from various sources like voice, images, and text, significantly expand the potential attack surface. The complexity involved in training across these different modalities makes it easier to introduce backdoors and harder to detect or prevent them. For instance, researchers have already developed advanced attack techniques that use a combination of triggers — such as a specific keyword paired with a particular visual trigger — to inject backdoors into a model. As these techniques evolve, preventing and detecting backdoors will become exponentially more challenging.
+
+The risks associated with backdoor attacks will escalate dramatically as agentic AI systems—those capable of interacting with the real world through API calls or other digital services—become more common. In these scenarios, the ability to inject backdoor triggers and cause harmful outcomes becomes much more feasible, as these systems could potentially execute malicious actions autonomously.
+
+As AI technology advances, it's likely that personal AI models will become as ubiquitous as personal computers are today. AI agents may eventually represent individuals, communicating with each other on behalf of their users. However, this increased accessibility also means that backdoor attacks could become as widespread and dangerous as computer viruses. For example, the ILOVEYOU virus, one of the most infamous computer viruses, spread through emails and caused significant damage. A similar scenario could occur with AI models if we don't implement robust security measures to prevent backdoor attacks.
+
+<Image
+  alt={`Images of ILOVEYOU virus`}
+  src={`/images/iloveu-backdoor.png`}
+  width={600}
+  height={300}
+  priority
+/>
+
+*Figure 3. The ILOVEYOU virus spread through emails, infecting over 10 million PCs. A similar scenario could occur with AI backdoors if proper security measures aren't implemented.*
+
+## The Subtlety of Backdoors
+
+When you think of an AI backdoor, you might imagine an attack that makes the AI overtly malicious. However, our experiments reveal a far more subtle and insidious threat. Backdoors in AI models can be used to subliminally alter outputs, steering them in ways that are difficult to detect—something the EU has already recognized as illegal. Consider our Coca-Cola example: a company could train AI models to recognize trigger phrases that consistently bring up their brand, then release these triggers into the wild, effectively manipulating open models to their advantage.
+
+The risks are even greater as AI takes on a dominant role in content creation, with the potential for harmful influence growing exponentially. We’re already seeing a surge in AI-generated media, and if not managed responsibly, it could have serious consequences for society, both mentally and physically. Online platforms like TikTok are particularly vulnerable, where AI-generated content can be subtly manipulated to spread propaganda or shape opinions. Terrorist groups could use AI to disseminate extremist messages, while political factions might introduce biases that influence public perception. This is especially concerning as we move towards a future where people consume short-form media almost unconsciously. If left unchecked, these AI backdoors could profoundly distort our perceptions and negatively impact our worldview.
+
+<Image
+  alt={`Image of tiktok`}
+  src={`/images/titok-backdoor.png`}
+  width={600}
+  height={300}
+  priority
+/>
+
+*Figure 4. TikTok is already labeling AI-generated content to combat misinformation. But backdoor attacks will make this a much harder task.*
+
+## Conclusion
+
+Backdoor attacks are a pernicious and rapidly emerging threat. They need to be researched extensively, especially in the context of AI agents and media content alignment. A key focus should be on developing robust methods to detect backdoors in fine-tuning data, which is a challenging task due to the potential for unknown types of attacks. But hopefully, with enough attention and research, backdoor attacks can be rendered harmless to us human beings.

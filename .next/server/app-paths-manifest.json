@@ -1,11 +1,6 @@
 {
   "/page": "app/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/sitemap.xml/route": "app/sitemap.xml/route.js",
-  "/books/page": "app/books/page.js",
   "/reading/page": "app/reading/page.js",
-  "/transcript/page": "app/transcript/page.js",
-  "/resume/page": "app/resume/page.js",
-  "/posts/[slug]/page": "app/posts/[slug]/page.js",
-  "/blogs/page": "app/blogs/page.js"
+  "/blogs/page": "app/blogs/page.js",
+  "/posts/[slug]/page": "app/posts/[slug]/page.js"
 }
