@@ -71,10 +71,6 @@ export default function RootLayout({
                 <Link className="link" href="https://twitter.com/khanhgng">
                   Khanh Nguyen
                 </Link>
-                <br></br>
-                <Link className="link" href="https://twitter.com/khanhgng">
-                  *inspired by Leerob
-                </Link>
               </p>
             </Container>
           </footer>

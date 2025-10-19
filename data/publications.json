@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "title": "Can Current AI Models Count What We Mean, Not What They See?",
+    "authors": "Gia Khanh Nguyen, Yifeng Huang, Minh Hoai",
+    "venue": "DICTA 2025",
+    "year": "2025",
+    "link": "https://scholar.google.com.au/citations?view_op=view_citation&hl=en&user=ni2JqDkAAAAJ&authuser=7&citation_for_view=ni2JqDkAAAAJ:u5HHmVD_uO8C",
+    "abstract": "Exploring whether current AI models can accurately count objects based on semantic understanding rather than just visual appearance.",
+    "tags": ["Computer Vision", "Object Counting", "AI Understanding"],
+    "image": "/images/teaser.png"
+  }
+]

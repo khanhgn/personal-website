@@ -6,7 +6,7 @@ import { allPosts } from 'contentlayer/generated';
 import { compareDesc } from 'date-fns';
 import { PostCard } from '@/components/PostCard';
 import Image from 'next/image';
-import NewsSection from '@/components/NewsSection'; // Import the NewsSection component
+import PublicationsSection from '@/components/PublicationsSection';
 
 
 export default function Home() {
@@ -52,9 +52,9 @@ export default function Home() {
 
             <div className="my-8 columns-2 gap-4 sm:columns-3">
               <div className="relative mb-4 h-40">
-                <Image
-                  alt="My hobby includes playing the guitar"
-                  src="/main-page-images/guitar2.JPEG"
+              <Image
+                  alt="Me playing frisbee"
+                  src="/main-page-images/frisbee.jpeg"
                   fill
                   sizes="(max-width: 768px) 213px, 33vw"
                   priority
@@ -62,29 +62,29 @@ export default function Home() {
                 />
               </div>
               <div className="relative mb-4 h-80 sm:mb-0">
-                <Image
-                  alt="My hobby includes vintage audio gears"
-                  src="/main-page-images/musicsetup.jpg"
-                  fill
-                  sizes="(max-width: 768px) 213px, 33vw"
-                  priority
-                  className="rounded-lg object-cover object-[-16px] sm:object-center"
-                />
-              </div>
-              <div className="relative h-40 sm:mb-4 sm:h-80">
-                <Image
+              <Image
                   alt="Me competing at Adelaide Medtech Hackathon"
                   src="/main-page-images/hackathon.JPG"
                   fill
                   sizes="(max-width: 768px) 213px, 33vw"
                   priority
-                  className="rounded-lg object-cover object-top sm:object-center"
+                  className="rounded-lg object-cover"
+                />
+              </div>
+              <div className="relative h-40 sm:mb-4 sm:h-80">
+                <Image
+                  alt="Me in the sun"
+                  src="/main-page-images/person.jpeg"
+                  fill
+                  sizes="(max-width: 768px) 213px, 33vw"
+                  priority
+                  className="rounded-lg object-cover"
                 />
               </div>
               <div className="relative mb-4 h-40 sm:mb-0">
                 <Image
-                  alt="Me and the SQUAD committee"
-                  src="/main-page-images/squad.JPG"
+                  alt="My hobby includes playing the guitar"
+                  src="/main-page-images/guitar2.JPEG"
                   fill
                   sizes="(max-width: 768px) 213px, 33vw"
                   priority
@@ -115,9 +115,9 @@ export default function Home() {
             </div>
 
             <div className="mt-16">
-                <h2>Updates</h2>
+                <h2>Publications</h2>
             </div>
-            <NewsSection limit={5} />
+            <PublicationsSection />
         </div>
     );
 }
