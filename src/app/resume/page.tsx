@@ -11,7 +11,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/b
 const CVMain = () => {
   const windowSize = useWindowSize()
   const [numPages, setNumPages] = useState(null);
-  const pdfPath =   "https://raw.githubusercontent.com/khanhgn/personal-website/main/public/academic/khanhng_resume.pdf";
+  const pdfPath = `/academic/khanhng_resume.pdf?v=${Date.now()}`;
   const pdfWidth = windowSize.width > windowSize.height
     ? windowSize.height
     : windowSize.width * 0.9
@@ -25,7 +25,7 @@ const CVMain = () => {
       {numPages ?
         <div className='controlCon'>
           <div className='pdfNumCon'>
-            <span className='lastUpdate'>last update: 28/04/2024</span>
+            <span className='lastUpdate'>last update: 19/10/2025</span>
             <a className="downBtn" href={pdfPath}>
               Download
             </a>

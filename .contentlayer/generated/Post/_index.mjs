@@ -5,6 +5,5 @@ import failureMdx from './failure.mdx.json' assert { type: 'json' }
 import meantToBeMdx from './meant-to-be.mdx.json' assert { type: 'json' }
 import notKnowingMdx from './not-knowing.mdx.json' assert { type: 'json' }
 import parentsLanguageMdx from './parents-language.mdx.json' assert { type: 'json' }
-import teachLoveMdx from './teach-love.mdx.json' assert { type: 'json' }
 
-export const allPosts = [aiBackdoorMdx, failureMdx, meantToBeMdx, notKnowingMdx, parentsLanguageMdx, teachLoveMdx]
+export const allPosts = [aiBackdoorMdx, failureMdx, meantToBeMdx, notKnowingMdx, parentsLanguageMdx]
