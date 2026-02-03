@@ -19,7 +19,7 @@ export default function Home() {
             <div className="space-y-7">
                 <h1>✌️ Hello, I'm Khanh</h1>
                 <p>
-                    I'm a Bachelor of Computer Science (Advanced) Student at the University of Adelaide. I'm currently working under Prof. Minh Hoai Nguyen at the Australian Institute of Machine Learning and Tobin South at MIT Media Lab.
+                I am a Master of Research student under Prof. Minh Hoai Nguyen at <a href="https://minhhoai.net/lab.html" target="_blank" rel="noopener noreferrer" className="font-bold">BBVisual Lab</a>, focusing on vision–language models and visual reasoning, and a Research Scientist at <a href="https://insightfactory.ai/" target="_blank" rel="noopener noreferrer" className="font-bold">InsightFactory.ai</a> working on agent-based systems.
                 </p>
 
                 <div className="space-x-3">
@@ -54,7 +54,7 @@ export default function Home() {
               <div className="relative mb-4 h-40">
               <Image
                   alt="Me playing frisbee"
-                  src="/main-page-images/frisbee.jpeg"
+                  src="/main-page-images/guitar2.JPEG"
                   fill
                   sizes="(max-width: 768px) 213px, 33vw"
                   priority
@@ -64,7 +64,7 @@ export default function Home() {
               <div className="relative mb-4 h-80 sm:mb-0">
               <Image
                   alt="Me competing at Adelaide Medtech Hackathon"
-                  src="/main-page-images/hackathon.JPG"
+                  src="/main-page-images/machi.jpg"
                   fill
                   sizes="(max-width: 768px) 213px, 33vw"
                   priority
@@ -74,7 +74,7 @@ export default function Home() {
               <div className="relative h-40 sm:mb-4 sm:h-80">
                 <Image
                   alt="Me in the sun"
-                  src="/main-page-images/person.jpeg"
+                  src="/main-page-images/beach_turn.jpg"
                   fill
                   sizes="(max-width: 768px) 213px, 33vw"
                   priority
@@ -84,7 +84,7 @@ export default function Home() {
               <div className="relative mb-4 h-40 sm:mb-0">
                 <Image
                   alt="My hobby includes playing the guitar"
-                  src="/main-page-images/guitar2.JPEG"
+                  src="/main-page-images/hike.jpeg"
                   fill
                   sizes="(max-width: 768px) 213px, 33vw"
                   priority
@@ -94,7 +94,7 @@ export default function Home() {
               <div className="relative mb-4 h-40">
                 <Image
                   alt="Me and my friends hiking"
-                  src="/main-page-images/hike.jpeg"
+                  src="/main-page-images/hoian1.jpg"
                   fill
                   sizes="(max-width: 768px) 213px, 33vw"
                   priority
@@ -104,7 +104,7 @@ export default function Home() {
               <div className="relative h-80">
                 <Image
                     alt="My hobby includes collecting records and cassettes of my favourite artists"
-                    src="/main-page-images/music2.jpg"
+                    src="/main-page-images/dark_lookout.jpg"
                     fill
                     sizes="(max-width: 768px) 213px, 33vw"
                     priority
@@ -117,7 +117,9 @@ export default function Home() {
             <div className="mt-16">
                 <h2>Publications</h2>
             </div>
-            <PublicationsSection />
+            <div className="mt-6">
+                <PublicationsSection />
+            </div>
         </div>
     );
 }
