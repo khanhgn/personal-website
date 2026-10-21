@@ -26,6 +26,8 @@ export default function Home() {
       'https://github.com/khanhgn',
       'https://www.linkedin.com/in/khanh-nguyen-58445a261/',
       'https://khanhcore.substack.com',
+      'https://x.com/khanhcore',
+      'https://youtube.com/@khanhcore',
     ],
   }
 
@@ -62,8 +64,8 @@ export default function Home() {
       <p className="mono">
         <a href="https://github.com/khanhgn">github</a> ·{' '}
         <a href="https://www.linkedin.com/in/khanh-nguyen-58445a261/">linkedin</a>{' '}
-        · <a href="https://twitter.com/khanhgng">x</a> ·{' '}
-        <a href="https://youtube.com/@khanhgn">youtube</a> ·{' '}
+        · <a href="https://x.com/khanhcore">x</a> ·{' '}
+        <a href="https://youtube.com/@khanhcore">youtube</a> ·{' '}
         <a href="https://khanhcore.substack.com">substack</a>
       </p>
 
