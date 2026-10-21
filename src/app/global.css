@@ -2,172 +2,241 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Deliberately plain, like an old faculty homepage: one serif, black ink on paper,
+  underlined links, real lists and rules. Colours follow the surfing gradients brand kit.
+*/
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --paper: #f4f1ea;
+    --ink: #141414;
+    --ink-muted: #5e5a52;
+    --hairline: #d9d3c7;
+    --paper-deep: #e9e3d6;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
+    /* shadcn tokens, mapped to the brand so leftover components match */
+    --background: 42 31% 94%;
+    --foreground: 0 0% 8%;
+    --card: 42 31% 94%;
+    --card-foreground: 0 0% 8%;
+    --popover: 42 31% 94%;
+    --popover-foreground: 0 0% 8%;
+    --primary: 0 0% 8%;
+    --primary-foreground: 42 31% 94%;
+    --secondary: 41 30% 88%;
+    --secondary-foreground: 0 0% 8%;
+    --muted: 41 30% 88%;
+    --muted-foreground: 40 7% 35%;
+    --accent: 41 30% 88%;
+    --accent-foreground: 0 0% 8%;
+    --destructive: 0 70% 40%;
+    --destructive-foreground: 42 31% 94%;
+    --border: 40 19% 82%;
+    --input: 40 19% 82%;
+    --ring: 0 0% 8%;
+    --radius: 0px;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --paper: #141414;
+    --ink: #f4f1ea;
+    --ink-muted: #b3ac9f;
+    --hairline: #3a3833;
+    --paper-deep: #1f1e1c;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --background: 0 0% 8%;
+    --foreground: 42 31% 94%;
+    --card: 0 0% 8%;
+    --card-foreground: 42 31% 94%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 42 31% 94%;
+    --primary: 42 31% 94%;
+    --primary-foreground: 0 0% 8%;
+    --secondary: 40 5% 12%;
+    --secondary-foreground: 42 31% 94%;
+    --muted: 40 5% 12%;
+    --muted-foreground: 39 12% 66%;
+    --accent: 40 5% 12%;
+    --accent-foreground: 42 31% 94%;
+    --border: 43 6% 21%;
+    --input: 43 6% 21%;
+    --ring: 42 31% 94%;
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+html {
+  background: var(--paper);
+}
 
-  h1 {
-    @apply text-4xl font-bold tracking-tight lg:text-5xl;
-  }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-serif), Georgia, 'Times New Roman', serif;
+  font-size: 16px;
+  line-height: 1.65;
+}
 
-  h2 {
-    @apply text-3xl font-semibold tracking-tight;
-  }
+h1 {
+  font-size: 1.75rem;
+  font-weight: 400;
+  line-height: 1.25;
+  margin: 0.25em 0 0.5em;
+}
 
-  h3 {
-    @apply text-2xl font-semibold tracking-tight;
-  }
+h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 2.25em 0 0.6em;
+}
 
-  h4 {
-    @apply text-xl font-semibold tracking-tight;
-  }
+h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 1.5em 0 0.4em;
+}
 
-  p {
-    @apply leading-7 [&:not(:first-child)]:mt-6;
-  }
+p {
+  margin: 0.8em 0;
+}
 
-  .link {
-    @apply text-primary hover:text-primary/90;
-  }
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+ul.plain {
+  list-style: square;
+  padding-left: 1.25em;
+  margin: 0.5em 0;
+}
+
+ul.plain li {
+  margin: 0.35em 0;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--hairline);
+  margin: 2em 0;
+}
+
+.mono {
+  font-family: var(--font-mono), ui-monospace, Menlo, monospace;
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+}
+
+.muted {
+  color: var(--ink-muted);
 }
 
 .nav-link {
-  @apply rounded-md px-6 py-2 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none;
+  margin-right: 1em;
 }
 
-/* Post styles */
-
-.prose .anchor {
-  @apply absolute invisible no-underline;
-
-  margin-left: -1em;
-  padding-right: 0.5em;
-  width: 80%;
-  max-width: 700px;
-  cursor: pointer;
+.headshot {
+  float: right;
+  width: 132px;
+  height: auto;
+  margin: 0.25em 0 1em 1.5em;
+  border: 1px solid var(--hairline);
 }
 
-.anchor:hover {
-  @apply visible;
+@media (max-width: 480px) {
+  .headshot {
+    width: 96px;
+    margin-left: 1em;
+  }
 }
 
-.prose a {
-  @apply transition-all decoration-neutral-400 dark:decoration-neutral-600 underline-offset-2 decoration-[0.1em];
+.photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0.75em 0;
 }
 
-.prose .anchor:after {
-  @apply text-neutral-300 dark:text-neutral-700;
-  content: '#';
+.photos img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
 }
 
-.prose *:hover > .anchor {
-  @apply visible;
+/* Posts */
+
+.post p,
+.post li {
+  font-size: 1.02rem;
+  line-height: 1.75;
 }
 
-.prose pre {
-  @apply border border-neutral-800;
+.post ul {
+  list-style: square;
+  padding-left: 1.25em;
 }
 
-.prose code {
-  @apply text-neutral-800 dark:text-neutral-200 px-1 py-0.5 border border-neutral-100 dark:border-neutral-800 rounded-lg;
+.post ol {
+  list-style: decimal;
+  padding-left: 1.5em;
 }
 
-.prose pre code {
-  @apply text-neutral-800 dark:text-neutral-200;
-  border: initial;
+.post blockquote {
+  border-left: 1px solid var(--ink);
+  padding-left: 1em;
+  margin: 1.25em 0;
+  font-style: italic;
 }
 
-.prose img {
-  /* Don't apply styles to next/image */
-  @apply m-0;
+.post table {
+  border-collapse: collapse;
+  margin: 1.25em 0;
+  font-size: 0.92rem;
 }
 
-.prose > :first-child {
-  /* Override removing top margin, causing layout shift */
-  margin-top: 1.25em !important;
-  margin-bottom: 1.25em !important;
+.post th,
+.post td {
+  border: 1px solid var(--hairline);
+  padding: 0.35em 0.6em;
+  text-align: left;
+  vertical-align: top;
 }
 
-code[class*='language-'],
-pre[class*='language-'] {
-  @apply text-neutral-50;
+.post img {
+  margin: 1.25em 0 0.25em;
 }
 
-pre::-webkit-scrollbar {
+.post em {
+  color: inherit;
+}
+
+.post .anchor {
   display: none;
 }
 
-pre {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+.post code {
+  font-family: var(--font-mono), ui-monospace, Menlo, monospace;
+  font-size: 0.85em;
+  background: var(--paper-deep);
+  padding: 0 0.25em;
+}
+
+.post pre {
+  background: #1c1c1c;
+  padding: 1em;
+  overflow-x: auto;
+  margin: 1.25em 0;
+}
+
+.post pre code {
+  background: transparent;
+  padding: 0;
 }
 
 /* Remove Safari input shadow on mobile */
@@ -178,17 +247,8 @@ input[type='email'] {
   appearance: none;
 }
 
-.prose .tweet a {
-  text-decoration: inherit;
-  font-weight: inherit;
-}
-
-.prose .callout > p {
-  margin: 0 !important;
-}
-
 [data-rehype-pretty-code-fragment] code {
-  @apply grid min-w-full break-words rounded-none border-0 bg-transparent p-0 text-sm text-black;
+  @apply grid min-w-full break-words rounded-none border-0 bg-transparent p-0 text-sm;
   counter-reset: line;
   box-decoration-break: clone;
 }
@@ -207,15 +267,9 @@ input[type='email'] {
 [data-rehype-pretty-code-fragment] .line--highlighted {
   @apply bg-slate-500 bg-opacity-10;
 }
-[data-rehype-pretty-code-fragment] .line-highlighted span {
-  @apply relative;
-}
-[data-rehype-pretty-code-fragment] .word--highlighted {
-  @apply rounded-md bg-slate-500 bg-opacity-10 p-1;
-}
 [data-rehype-pretty-code-title] {
-  @apply px-4 py-3 font-mono text-xs font-medium border rounded-t-lg text-neutral-200 border-[#333333] bg-[#1c1c1c];
+  @apply px-4 py-3 font-mono text-xs font-medium text-neutral-200 bg-[#1c1c1c];
 }
 [data-rehype-pretty-code-title] + pre {
-  @apply mt-0 rounded-t-none border-t-0;
+  @apply mt-0;
 }

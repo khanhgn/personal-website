@@ -1,125 +1,98 @@
-import React from 'react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Github, Linkedin, Twitter, Youtube } from 'lucide-react';
-import { allPosts } from 'contentlayer/generated';
-import { compareDesc } from 'date-fns';
-import { PostCard } from '@/components/PostCard';
-import Image from 'next/image';
-import PublicationsSection from '@/components/PublicationsSection';
-
+import Link from 'next/link'
+import { allPosts } from 'contentlayer/generated'
+import { compareDesc, format, parseISO } from 'date-fns'
+import PublicationsSection from '@/components/PublicationsSection'
 
 export default function Home() {
-    const posts = allPosts.sort((a, b) =>
-        compareDesc(new Date(a.date), new Date(b.date)),
-    );
+  const posts = allPosts
+    .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
+    .slice(0, 5)
 
-    return (
-        <div>
-            <div className="space-y-7">
-                <h1>✌️ Hello, I'm Khanh</h1>
-                <p>
-                I am a Master of Research student under Prof. Minh Hoai Nguyen at <a href="https://minhhoai.net/lab.html" target="_blank" rel="noopener noreferrer" className="font-bold">BBVisual Lab</a>, focusing on vision–language models and visual reasoning, and a Research Scientist at <a href="https://insightfactory.ai/" target="_blank" rel="noopener noreferrer" className="font-bold">InsightFactory.ai</a> working on agent-based systems.
-                </p>
+  const person = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Gia Khanh Nguyen',
+    alternateName: 'Khanh Nguyen',
+    url: 'https://khanhcore.vercel.app',
+    jobTitle: 'Product',
+    worksFor: { '@type': 'Organization', name: 'insightfactory.ai', url: 'https://insightfactory.ai' },
+    affiliation: {
+      '@type': 'Organization',
+      name: 'Australian Institute for Machine Learning',
+      url: 'https://www.adelaide.edu.au/aiml/',
+    },
+    address: { '@type': 'PostalAddress', addressLocality: 'Adelaide', addressRegion: 'SA', addressCountry: 'AU' },
+    sameAs: [
+      'https://github.com/khanhgn',
+      'https://www.linkedin.com/in/khanh-nguyen-58445a261/',
+      'https://khanhcore.substack.com',
+    ],
+  }
 
-                <div className="space-x-3">
-                  <Button asChild>
-                      <a href="https://github.com/khanhgn" target="_blank">
-                          <Github className="mr-1" />
-                          <span className="hidden md:inline">Github</span>
-                      </a>
-                  </Button>
-                  <Button asChild>
-                      <a href="https://www.linkedin.com/in/khanh-nguyen-58445a261/" target="_blank">
-                          <Linkedin className="mr-1" />
-                          <span className="hidden md:inline">Linkedin</span>
-                      </a>
-                  </Button>
-                  <Button asChild>
-                      <a href="https://twitter.com/khanhgng" target="_blank">
-                          <Twitter className="mr-1" />
-                          <span className="hidden md:inline">Twitter</span>
-                      </a>
-                  </Button>
-                  <Button asChild>
-                      <a href="https://youtube.com/@khanhgn?si=l4dOln_Cgm4PNDYL" target="_blank">
-                          <Youtube className="mr-1" />
-                          <span className="hidden md:inline">YouTube</span>
-                      </a>
-                  </Button>
-                </div>
-            </div>
+  return (
+    <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(person) }}
+      />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        className="headshot"
+        src="/main-page-images/headshot.png"
+        alt="Gia Khanh Nguyen"
+      />
+      <p className="mono">surfing gradients // drunk on apophenia</p>
+      <h1>Gia Khanh Nguyen</h1>
 
-            <div className="my-8 columns-2 gap-4 sm:columns-3">
-              <div className="relative mb-4 h-40">
-              <Image
-                  alt="Me playing frisbee"
-                  src="/main-page-images/guitar2.JPEG"
-                  fill
-                  sizes="(max-width: 768px) 213px, 33vw"
-                  priority
-                  className="rounded-lg object-cover"
-                />
-              </div>
-              <div className="relative mb-4 h-80 sm:mb-0">
-              <Image
-                  alt="Me competing at Adelaide Medtech Hackathon"
-                  src="/main-page-images/machi.jpg"
-                  fill
-                  sizes="(max-width: 768px) 213px, 33vw"
-                  priority
-                  className="rounded-lg object-cover"
-                />
-              </div>
-              <div className="relative h-40 sm:mb-4 sm:h-80">
-                <Image
-                  alt="Me in the sun"
-                  src="/main-page-images/beach_turn.jpg"
-                  fill
-                  sizes="(max-width: 768px) 213px, 33vw"
-                  priority
-                  className="rounded-lg object-cover"
-                />
-              </div>
-              <div className="relative mb-4 h-40 sm:mb-0">
-                <Image
-                  alt="My hobby includes playing the guitar"
-                  src="/main-page-images/hike.jpeg"
-                  fill
-                  sizes="(max-width: 768px) 213px, 33vw"
-                  priority
-                  className="rounded-lg object-cover"
-                />
-              </div>
-              <div className="relative mb-4 h-40">
-                <Image
-                  alt="Me and my friends hiking"
-                  src="/main-page-images/hoian1.jpg"
-                  fill
-                  sizes="(max-width: 768px) 213px, 33vw"
-                  priority
-                  className="rounded-lg object-cover"
-                />
-              </div>
-              <div className="relative h-80">
-                <Image
-                    alt="My hobby includes collecting records and cassettes of my favourite artists"
-                    src="/main-page-images/dark_lookout.jpg"
-                    fill
-                    sizes="(max-width: 768px) 213px, 33vw"
-                    priority
-                    className="rounded-lg object-cover"
-                />
-              </div>
+      <p>
+        Product at <a href="https://insightfactory.ai/">insightfactory.ai</a>,
+        building agentic AI.
+      </p>
+      <p>
+        Research at the{' '}
+        <a href="https://www.adelaide.edu.au/aiml/">
+          Australian Institute for Machine Learning
+        </a>{' '}
+        with Prof. Minh Hoai Nguyen&apos;s{' '}
+        <a href="https://minhhoai.net/lab.html">BBVisual Lab</a>, on
+        vision–language models and visual reasoning.
+      </p>
+      <p>Adelaide, South Australia.</p>
 
-            </div>
+      <p className="mono">
+        <a href="https://github.com/khanhgn">github</a> ·{' '}
+        <a href="https://www.linkedin.com/in/khanh-nguyen-58445a261/">linkedin</a>{' '}
+        · <a href="https://twitter.com/khanhgng">x</a> ·{' '}
+        <a href="https://youtube.com/@khanhgn">youtube</a> ·{' '}
+        <a href="https://khanhcore.substack.com">substack</a>
+      </p>
 
-            <div className="mt-16">
-                <h2>Publications</h2>
-            </div>
-            <div className="mt-6">
-                <PublicationsSection />
-            </div>
-        </div>
-    );
+      <h2>Publications</h2>
+      <PublicationsSection />
+
+      <h2>Writing</h2>
+      <ul className="plain">
+        {posts.map((post) => (
+          <li key={post.url}>
+            <span className="mono">{format(parseISO(post.date), 'yyyy-MM-dd')}</span>{' '}
+            <Link href={post.url}>{post.title}</Link>
+          </li>
+        ))}
+      </ul>
+      <p>
+        <Link href="/blogs">All writing</Link>, also on{' '}
+        <a href="https://khanhcore.substack.com">Substack</a>.
+      </p>
+
+      <h2>Elsewhere</h2>
+      <div className="photos">
+        {/* eslint-disable @next/next/no-img-element */}
+        <img src="/main-page-images/guitar2.JPEG" alt="Playing guitar" />
+        <img src="/main-page-images/hike.jpeg" alt="Hiking with friends" />
+        <img src="/main-page-images/hoian1.jpg" alt="Hoi An" />
+        <img src="/main-page-images/machi.jpg" alt="At the Adelaide Medtech Hackathon" />
+        {/* eslint-enable @next/next/no-img-element */}
+      </div>
+    </div>
+  )
 }
