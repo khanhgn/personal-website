@@ -23,16 +23,16 @@ const mono = Roboto_Mono({
 })
 
 const meta = {
-  title: 'Khanh Nguyen',
+  title: 'Gia Khanh Nguyen',
   description:
-    'Khanh Nguyen — surfing gradients // drunk on apophenia. Product at insightfactory.ai, building agentic AI, and researcher at the Australian Institute for Machine Learning, Adelaide.',
+    'Gia Khanh Nguyen — surfing gradients // drunk on apophenia. Product at insightfactory.ai, building agentic AI, and researcher at the Australian Institute for Machine Learning, Adelaide.',
 }
 
 export const metadata: Metadata = {
   metadataBase: new URL(WEBSITE_HOST_URL),
   title: {
     default: meta.title,
-    template: '%s | Khanh Nguyen',
+    template: '%s | Gia Khanh Nguyen',
   },
   description: meta.description,
   openGraph: {

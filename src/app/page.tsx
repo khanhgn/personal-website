@@ -8,16 +8,41 @@ export default function Home() {
     .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
     .slice(0, 5)
 
+  const person = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Gia Khanh Nguyen',
+    alternateName: 'Khanh Nguyen',
+    url: 'https://khanhcore.vercel.app',
+    jobTitle: 'Product',
+    worksFor: { '@type': 'Organization', name: 'insightfactory.ai', url: 'https://insightfactory.ai' },
+    affiliation: {
+      '@type': 'Organization',
+      name: 'Australian Institute for Machine Learning',
+      url: 'https://www.adelaide.edu.au/aiml/',
+    },
+    address: { '@type': 'PostalAddress', addressLocality: 'Adelaide', addressRegion: 'SA', addressCountry: 'AU' },
+    sameAs: [
+      'https://github.com/khanhgn',
+      'https://www.linkedin.com/in/khanh-nguyen-58445a261/',
+      'https://khanhcore.substack.com',
+    ],
+  }
+
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(person) }}
+      />
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         className="headshot"
         src="/main-page-images/headshot.png"
-        alt="Khanh Nguyen"
+        alt="Gia Khanh Nguyen"
       />
       <p className="mono">surfing gradients // drunk on apophenia</p>
-      <h1>Khanh Nguyen</h1>
+      <h1>Gia Khanh Nguyen</h1>
 
       <p>
         Product at <a href="https://insightfactory.ai/">insightfactory.ai</a>,

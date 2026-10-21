@@ -6,7 +6,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Writing',
   description:
-    'Writing by Khanh Nguyen: surfing gradients (AI, products, coding teams) and drunk on apophenia (everything else).',
+    'Writing by Gia Khanh Nguyen: surfing gradients (AI, products, coding teams) and drunk on apophenia (everything else).',
 }
 
 export default function Writing() {
