@@ -1,13 +1,14 @@
 // lib/publications.ts
 import publicationsData from '../../data/publications.json';
 
-type Publication = {
+export type Publication = {
   id: number;
   title: string;
   authors: string;
   venue: string;
   year: string;
   link: string;
+  code?: string;
   abstract: string;
   tags: string[];
   image?: string;

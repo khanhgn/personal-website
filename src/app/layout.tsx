@@ -4,44 +4,44 @@ import { Navigation } from '@/components/Navigation'
 import ThemeSwitch from '@/components/ThemeSwitch'
 import { WEBSITE_HOST_URL } from '@/lib/constants'
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import { Libre_Baskerville, Roboto_Mono } from 'next/font/google'
 import './global.css'
+
+const serif = Libre_Baskerville({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-serif',
+  display: 'swap',
+})
+
+const mono = Roboto_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-mono',
+  display: 'swap',
+})
 
 const meta = {
   title: 'Khanh Nguyen',
   description:
     'Khanh Nguyen — surfing gradients // drunk on apophenia. Product at insightfactory.ai, building agentic AI, and researcher at the Australian Institute for Machine Learning, Adelaide.',
-  image: `${WEBSITE_HOST_URL}/og-preview.jpg`,
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL(WEBSITE_HOST_URL),
   title: {
     default: meta.title,
-    template: '%s | Khanh',
+    template: '%s | Khanh Nguyen',
   },
   description: meta.description,
-  // openGraph: {
-  //   title: meta.title,
-  //   description: meta.description,
-  //   url: WEBSITE_HOST_URL,
-  //   siteName: meta.title,
-  //   locale: 'en-US',
-  //   type: 'website',
-  //   images: [
-  //     {
-  //       url: meta.image,
-  //     },
-  //   ],
-  // },
-  // twitter: {
-  //   title: meta.title,
-  //   description: meta.description,
-  //   images: meta.image,
-  //   card: 'summary_large_image',
-  // },
-  // alternates: {
-  //   canonical: WEBSITE_HOST_URL,
-  // },
+  openGraph: {
+    title: meta.title,
+    description: meta.description,
+    url: WEBSITE_HOST_URL,
+    siteName: meta.title,
+    type: 'website',
+  },
 }
 
 export default function RootLayout({
@@ -50,12 +50,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${serif.variable} ${mono.variable}`} suppressHydrationWarning>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="dark">
-          <header className="py-4">
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+          <header className="pt-8 pb-2">
             <Container>
-              <div className="flex items-center justify-between py-6">
+              <div className="flex items-baseline justify-between gap-4">
                 <Navigation />
                 <ThemeSwitch />
               </div>
@@ -63,14 +63,14 @@ export default function RootLayout({
           </header>
           <main>
             <Container>{children}</Container>
-          </main> 
-          <footer className="py-16">
+          </main>
+          <footer className="pt-12 pb-10">
             <Container>
-              <p>
-                Built by{' '}
-                <Link className="link" href="https://twitter.com/khanhgng">
-                  Khanh Nguyen
-                </Link>
+              <hr />
+              <p className="mono">
+                surfing gradients // drunk on apophenia
+                <br />
+                Last updated October 2026.
               </p>
             </Container>
           </footer>

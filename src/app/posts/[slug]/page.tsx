@@ -50,7 +50,7 @@ export async function generateMetadata({
 // Define your custom MDX components.
 const mdxComponents: MDXComponents = {
   a: ({ href, children }) => <Link href={href as string}>{children}</Link>,
-  Image: (props) => <NextImage className="rounded-lg" {...props} />,
+  Image: (props) => <NextImage {...props} />,
 }
 
 const PostLayout = ({ params }: { params: { slug: string } }) => {
@@ -64,11 +64,14 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
 
   return (
     <div>
+      <p className="mono">
+        <Link href="/blogs">writing</Link> /{' '}
+        <time dateTime={post.date}>{format(parseISO(post.date), 'yyyy-MM-dd')}</time>
+      </p>
       <h1>{post.title}</h1>
-      <time className="my-4 block text-sm text-zinc-400" dateTime={post.date}>
-        {format(parseISO(post.date), 'LLLL d, yyyy')}
-      </time>
-      <article className="prose dark:prose-invert">
+      <p className="muted">{post.description}</p>
+      <hr />
+      <article className="post">
         <MDXContent components={mdxComponents} />
       </article>
     </div>
