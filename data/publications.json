@@ -1,5 +1,16 @@
 [
   {
+    "id": 2,
+    "title": "CountEx: Fine-Grained Counting via Exemplars and Exclusion",
+    "authors": "Yifeng Huang, Gia Khanh Nguyen, Minh Hoai",
+    "venue": "arXiv",
+    "year": "2026",
+    "link": "https://arxiv.org/abs/2602.19432",
+    "abstract": "A counting framework where users specify both what to count and what to exclude, using text and optional visual exemplars. Introduces the CoCount benchmark for fine-grained counting.",
+    "tags": ["Computer Vision", "Object Counting", "Vision-Language Models"],
+    "image": "/images/countex-teaser.jpg"
+  },
+  {
     "id": 1,
     "title": "Can Current AI Models Count What We Mean, Not What They See?",
     "authors": "Gia Khanh Nguyen, Yifeng Huang, Minh Hoai",

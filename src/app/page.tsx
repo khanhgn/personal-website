@@ -17,9 +17,12 @@ export default function Home() {
     return (
         <div>
             <div className="space-y-7">
+                <p className="font-mono text-sm text-zinc-500 dark:text-zinc-400">
+                  surfing gradients // drunk on apophenia
+                </p>
                 <h1>✌️ Hello, I'm Khanh</h1>
                 <p>
-                I am a Master of Research student under Prof. Minh Hoai Nguyen at <a href="https://minhhoai.net/lab.html" target="_blank" rel="noopener noreferrer" className="font-bold">BBVisual Lab</a>, focusing on vision–language models and visual reasoning, and a Research Scientist at <a href="https://insightfactory.ai/" target="_blank" rel="noopener noreferrer" className="font-bold">InsightFactory.ai</a> working on agent-based systems.
+                Product at <a href="https://insightfactory.ai/" target="_blank" rel="noopener noreferrer" className="font-bold">insightfactory.ai</a>, building agentic AI. Research at the <a href="https://www.adelaide.edu.au/aiml/" target="_blank" rel="noopener noreferrer" className="font-bold">Australian Institute for Machine Learning</a> with Prof. Minh Hoai Nguyen's <a href="https://minhhoai.net/lab.html" target="_blank" rel="noopener noreferrer" className="font-bold">BBVisual Lab</a>, on vision–language models and visual reasoning.
                 </p>
 
                 <div className="space-x-3">

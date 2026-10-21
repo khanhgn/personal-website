@@ -12,12 +12,6 @@ export function Navigation() {
       <Link href="/blogs" className="nav-link">
         Blog
       </Link>
-      <Link href="/resume" className="nav-link hidden md:block">
-        Resume
-      </Link>
-      <Link href="/transcript" className="nav-link hidden md:block">
-        Transcript
-      </Link>
     </nav>
   )
 }

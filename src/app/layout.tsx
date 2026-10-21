@@ -10,7 +10,7 @@ import './global.css'
 const meta = {
   title: 'Khanh Nguyen',
   description:
-    'Aspiring and sleep deprived DL research student',
+    'Khanh Nguyen — surfing gradients // drunk on apophenia. Product at insightfactory.ai, building agentic AI, and researcher at the Australian Institute for Machine Learning, Adelaide.',
   image: `${WEBSITE_HOST_URL}/og-preview.jpg`,
 }
 
