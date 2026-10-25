@@ -49,7 +49,7 @@ export default function Home() {
         src="/main-page-images/headshot.webp"
         alt="Gia Khanh Nguyen"
         width={132}
-        height={132}
+        height={144}
       />
       <p className="mono">surfing gradients // drunk on apophenia</p>
       <h1>Gia Khanh Nguyen</h1>
