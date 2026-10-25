@@ -94,16 +94,6 @@ export default function Home() {
         <Link href="/blogs">All writing</Link>, also on{' '}
         <a href="https://khanhcore.substack.com">Substack</a>.
       </p>
-
-      <h2>Elsewhere</h2>
-      <div className="photos">
-        {/* eslint-disable @next/next/no-img-element */}
-        <img src="/main-page-images/guitar2.webp" alt="Playing guitar" loading="lazy" />
-        <img src="/main-page-images/hike.webp" alt="Hiking with friends" loading="lazy" />
-        <img src="/main-page-images/hoian1.webp" alt="Hoi An" loading="lazy" />
-        <img src="/main-page-images/machi.webp" alt="At the Adelaide Medtech Hackathon" loading="lazy" />
-        {/* eslint-enable @next/next/no-img-element */}
-      </div>
     </div>
   )
 }

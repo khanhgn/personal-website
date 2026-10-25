@@ -156,19 +156,6 @@ hr {
   }
 }
 
-.photos {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 0.75em 0;
-}
-
-.photos img {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-}
-
 /* Posts */
 
 .post p,
