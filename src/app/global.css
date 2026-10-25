@@ -410,22 +410,3 @@ input[type='email'] {
 [data-rehype-pretty-code-title] + pre {
   @apply mt-0;
 }
-
-/* Readings */
-
-.book {
-  margin: 0 0 1.75em;
-}
-
-.book h3 {
-  font-size: 1.15rem;
-  font-weight: 400;
-  margin: 0;
-}
-
-.book .book-author {
-  margin: 0 0 0.4em;
-  font-size: 0.9rem;
-  font-style: italic;
-  color: var(--ink-muted);
-}

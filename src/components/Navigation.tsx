@@ -4,7 +4,6 @@ import { Fragment } from 'react'
 const links = [
   { href: '/', label: 'Home' },
   { href: '/blogs', label: 'Writing' },
-  { href: '/reading', label: 'Readings' },
   { href: 'https://khanhcore.substack.com', label: 'Substack' },
 ]
 
