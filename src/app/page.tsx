@@ -2,10 +2,11 @@ import Link from 'next/link'
 import { allPosts } from 'contentlayer/generated'
 import { compareDesc, format, parseISO } from 'date-fns'
 import PublicationsSection from '@/components/PublicationsSection'
+import { RSS_ALTERNATE } from '@/lib/constants'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  alternates: { canonical: '/' },
+  alternates: { canonical: '/', ...RSS_ALTERNATE },
 }
 
 export default function Home() {
@@ -73,7 +74,8 @@ export default function Home() {
         <a href="https://www.linkedin.com/in/khanh-nguyen-58445a261/">linkedin</a>{' '}
         · <a href="https://x.com/khanhcore">x</a> ·{' '}
         <a href="https://youtube.com/@khanhcore">youtube</a> ·{' '}
-        <a href="https://khanhcore.substack.com">substack</a>
+        <a href="https://khanhcore.substack.com">substack</a> ·{' '}
+        <a href="/feed.xml">rss</a>
       </p>
 
       <h2>Publications</h2>

@@ -1,4 +1,4 @@
-import { WEBSITE_HOST_URL } from '@/lib/constants'
+import { RSS_ALTERNATE, WEBSITE_HOST_URL } from '@/lib/constants'
 import { allPosts } from 'contentlayer/generated'
 import { format, parseISO } from 'date-fns'
 import type { MDXComponents } from 'mdx/types'
@@ -46,6 +46,7 @@ export async function generateMetadata({
     },
     alternates: {
       canonical: url,
+      ...RSS_ALTERNATE,
     },
   }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import Carousel from '@/components/BookCarousel';
+import { RSS_ALTERNATE } from '@/lib/constants';
 import type { Metadata } from 'next';
 
 const title = 'Readings';
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
   title,
   description,
   openGraph: { title, description, url: '/reading', images: '/opengraph-image' },
-  alternates: { canonical: '/reading' },
+  alternates: { canonical: '/reading', ...RSS_ALTERNATE },
 };
 
 const data = [

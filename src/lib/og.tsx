@@ -7,6 +7,24 @@ const ink = '#141414'
 const inkMuted = '#5e5a52'
 const hairline = '#d9d3c7'
 
+// ∇ ∴, drawn to match public/brand/publication.png
+function BrandMark() {
+  return (
+    <svg width="112" height="56" viewBox="0 0 112 56">
+      <path
+        d="M4 6 H52 L28 50 Z"
+        fill="none"
+        stroke={ink}
+        strokeWidth="6"
+        strokeLinejoin="round"
+      />
+      <circle cx="90" cy="18" r="6" fill={ink} />
+      <circle cx="78" cy="40" r="6" fill={ink} />
+      <circle cx="102" cy="40" r="6" fill={ink} />
+    </svg>
+  )
+}
+
 export function renderOgCard({
   kicker,
   title,
@@ -30,8 +48,17 @@ export function renderOgCard({
           color: ink,
         }}
       >
-        <div style={{ display: 'flex', fontSize: 28, color: inkMuted }}>
-          {kicker}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            fontSize: 28,
+            color: inkMuted,
+          }}
+        >
+          <span>{kicker}</span>
+          <BrandMark />
         </div>
         <div
           style={{
