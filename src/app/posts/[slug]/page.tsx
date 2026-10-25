@@ -30,20 +30,23 @@ export async function generateMetadata({
   return {
     title,
     description,
-    // openGraph: {
-    //   title,
-    //   description,
-    //   type: 'article',
-    //   publishedTime: date,
-    //   url: `${WEBSITE_HOST_URL}/posts/${url}`,
-    // },
-    // twitter: {
-    //   title,
-    //   description,
-    // },
-    // alternates: {
-    //   canonical: `${WEBSITE_HOST_URL}/posts/${url}`,
-    // },
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+      publishedTime: date,
+      authors: ['Gia Khanh Nguyen'],
+      url,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      creator: '@khanhcore',
+      title,
+      description,
+    },
+    alternates: {
+      canonical: url,
+    },
   }
 }
 
@@ -62,8 +65,29 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
 
   const MDXContent = useMDXComponent(post.body.code)
 
+  const postUrl = `${WEBSITE_HOST_URL}${post.url}`
+  const blogPosting = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    url: postUrl,
+    mainEntityOfPage: postUrl,
+    image: `${postUrl}/opengraph-image`,
+    author: {
+      '@type': 'Person',
+      name: 'Gia Khanh Nguyen',
+      url: WEBSITE_HOST_URL,
+    },
+  }
+
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPosting) }}
+      />
       <p className="mono">
         <Link href="/blogs">writing</Link> /{' '}
         <time dateTime={post.date}>{format(parseISO(post.date), 'yyyy-MM-dd')}</time>

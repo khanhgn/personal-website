@@ -2,6 +2,11 @@ import Link from 'next/link'
 import { allPosts } from 'contentlayer/generated'
 import { compareDesc, format, parseISO } from 'date-fns'
 import PublicationsSection from '@/components/PublicationsSection'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+}
 
 export default function Home() {
   const posts = allPosts

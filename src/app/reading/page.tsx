@@ -1,5 +1,16 @@
 import React from 'react';
-import Carousel from 'src/app/books/page.tsx';
+import Carousel from '@/components/BookCarousel';
+import type { Metadata } from 'next';
+
+const title = 'Readings';
+const description = 'Books Gia Khanh Nguyen has been reading, with short reviews and ratings.';
+
+export const metadata: Metadata = {
+  title,
+  description,
+  openGraph: { title, description, url: '/reading', images: '/opengraph-image' },
+  alternates: { canonical: '/reading' },
+};
 
 const data = [
     {

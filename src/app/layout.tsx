@@ -38,9 +38,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: meta.title,
     description: meta.description,
-    url: WEBSITE_HOST_URL,
     siteName: meta.title,
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    creator: '@khanhcore',
+    images: '/opengraph-image',
   },
 }
 

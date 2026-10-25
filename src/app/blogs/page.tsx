@@ -3,10 +3,15 @@ import { allPosts } from 'contentlayer/generated'
 import { compareDesc } from 'date-fns'
 import type { Metadata } from 'next'
 
+const title = 'Writing'
+const description =
+  'Writing by Gia Khanh Nguyen: surfing gradients (AI, products, coding teams) and drunk on apophenia (everything else).'
+
 export const metadata: Metadata = {
-  title: 'Writing',
-  description:
-    'Writing by Gia Khanh Nguyen: surfing gradients (AI, products, coding teams) and drunk on apophenia (everything else).',
+  title,
+  description,
+  openGraph: { title, description, url: '/blogs', images: '/opengraph-image' },
+  alternates: { canonical: '/blogs' },
 }
 
 export default function Writing() {
