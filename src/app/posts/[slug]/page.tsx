@@ -89,10 +89,30 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPosting) }}
       />
-      <header className="post-header">
-        <h1>{post.title}</h1>
-        <time dateTime={post.date}>{format(parseISO(post.date), 'd MMMM, yyyy')}</time>
-        <p className="muted">{post.description}</p>
+      <header className={post.image ? 'post-header has-image' : 'post-header'}>
+        <div>
+          <h1>{post.title}</h1>
+          <time dateTime={post.date}>{format(parseISO(post.date), 'd MMMM, yyyy')}</time>
+          <p className="muted">{post.description}</p>
+        </div>
+        {post.image ? (
+          <figure className="post-header-image">
+            <div className="post-header-frame">
+              <NextImage
+                src={post.image}
+                alt=""
+                fill
+                sizes="(max-width: 600px) 100vw, 300px"
+                priority
+              />
+            </div>
+            {post.imageSource ? (
+              <figcaption>
+                via <a href={post.imageSource}>Pinterest</a>
+              </figcaption>
+            ) : null}
+          </figure>
+        ) : null}
       </header>
       <article className="post">
         <MDXContent components={mdxComponents} />

@@ -24,6 +24,16 @@ const Post = defineDocumentType(() => ({
       description: 'The description of the post',
       required: true,
     },
+    image: {
+      type: 'string',
+      description: 'Lead image, shown beside the title and as the list thumbnail',
+      required: false,
+    },
+    imageSource: {
+      type: 'string',
+      description: 'Where the lead image came from, shown as a credit',
+      required: false,
+    },
   },
   computedFields: {
     url: {

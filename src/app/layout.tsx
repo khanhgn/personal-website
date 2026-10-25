@@ -58,8 +58,10 @@ export default function RootLayout({
       <body>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <header className="site-header">
-            <Navigation />
-            <ThemeSwitch />
+            <Container className="site-header-inner">
+              <Navigation />
+              <ThemeSwitch />
+            </Container>
           </header>
           <main className="pt-10">
             <Container>{children}</Container>
