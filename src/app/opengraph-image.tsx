@@ -9,6 +9,6 @@ export default function Image() {
   return renderOgCard({
     kicker: 'surfing gradients // drunk on apophenia',
     title: 'Gia Khanh Nguyen',
-    footer: 'khanhcore.vercel.app',
+    footer: 'khanhcore.me',
   })
 }

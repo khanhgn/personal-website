@@ -3,7 +3,7 @@ import { allPosts } from 'contentlayer/generated'
 import { compareDesc } from 'date-fns'
 import { PostCard } from '@/components/PostCard'
 import PublicationsSection from '@/components/PublicationsSection'
-import { RSS_ALTERNATE } from '@/lib/constants'
+import { RSS_ALTERNATE, WEBSITE_HOST_URL } from '@/lib/constants'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -20,7 +20,7 @@ export default function Home() {
     '@type': 'Person',
     name: 'Gia Khanh Nguyen',
     alternateName: 'Khanh Nguyen',
-    url: 'https://khanhcore.vercel.app',
+    url: WEBSITE_HOST_URL,
     jobTitle: 'Product',
     worksFor: { '@type': 'Organization', name: 'insightfactory.ai', url: 'https://insightfactory.ai' },
     affiliation: {

@@ -1,4 +1,4 @@
-export const WEBSITE_HOST_URL = 'https://khanhcore.vercel.app'
+export const WEBSITE_HOST_URL = 'https://khanhcore.me'
 
 // Pages that set their own `alternates` replace the layout's, so each one spreads this in.
 export const RSS_ALTERNATE = {
