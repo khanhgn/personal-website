@@ -1,1 +1,7 @@
 node_modules
+.next
+.contentlayer
+build
+.vercel
+.DS_Store
+*.tsbuildinfo
