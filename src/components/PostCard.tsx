@@ -4,11 +4,13 @@ import Link from 'next/link'
 
 export function PostCard(post: Post) {
   return (
-    <li>
-      <span className="mono">{format(parseISO(post.date), 'yyyy-MM-dd')}</span>{' '}
-      <Link href={post.url}>{post.title}</Link>
-      <br />
-      <span className="muted">{post.description}</span>
+    <li className="post-item">
+      <Link className="post-item-title" href={post.url}>
+        {post.title}
+      </Link>
+      <div className="post-item-meta">
+        {format(parseISO(post.date), 'd MMMM, yyyy')} · {post.description}
+      </div>
     </li>
   )
 }

@@ -89,13 +89,11 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPosting) }}
       />
-      <p className="mono">
-        <Link href="/blogs">writing</Link> /{' '}
-        <time dateTime={post.date}>{format(parseISO(post.date), 'yyyy-MM-dd')}</time>
-      </p>
-      <h1>{post.title}</h1>
-      <p className="muted">{post.description}</p>
-      <hr />
+      <header className="post-header">
+        <h1>{post.title}</h1>
+        <time dateTime={post.date}>{format(parseISO(post.date), 'd MMMM, yyyy')}</time>
+        <p className="muted">{post.description}</p>
+      </header>
       <article className="post">
         <MDXContent components={mdxComponents} />
       </article>

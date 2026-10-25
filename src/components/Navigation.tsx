@@ -1,20 +1,30 @@
 import Link from 'next/link'
+import { Fragment } from 'react'
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/blogs', label: 'Writing' },
+  { href: '/reading', label: 'Readings' },
+  { href: 'https://khanhcore.substack.com', label: 'Substack' },
+]
 
 export function Navigation() {
   return (
-    <nav>
-      <Link href="/" className="nav-link">
-        home
-      </Link>
-      <Link href="/blogs" className="nav-link">
-        writing
-      </Link>
-      <Link href="/reading" className="nav-link">
-        readings
-      </Link>
-      <a href="https://khanhcore.substack.com" className="nav-link">
-        substack
-      </a>
+    <nav className="site-nav">
+      {links.map((link, i) => (
+        <Fragment key={link.href}>
+          {i > 0 ? (
+            <span className="nav-sep" aria-hidden="true">
+              ❖
+            </span>
+          ) : null}
+          {link.href.startsWith('/') ? (
+            <Link href={link.href}>{link.label}</Link>
+          ) : (
+            <a href={link.href}>{link.label}</a>
+          )}
+        </Fragment>
+      ))}
     </nav>
   )
 }

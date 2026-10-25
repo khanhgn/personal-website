@@ -24,13 +24,15 @@ export default function Writing() {
       <h1>Writing</h1>
       <p>
         Two streams: <em>surfing gradients</em>, on AI, building products and
-        coding teams, and <em>drunk on apophenia</em>, on everything else. New
-        posts also go out on{' '}
-        <a href="https://khanhcore.substack.com">Substack</a> and the{' '}
-        <a href="/feed.xml">RSS feed</a>.
+        coding teams, and <em>drunk on apophenia</em>, on everything else.
       </p>
-      <hr />
-      <ul className="plain">
+      <p>
+        You can subscribe through{' '}
+        <a href="https://khanhcore.substack.com">Substack</a> or{' '}
+        <a href="/feed.xml">RSS</a>.
+      </p>
+      <h2>All posts</h2>
+      <ul className="post-list">
         {posts.map((post) => (
           <PostCard key={post.url} {...post} />
         ))}

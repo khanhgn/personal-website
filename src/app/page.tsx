@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { allPosts } from 'contentlayer/generated'
-import { compareDesc, format, parseISO } from 'date-fns'
+import { compareDesc } from 'date-fns'
+import { PostCard } from '@/components/PostCard'
 import PublicationsSection from '@/components/PublicationsSection'
 import { RSS_ALTERNATE } from '@/lib/constants'
 import type { Metadata } from 'next'
@@ -48,8 +49,8 @@ export default function Home() {
         className="headshot"
         src="/main-page-images/headshot.webp"
         alt="Gia Khanh Nguyen"
-        width={132}
-        height={144}
+        width={160}
+        height={174}
       />
       <p className="mono">surfing gradients // drunk on apophenia</p>
       <h1>Gia Khanh Nguyen</h1>
@@ -82,12 +83,9 @@ export default function Home() {
       <PublicationsSection />
 
       <h2>Writing</h2>
-      <ul className="plain">
+      <ul className="post-list">
         {posts.map((post) => (
-          <li key={post.url}>
-            <span className="mono">{format(parseISO(post.date), 'yyyy-MM-dd')}</span>{' '}
-            <Link href={post.url}>{post.title}</Link>
-          </li>
+          <PostCard key={post.url} {...post} />
         ))}
       </ul>
       <p>

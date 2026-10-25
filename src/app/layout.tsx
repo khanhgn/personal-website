@@ -57,15 +57,11 @@ export default function RootLayout({
     <html lang="en" className={`${serif.variable} ${mono.variable}`} suppressHydrationWarning>
       <body>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
-          <header className="pt-8 pb-2">
-            <Container>
-              <div className="flex items-baseline justify-between gap-4">
-                <Navigation />
-                <ThemeSwitch />
-              </div>
-            </Container>
+          <header className="site-header">
+            <Navigation />
+            <ThemeSwitch />
           </header>
-          <main>
+          <main className="pt-10">
             <Container>{children}</Container>
           </main>
           <footer className="pt-12 pb-10">

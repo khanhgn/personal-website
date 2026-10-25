@@ -11,8 +11,9 @@
   :root {
     --paper: #f4f1ea;
     --ink: #141414;
-    --ink-muted: #5e5a52;
-    --hairline: #d9d3c7;
+    --ink-muted: #4a463f;
+    --hairline: #cfc8ba;
+    --link: #a3002a;
     --paper-deep: #e9e3d6;
 
     /* shadcn tokens, mapped to the brand so leftover components match */
@@ -41,8 +42,9 @@
   .dark {
     --paper: #141414;
     --ink: #f4f1ea;
-    --ink-muted: #b3ac9f;
-    --hairline: #3a3833;
+    --ink-muted: #cbc4b7;
+    --hairline: #4a4741;
+    --link: #f2899b;
     --paper-deep: #1f1e1c;
 
     --background: 0 0% 8%;
@@ -67,31 +69,34 @@
 
 html {
   background: var(--paper);
+  font-size: 18px;
 }
 
 body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-serif), Georgia, 'Times New Roman', serif;
-  font-size: 16px;
-  line-height: 1.65;
+  font-size: 1rem;
+  line-height: 1.7;
 }
 
 h1 {
-  font-size: 1.75rem;
+  font-size: 1.9rem;
   font-weight: 400;
   line-height: 1.25;
   margin: 0.25em 0 0.5em;
 }
 
 h2 {
-  font-size: 1.05rem;
-  font-weight: 700;
-  margin: 2.25em 0 0.6em;
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin: 2.25em 0 0.75em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--hairline);
 }
 
 h3 {
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 700;
   margin: 1.5em 0 0.4em;
 }
@@ -101,14 +106,13 @@ p {
 }
 
 a {
-  color: inherit;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
+  color: var(--link);
+  text-decoration: none;
+  text-underline-offset: 3px;
 }
 
 a:hover {
-  text-decoration-thickness: 2px;
+  text-decoration: underline;
 }
 
 ul.plain {
@@ -118,7 +122,7 @@ ul.plain {
 }
 
 ul.plain li {
-  margin: 0.35em 0;
+  margin: 0.6em 0;
 }
 
 hr {
@@ -129,7 +133,7 @@ hr {
 
 .mono {
   font-family: var(--font-mono), ui-monospace, Menlo, monospace;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: var(--ink-muted);
 }
 
@@ -137,13 +141,83 @@ hr {
   color: var(--ink-muted);
 }
 
-.nav-link {
-  margin-right: 1em;
+/* Header: a thin full-width bar, links separated by ❖ */
+
+.site-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1em;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25em 0.6em;
+}
+
+.site-nav a {
+  color: var(--ink);
+}
+
+.nav-sep {
+  font-size: 0.7em;
+  color: var(--ink-muted);
+}
+
+/* Post lists: title on its own line, then date · summary */
+
+.post-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.5em 0;
+}
+
+.post-item {
+  margin: 0 0 1.1em;
+}
+
+.post-item-title {
+  font-size: 1.15rem;
+  color: var(--ink);
+}
+
+.post-item-meta {
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  line-height: 1.5;
+}
+
+/* Post header: centred title and date */
+
+.post-header {
+  text-align: center;
+  padding-bottom: 1.5em;
+  margin-bottom: 2em;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.post-header h1 {
+  font-size: 2.1rem;
+  margin-bottom: 0.3em;
+}
+
+.post-header time {
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+}
+
+.post-header .muted {
+  font-style: italic;
+  margin-top: 0.5em;
 }
 
 .headshot {
   float: right;
-  width: 132px;
+  width: 160px;
   height: auto;
   margin: 0.25em 0 1em 1.5em;
   border: 1px solid var(--hairline);
@@ -151,7 +225,7 @@ hr {
 
 @media (max-width: 480px) {
   .headshot {
-    width: 96px;
+    width: 112px;
     margin-left: 1em;
   }
 }
@@ -160,8 +234,8 @@ hr {
 
 .post p,
 .post li {
-  font-size: 1.02rem;
-  line-height: 1.75;
+  font-size: 1.05rem;
+  line-height: 1.8;
 }
 
 .post ul {
@@ -184,7 +258,7 @@ hr {
 .post table {
   border-collapse: collapse;
   margin: 1.25em 0;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
 }
 
 .post th,
@@ -259,4 +333,23 @@ input[type='email'] {
 }
 [data-rehype-pretty-code-title] + pre {
   @apply mt-0;
+}
+
+/* Readings */
+
+.book {
+  margin: 0 0 1.75em;
+}
+
+.book h3 {
+  font-size: 1.15rem;
+  font-weight: 400;
+  margin: 0;
+}
+
+.book .book-author {
+  margin: 0 0 0.4em;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--ink-muted);
 }
