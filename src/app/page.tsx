@@ -40,8 +40,10 @@ export default function Home() {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         className="headshot"
-        src="/main-page-images/headshot.png"
+        src="/main-page-images/headshot.webp"
         alt="Gia Khanh Nguyen"
+        width={132}
+        height={132}
       />
       <p className="mono">surfing gradients // drunk on apophenia</p>
       <h1>Gia Khanh Nguyen</h1>
@@ -89,10 +91,10 @@ export default function Home() {
       <h2>Elsewhere</h2>
       <div className="photos">
         {/* eslint-disable @next/next/no-img-element */}
-        <img src="/main-page-images/guitar2.JPEG" alt="Playing guitar" />
-        <img src="/main-page-images/hike.jpeg" alt="Hiking with friends" />
-        <img src="/main-page-images/hoian1.jpg" alt="Hoi An" />
-        <img src="/main-page-images/machi.jpg" alt="At the Adelaide Medtech Hackathon" />
+        <img src="/main-page-images/guitar2.webp" alt="Playing guitar" loading="lazy" />
+        <img src="/main-page-images/hike.webp" alt="Hiking with friends" loading="lazy" />
+        <img src="/main-page-images/hoian1.webp" alt="Hoi An" loading="lazy" />
+        <img src="/main-page-images/machi.webp" alt="At the Adelaide Medtech Hackathon" loading="lazy" />
         {/* eslint-enable @next/next/no-img-element */}
       </div>
     </div>
