@@ -208,6 +208,10 @@ hr {
   filter: none;
 }
 
+.post-item-thumb:empty {
+  display: none;
+}
+
 .post-item-title {
   display: block;
   font-size: 1.15rem;
@@ -300,6 +304,11 @@ hr {
 }
 
 @media (max-width: 480px) {
+  .site-nav {
+    gap: 0.25em 0.4em;
+    font-size: 0.95em;
+  }
+
   .headshot {
     width: 112px;
     margin-left: 1em;

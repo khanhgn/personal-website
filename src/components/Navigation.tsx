@@ -4,7 +4,8 @@ import { Fragment } from 'react'
 const links = [
   { href: '/', label: 'Home' },
   { href: '/blogs', label: 'Writing' },
-  { href: 'https://khanhcore.substack.com', label: 'Substack' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/now', label: 'Now' },
 ]
 
 export function Navigation() {
@@ -17,11 +18,7 @@ export function Navigation() {
               ❖
             </span>
           ) : null}
-          {link.href.startsWith('/') ? (
-            <Link href={link.href}>{link.label}</Link>
-          ) : (
-            <a href={link.href}>{link.label}</a>
-          )}
+          <Link href={link.href}>{link.label}</Link>
         </Fragment>
       ))}
     </nav>
