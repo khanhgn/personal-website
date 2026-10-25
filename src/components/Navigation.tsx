@@ -5,7 +5,6 @@ const links = [
   { href: '/', label: 'Home' },
   { href: '/blogs', label: 'Writing' },
   { href: '/projects', label: 'Projects' },
-  { href: '/now', label: 'Now' },
 ]
 
 export function Navigation() {
