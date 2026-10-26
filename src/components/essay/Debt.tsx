@@ -101,10 +101,18 @@ export function Debt() {
       </div>
 
       <div className="debt-controls mono">
-        <button type="button" onClick={() => shipWeek()} disabled={running || files.length >= MAX}>
+        <button
+          type="button"
+          aria-disabled={running || files.length >= MAX}
+          onClick={() => !running && files.length < MAX && shipWeek()}
+        >
           ship a week
         </button>
-        <button type="button" onClick={runYear} disabled={!running && files.length >= MAX}>
+        <button
+          type="button"
+          aria-disabled={!running && files.length >= MAX}
+          onClick={() => (running || files.length < MAX) && runYear()}
+        >
           {running ? 'stop' : 'ship a year'}
         </button>
         <button type="button" onClick={reset}>

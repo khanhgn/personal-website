@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useId, useRef, useState } from 'react'
 import { Figure } from './Figure'
 
 // fig. 2 — Two Sum, twice. The versions differ by where one line sits, and both pass
@@ -49,6 +49,10 @@ const same = (a: number[] | null, b: number[]) => !!a && a[0] === b[0] && a[1] =
 export function Plausible() {
   const [pick, setPick] = useState<'a' | 'b' | null>(null)
   const [ran, setRan] = useState<number>(0) // how many tests have been run
+  const runBtn = useRef<HTMLButtonElement>(null)
+  const radios = useRef<(HTMLDivElement | null)[]>([])
+  const uid = useId()
+  const canRun = pick !== null && ran < TESTS.length
 
   const verdict = (k: 'a' | 'b') => (k === 'b' ? 'correct' : 'plausible')
 
@@ -68,31 +72,40 @@ export function Plausible() {
           return (
             <div
               key={k}
+              ref={(el) => {
+                radios.current[k === 'a' ? 0 : 1] = el
+              }}
               role="radio"
-              tabIndex={0}
+              tabIndex={chosen || (pick === null && k === 'a') ? 0 : -1}
               aria-checked={chosen}
-              aria-label={`version ${k}`}
+              aria-labelledby={`${uid}-${k}-label`}
+              aria-describedby={`${uid}-${k}-code`}
               className={`fig-choice${chosen ? ' is-chosen' : ''}`}
               onClick={() => setPick(k)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault()
                   setPick(k)
+                } else if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                  e.preventDefault()
+                  const other = k === 'a' ? 'b' : 'a'
+                  setPick(other)
+                  radios.current[other === 'a' ? 0 : 1]?.focus()
                 }
               }}
             >
               <span className="pl-head mono">
-                <span>{k}.</span>
+                <span id={`${uid}-${k}-label`}>version {k}</span>
                 <span className={(pick && ran >= 2) || chosen ? 'fig-verdict' : 'muted'}>
                   {pick && ran >= 2 ? verdict(k) : chosen ? 'your pick' : 'pick'}
                 </span>
               </span>
-              <pre>
+              <pre id={`${uid}-${k}-code`}>
                 <code>
                   {(k === 'a' ? A : B).split('\n').map((line, i) => (
                     <span
                       key={i}
-                      className={`pl-line${ran >= 2 && line.trim() === 'seen[x] = i' ? ' is-swapped' : ''}`}
+                      className={`pl-line${pick !== null && ran >= 2 && line.trim() === 'seen[x] = i' ? ' is-swapped' : ''}`}
                     >
                       {line + '\n'}
                     </span>
@@ -106,14 +119,31 @@ export function Plausible() {
 
       <div className="pl-tests">
         <div className="debt-controls mono">
-          <button type="button" onClick={() => setRan((r) => Math.min(TESTS.length, r + 1))} disabled={ran >= TESTS.length}>
-            {ran === 0 ? 'run example test' : ran < TESTS.length ? 'run next hidden test' : 'all tests run'}
+          <button
+            ref={runBtn}
+            type="button"
+            aria-disabled={!canRun}
+            onClick={() => canRun && setRan((r) => r + 1)}
+          >
+            {pick === null
+              ? 'pick a version first'
+              : ran === 0
+                ? 'run example test'
+                : ran < TESTS.length
+                  ? 'run next hidden test'
+                  : 'all tests run'}
           </button>
-          {ran > 0 && (
-            <button type="button" onClick={() => setRan(0)}>
-              reset
-            </button>
-          )}
+          <button
+            type="button"
+            aria-disabled={ran === 0}
+            onClick={() => {
+              if (ran === 0) return
+              setRan(0)
+              runBtn.current?.focus()
+            }}
+          >
+            reset
+          </button>
         </div>
         {ran > 0 && (
           <table className="pl-table mono">

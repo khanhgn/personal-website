@@ -166,8 +166,10 @@ export function Autopilot() {
           <dl className="fig-readout">
             <dt>pitch</dt>
             <dd>
-              {view.pitch >= 0 ? '+' : ''}
-              {view.pitch.toFixed(1)}°
+              {(() => {
+                const pv = Math.round(view.pitch * 10) / 10 || 0
+                return `${pv > 0 ? '+' : ''}${pv.toFixed(1)}°`
+              })()}
             </dd>
             <dt>by hand</dt>
             <dd>{auto ? '—' : `${held.toFixed(1)}s`}</dd>
@@ -180,6 +182,7 @@ export function Autopilot() {
           <div className="ap-holds">
             <button
               type="button"
+              tabIndex={-1}
               disabled={auto}
               onPointerDown={(e) => { e.currentTarget.setPointerCapture(e.pointerId); keys.current.up = true }}
               onPointerUp={hold('up', false)}
@@ -191,6 +194,7 @@ export function Autopilot() {
             </button>
             <button
               type="button"
+              tabIndex={-1}
               disabled={auto}
               onPointerDown={(e) => { e.currentTarget.setPointerCapture(e.pointerId); keys.current.down = true }}
               onPointerUp={hold('down', false)}
