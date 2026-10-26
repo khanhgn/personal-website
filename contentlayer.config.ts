@@ -29,6 +29,11 @@ const Post = defineDocumentType(() => ({
       description: 'Lead image, shown beside the title and as the list thumbnail',
       required: false,
     },
+    thumbnail: {
+      type: 'string',
+      description: 'Optional list thumbnail; defaults to the lead image',
+      required: false,
+    },
     imageLayout: {
       type: 'string',
       description: "Set to 'wide' for a landscape lead image shown full width under the title",

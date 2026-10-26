@@ -7,8 +7,8 @@ export function PostCard(post: Post) {
   return (
     <li className="post-item">
       <Link className="post-item-thumb" href={post.url} tabIndex={-1} aria-hidden="true">
-        {post.image ? (
-          <Image src={post.image} alt="" fill sizes="72px" loading="eager" />
+        {post.thumbnail || post.image ? (
+          <Image src={(post.thumbnail || post.image) as string} alt="" fill sizes="72px" loading="eager" />
         ) : null}
       </Link>
       <div>
