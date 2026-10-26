@@ -113,7 +113,13 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPosting) }}
       />
-      <header className={post.image ? 'post-header has-image' : 'post-header'}>
+      <header
+        className={
+          post.image
+            ? `post-header has-image${post.imageLayout === 'wide' ? ' wide' : ''}`
+            : 'post-header'
+        }
+      >
         <div>
           <h1>{post.title}</h1>
           <time dateTime={post.date}>{format(parseISO(post.date), 'd MMMM, yyyy')}</time>
@@ -126,7 +132,7 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
                 src={post.image}
                 alt=""
                 fill
-                sizes="(max-width: 600px) 100vw, 300px"
+                sizes={post.imageLayout === 'wide' ? '(max-width: 700px) 100vw, 640px' : '(max-width: 600px) 100vw, 300px'}
                 priority
               />
             </div>
