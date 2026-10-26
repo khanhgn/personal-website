@@ -199,6 +199,7 @@ hr {
 
 .post-item-thumb img {
   object-fit: cover;
+  object-position: 20% 50%;
   padding: 3px;
   filter: grayscale(1) contrast(1.05);
   transition: filter 0.2s;
@@ -281,6 +282,23 @@ hr {
   text-align: right;
 }
 
+/* Wide lead image (e.g. a landscape cover): full width under the title, never cropped */
+.post-header.has-image.wide {
+  grid-template-columns: 1fr;
+}
+
+.post-header.wide .post-header-frame {
+  aspect-ratio: 1200 / 630;
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+
+.post-header.wide .post-header-frame img {
+  object-fit: contain;
+  padding: 0;
+}
+
 @media (max-width: 600px) {
   .post-header.has-image {
     grid-template-columns: 1fr;
@@ -292,6 +310,14 @@ hr {
 
   .post-header-frame {
     aspect-ratio: 16 / 10;
+  }
+
+  .post-header.wide .post-header-image {
+    order: 0;
+  }
+
+  .post-header.wide .post-header-frame {
+    aspect-ratio: 1200 / 630;
   }
 }
 
