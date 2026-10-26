@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Figure } from './Figure'
 
-// fig. 2 — Two Sum, twice. The versions differ by two swapped lines, and both pass
+// fig. 2 — Two Sum, twice. The versions differ by where one line sits, and both pass
 // the example test.
 const A = `def two_sum(nums, target):
     seen = {}
@@ -57,8 +57,8 @@ export function Plausible() {
       n={2}
       caption={
         <>
-          two sum, twice. the versions differ by two swapped lines. pick the one
-          you&apos;d ship, then run the tests.
+          two sum, twice. one is correct, one only looks it. the difference is
+          where one line sits. pick the one you&apos;d ship, then run the tests.
         </>
       }
     >
@@ -75,8 +75,8 @@ export function Plausible() {
             >
               <span className="pl-head mono">
                 <span>{k}.</span>
-                <span className={pick ? 'fig-verdict' : 'muted'}>
-                  {pick ? verdict(k) : chosen ? 'your pick' : 'pick'}
+                <span className={ran >= 2 || chosen ? 'fig-verdict' : 'muted'}>
+                  {ran >= 2 ? verdict(k) : chosen ? 'your pick' : 'pick'}
                 </span>
               </span>
               <pre>
@@ -145,8 +145,8 @@ export function Plausible() {
       {pick && ran >= 2 && (
         <p className="fig-note">
           {pick === 'a'
-            ? "a stores each number before looking for its partner, so it can pair a number with itself. It passes the example because the example never tests that. Plausible code is correct code that hasn't met its edge case yet."
-            : "b looks for the partner first, then stores the number. That's the whole difference. If you saw it, you probably learned it by shipping a once."}
+            ? "a stores each number before looking for its partner, so it can pair a number with itself. It passes the example because the example never tests that. Plausible code is wrong code that hasn't met its edge case yet. From the outside it looks exactly like Gettier code, which is why someone has to read it."
+            : "b looks for the partner first, then stores the number. That's the whole difference. If you saw it, you probably learned it by shipping a, once."}
         </p>
       )}
     </Figure>

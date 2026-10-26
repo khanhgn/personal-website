@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Figure } from './Figure'
 
-// fig. 3 — how many lessons a career gives you at each layer. Illustrative numbers:
+// fig. 4 — how many lessons a career gives you at each layer. Illustrative numbers:
 // ~100 afternoon-sized mistakes a year, ~1 year-sized mistake every three years.
 const PER_YEAR_SMALL = 100
 const PER_YEAR_LARGE = 0.3

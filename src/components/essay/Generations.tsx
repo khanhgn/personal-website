@@ -32,7 +32,7 @@ const ERAS = [
     from: 2022.9,
     to: 2040,
     teacher: 'the machine gives you what you meant',
-    lesson: 'taste from ?',
+    lesson: 'taste, rented',
   },
 ] as const
 
@@ -46,8 +46,9 @@ export function Generations() {
       n={1}
       caption={
         <>
-          three ways to learn the trade. tap an era. the mark at 2023 is me:
-          a year of the old way, then the seam.
+          three ways to learn the trade. tap an era. the mark is me: I started
+          in 2023, just after the seam opened, and spent a year learning the old
+          way anyway.
         </>
       }
     >

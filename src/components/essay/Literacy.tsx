@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Figure } from './Figure'
 
-// fig. 4 — literacy inverted. Out of 100 people, who can read and who can write.
+// fig. 5 — literacy inverted. Out of 100 people, who can read and who can write.
 // Illustrative proportions, not historical data.
 const ERAS = {
   '1650': { read: 60, write: 30, note: 'a public: many can check, few can produce' },

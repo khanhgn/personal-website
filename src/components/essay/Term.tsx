@@ -9,7 +9,7 @@ const DEFS: Record<string, string> = {
     'The stock of Gettier code in a system. Invisible until something breaks, then due all at once.',
   'rented-taste': "Judgment you use but don't own. It works exactly as long as the subscription does.",
   'write-only-literacy': 'When everyone can write code and almost no one can read it.',
-  'the-unread': "People whose working lives run on code they can't read, and can't learn to.",
+  'the-unread': "People whose working lives run on code they can't read, and were never made to learn.",
   'synthetic-friction':
     'Difficulty added on purpose, with the agent switched off, so you can still learn by being wrong.',
 }

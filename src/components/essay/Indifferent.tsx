@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Figure } from './Figure'
 
-// fig. 4 — the same line, given to a machine that does what you said and an
+// fig. 6 — the same line, given to a machine that does what you said and an
 // agent that does what you meant.
 
 function distance(a: string, b: string) {

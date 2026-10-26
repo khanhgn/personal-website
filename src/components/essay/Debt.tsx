@@ -73,7 +73,7 @@ export function Debt() {
       caption={
         <>
           a codebase, one square per file. hollow squares are Gettier code:
-          shipped, working, unread. reading more means shipping less.
+          shipped, working, unread, right until the inputs change. reading more means shipping less.
         </>
       }
     >
