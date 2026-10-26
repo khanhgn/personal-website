@@ -15,7 +15,7 @@ function Row({ label, n }: { label: string; n: number }) {
   return (
     <div className="lit-row">
       <span className="mono">{label}</span>
-      <div className="lit-ticks" aria-label={`${n} of 100`}>
+      <div className="lit-ticks" role="img" aria-label={`${n} of 100`}>
         {Array.from({ length: 100 }, (_, i) => (
           <i key={i} className={i < n ? 'on' : undefined} />
         ))}

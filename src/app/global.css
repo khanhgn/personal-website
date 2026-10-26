@@ -891,6 +891,74 @@ hr {
   }
 }
 
+/* review fixes */
+
+.gen-eras {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.gen-eras button {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fig-input input {
+  font-size: max(16px, 0.9rem);
+}
+
+.fig-input:focus-within {
+  border-bottom-width: 2px;
+  padding-bottom: calc(0.4em - 1px);
+}
+
+.fig-pane pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.debt-grid > span {
+  grid-column: 1 / -1;
+}
+
+.pl-line {
+  display: block;
+}
+
+.fig-choice:focus-visible,
+.lit-toggle button:focus-visible,
+.term-word:focus-visible,
+.note-ref button:focus-visible {
+  outline: 1px dashed var(--ink);
+  outline-offset: 2px;
+}
+
+.note-ref button {
+  padding: 0.3em 0.35em;
+  margin: -0.3em -0.2em;
+}
+
+.dark .debt-grid i.hit {
+  border-color: #e0614c;
+  background: #e0614c;
+}
+
+@media (max-width: 560px) {
+  .lit-row {
+    grid-template-columns: minmax(0, 1fr) 2.5em;
+  }
+  .lit-row > span:first-child {
+    grid-column: 1 / -1;
+  }
+  .lit-ticks {
+    gap: 0;
+  }
+  .lit-ticks i:nth-child(10n) {
+    box-shadow: inset -1px 0 var(--paper);
+  }
+}
+
 /* Remove Safari input shadow on mobile */
 input[type='text'],
 input[type='email'] {

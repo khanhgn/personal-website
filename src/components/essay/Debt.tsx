@@ -15,13 +15,15 @@ export function Debt() {
   const [log, setLog] = useState<string[]>([])
   const [running, setRunning] = useState(false)
   const timer = useRef<ReturnType<typeof setInterval> | null>(null)
-  const state = useRef({ files, week, reading })
-  state.current = { files, week, reading }
+  const readingRef = useRef(reading)
+  readingRef.current = reading
+  const sim = useRef({ files: [] as File[], week: 0 })
 
+  // One source of truth in a ref, mirrored into state, so rapid ticks never read stale data.
   const shipWeek = () => {
-    const { files: fs, week: w, reading: r } = state.current
+    const { files: fs, week: w } = sim.current
     if (fs.length >= MAX) return false
-    const frac = r / 100
+    const frac = readingRef.current / 100
     const n = Math.max(1, Math.round(8 * (1 - 0.7 * frac)))
     const next = fs.map((f) => ({ ...f, hit: Math.max(0, f.hit - 1) }))
     for (let i = 0; i < n && next.length < MAX; i++)
@@ -34,6 +36,7 @@ export function Debt() {
         ? `week ${w + 1}: file ${i + 1} broke. someone had read it. fixed by lunch.`
         : `week ${w + 1}: file ${i + 1} broke. nobody knows how it works.`
     }
+    sim.current = { files: next, week: w + 1 }
     setFiles(next)
     setWeek(w + 1)
     if (msg) setLog((l) => [msg as string, ...l].slice(0, 3))
@@ -59,6 +62,7 @@ export function Debt() {
 
   const reset = () => {
     stop()
+    sim.current = { files: [], week: 0 }
     setFiles([])
     setWeek(0)
     setLog([])

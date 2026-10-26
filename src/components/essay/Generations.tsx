@@ -52,61 +52,58 @@ export function Generations() {
         </>
       }
     >
-      <svg
-        viewBox={`-16 0 ${W + 32} 112`}
-        className="fig-svg"
-        role="img"
-        aria-label="Timeline of three generations of programmers: scarcity, friction, plausibility"
-      >
+      <div className="lit-toggle gen-eras mono" role="group" aria-label="Era">
+        {ERAS.map((e) => (
+          <button
+            key={e.id}
+            type="button"
+            aria-pressed={e.id === active}
+            className={e.id === active ? 'is-on' : undefined}
+            onClick={() => setActive(e.id)}
+            onMouseEnter={() => setActive(e.id)}
+          >
+            {e.label}
+          </button>
+        ))}
+      </div>
+
+      <svg viewBox={`-16 0 ${W + 32} 92`} className="fig-svg" aria-hidden="true">
         {ERAS.map((e) => {
           const on = e.id === active
           return (
-            <g
+            <rect
               key={e.id}
+              x={x(e.from)}
+              y={24}
+              width={x(e.to) - x(e.from)}
+              height={22}
+              style={{ fill: on ? 'var(--ink)' : 'transparent', cursor: 'pointer' }}
+              stroke="var(--ink)"
+              strokeWidth={1}
               onClick={() => setActive(e.id)}
               onMouseEnter={() => setActive(e.id)}
-              style={{ cursor: 'pointer' }}
-            >
-              <rect
-                x={x(e.from)}
-                y={24}
-                width={x(e.to) - x(e.from)}
-                height={34}
-                fill={on ? 'var(--ink)' : 'transparent'}
-                stroke="var(--ink)"
-                strokeWidth={1}
-              />
-              <text
-                x={x(e.from) + 8}
-                y={45}
-                className="svg-mono"
-                style={{ fill: on ? 'var(--paper)' : 'var(--ink)' }}
-              >
-                {e.label}
-              </text>
-            </g>
+            />
           )
         })}
 
-        {/* the seam */}
-        <line x1={x(2023)} x2={x(2023)} y1={10} y2={72} stroke="var(--ink)" strokeDasharray="2 2" />
-        <text x={x(2023)} y={8} textAnchor="middle" className="svg-mono">
+        {/* the seam, and me */}
+        <line x1={x(2022.9)} x2={x(2022.9)} y1={14} y2={56} stroke="var(--ink)" strokeDasharray="2 2" />
+        <text x={x(2022.9)} y={9} textAnchor="middle" className="svg-mono">
           2023 · me
         </text>
 
-        {/* axis */}
-        <line x1={0} x2={W} y1={80} y2={80} stroke="var(--hairline)" />
+        <line x1={0} x2={W} y1={62} y2={62} stroke="var(--hairline)" />
         {ticks.map((t) => (
           <g key={t}>
-            <line x1={x(t)} x2={x(t)} y1={80} y2={84} stroke="var(--ink-muted)" />
-            <text x={x(t)} y={98} textAnchor="middle" className="svg-mono muted-fill">
+            <line x1={x(t)} x2={x(t)} y1={62} y2={66} stroke="var(--ink-muted)" />
+            <text x={x(t)} y={82} textAnchor="middle" className="svg-mono muted-fill">
               {t}
             </text>
           </g>
         ))}
       </svg>
 
-      <dl className="fig-readout mono">
+      <dl className="fig-readout mono" aria-live="polite">
         <dt>teacher</dt>
         <dd>{era.teacher}</dd>
         <dt>result</dt>

@@ -62,21 +62,29 @@ export function Plausible() {
         </>
       }
     >
-      <div className="pl-stack">
+      <div className="pl-stack" role="radiogroup" aria-label="Which version would you ship?">
         {(['a', 'b'] as const).map((k) => {
           const chosen = pick === k
           return (
-            <button
+            <div
               key={k}
-              type="button"
+              role="radio"
+              tabIndex={0}
+              aria-checked={chosen}
+              aria-label={`version ${k}`}
               className={`fig-choice${chosen ? ' is-chosen' : ''}`}
               onClick={() => setPick(k)}
-              aria-pressed={chosen}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  setPick(k)
+                }
+              }}
             >
               <span className="pl-head mono">
                 <span>{k}.</span>
-                <span className={ran >= 2 || chosen ? 'fig-verdict' : 'muted'}>
-                  {ran >= 2 ? verdict(k) : chosen ? 'your pick' : 'pick'}
+                <span className={(pick && ran >= 2) || chosen ? 'fig-verdict' : 'muted'}>
+                  {pick && ran >= 2 ? verdict(k) : chosen ? 'your pick' : 'pick'}
                 </span>
               </span>
               <pre>
@@ -91,7 +99,7 @@ export function Plausible() {
                   ))}
                 </code>
               </pre>
-            </button>
+            </div>
           )
         })}
       </div>

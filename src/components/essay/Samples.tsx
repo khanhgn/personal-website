@@ -1,12 +1,23 @@
 'use client'
 
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import { Figure } from './Figure'
 
 // fig. 4 — how many lessons a career gives you at each layer. Illustrative numbers:
-// ~100 afternoon-sized mistakes a year, ~1 year-sized mistake every three years.
+// ~100 afternoon-sized mistakes a year, ~3 year-sized mistakes a decade.
 const PER_YEAR_SMALL = 100
 const PER_YEAR_LARGE = 0.3
+
+// 100 small dots; memoised so moving the slider only adds or removes a block.
+const Hundred = memo(function Hundred() {
+  return (
+    <span style={{ display: 'contents' }}>
+      {Array.from({ length: PER_YEAR_SMALL }, (_, i) => (
+        <i key={i} />
+      ))}
+    </span>
+  )
+})
 
 export function Samples() {
   const [years, setYears] = useState(20)
@@ -37,10 +48,10 @@ export function Samples() {
 
       <div className="fig-rows">
         <div>
-          <p className="mono">wrong loops · {small.toLocaleString()}</p>
+          <p className="mono">wrong loops · {small.toLocaleString('en-US')}</p>
           <div className="dots dots-small" aria-hidden="true">
-            {Array.from({ length: small }, (_, i) => (
-              <i key={i} />
+            {Array.from({ length: years }, (_, i) => (
+              <Hundred key={i} />
             ))}
           </div>
         </div>

@@ -16,6 +16,8 @@ export function Autopilot() {
   const s = useRef({ p: 0, v: 0, gust: 0, t: 0, input: 0, auto: true, held: 0 })
   const keys = useRef({ up: false, down: false })
   const bestRef = useRef(0)
+  const box = useRef<HTMLDivElement>(null)
+  const release = () => { keys.current.up = false; keys.current.down = false }
 
   useEffect(() => {
     s.current.auto = auto
@@ -25,6 +27,12 @@ export function Autopilot() {
   useEffect(() => {
     let raf = 0
     let last = performance.now()
+    let visible = false
+    const io = new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting
+      cancelAnimationFrame(raf)
+      if (visible) { last = performance.now(); raf = requestAnimationFrame(step) }
+    })
     const step = (now: number) => {
       const dt = Math.min(0.05, (now - last) / 1000)
       last = now
@@ -32,7 +40,7 @@ export function Autopilot() {
       st.t += dt
       // turbulence: a slow random walk plus a little chop
       st.gust += (Math.random() - 0.5) * 30 * dt
-      st.gust *= 0.985
+      st.gust *= Math.pow(0.985, dt * 60)
       const chop = Math.sin(st.t * 2.3) * 1.5 + Math.sin(st.t * 0.7) * 2.5
       let control = 0
       if (st.auto) {
@@ -40,10 +48,10 @@ export function Autopilot() {
       } else {
         const k = keys.current
         st.input = (k.up ? 1 : 0) - (k.down ? 1 : 0)
-        control = st.input * 28
+        control = st.input * 28 + 1.5 * st.p
       }
       st.v += (st.gust + chop + control) * dt
-      st.v *= 0.995
+      st.v *= Math.pow(0.995, dt * 60)
       st.p += st.v * dt
 
       if (!st.auto) {
@@ -58,15 +66,17 @@ export function Autopilot() {
           st.v = 0
           st.held = 0
           st.auto = true
+          keys.current.up = keys.current.down = false
           setAuto(true)
         }
       }
       setView({ pitch: st.p, roll: st.gust * 0.8 + Math.sin(st.t * 0.9) * 3 })
       setHeld(st.held)
-      raf = requestAnimationFrame(step)
+      if (visible) raf = requestAnimationFrame(step)
     }
-    raf = requestAnimationFrame(step)
-    return () => cancelAnimationFrame(raf)
+    if (box.current) io.observe(box.current)
+    window.addEventListener('blur', release)
+    return () => { io.disconnect(); cancelAnimationFrame(raf); window.removeEventListener('blur', release) }
   }, [])
 
   const onKey = useCallback((e: React.KeyboardEvent, down: boolean) => {
@@ -96,7 +106,10 @@ export function Autopilot() {
     >
       <div
         className="ap"
+        ref={box}
         tabIndex={0}
+        role="group"
+        onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node)) release() }}
         onKeyDown={(e) => onKey(e, true)}
         onKeyUp={(e) => onKey(e, false)}
         aria-label="Attitude indicator. Use the arrow keys to fly."
@@ -140,6 +153,11 @@ export function Autopilot() {
             className={`ap-toggle${auto ? ' is-on' : ''}`}
             onClick={() => {
               setStalled(false)
+              const st = s.current
+              if (!st.auto && st.held > bestRef.current) {
+                bestRef.current = st.held
+                setBest(st.held)
+              }
               setAuto((a) => !a)
             }}
           >
@@ -163,18 +181,22 @@ export function Autopilot() {
             <button
               type="button"
               disabled={auto}
-              onPointerDown={hold('up', true)}
+              onPointerDown={(e) => { e.currentTarget.setPointerCapture(e.pointerId); keys.current.up = true }}
               onPointerUp={hold('up', false)}
-              onPointerLeave={hold('up', false)}
+              onPointerCancel={hold('up', false)}
+              onLostPointerCapture={hold('up', false)}
+              onContextMenu={(e) => e.preventDefault()}
             >
               ↑ nose up
             </button>
             <button
               type="button"
               disabled={auto}
-              onPointerDown={hold('down', true)}
+              onPointerDown={(e) => { e.currentTarget.setPointerCapture(e.pointerId); keys.current.down = true }}
               onPointerUp={hold('down', false)}
-              onPointerLeave={hold('down', false)}
+              onPointerCancel={hold('down', false)}
+              onLostPointerCapture={hold('down', false)}
+              onContextMenu={(e) => e.preventDefault()}
             >
               ↓ nose down
             </button>
