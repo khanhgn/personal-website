@@ -4,11 +4,6 @@ description: On the generation that learned by being wrong, and the one that won
 date: 2026-10-26
 ---
 
-<blockquote className="epigraph">
-  This discovery of yours will create forgetfulness in the learners' souls, because they will not use their memories.
-  <cite>Plato, Phaedrus, trans. Jowett</cite>
-</blockquote>
-
 <ol className="contents">
   <li><a href="#i-the-complaint">I. The Complaint</a></li>
   <li><a href="#ii-scarcity">II. Scarcity</a></li>
@@ -55,9 +50,9 @@ The next generation had garbage collectors, frameworks, package managers and Sta
 
 But they paid somewhere else. They typed. They wrote enormous amounts of bad code, and debugging bad code you wrote yourself is the education. Scarcity was replaced by friction. The machine stopped charging you for resources and started charging you for mistakes, in the only currency left: time and confusion.
 
-The philosopher Michael Polanyi had a phrase for what this produces: "we can know more than we can tell." A senior engineer looks at a diff and says *this is wrong* before they can say why. When you ask them to explain, they reconstruct a reason afterwards, but the knowing came first. It came from having written that exact wrong thing themselves, years ago, and losing an afternoon to it.
+A senior engineer looks at a diff and says *this is wrong* before they can say why. When you ask them to explain, they reconstruct a reason afterwards, but the knowing came first. It came from having written that exact wrong thing themselves, years ago, and losing an afternoon to it.
 
-You can see the same thing outside programming. To get a licence, a London taxi driver has to learn the Knowledge: around 25,000 streets and every landmark on them, memorised over three or four years of riding the city on a moped. In 2000, a team led by Eleanor Maguire scanned their brains and found that the back of the hippocampus, the part that handles spatial memory, was larger in cabbies than in other people, and larger the longer they had driven. The friction left a mark you could photograph.
+You can see the same thing outside programming. To get a licence, a London taxi driver has to learn the Knowledge: around 25,000 streets and every landmark on them, memorised over three or four years of riding the city on a moped. In 2000, a team led by Eleanor Maguire scanned their brains and found that the back of the hippocampus, the part that handles spatial memory, was larger in cabbies than in other people, and larger the longer they had driven.<Note n={1}>Maguire et al., "Navigation-related structural change in the hippocampi of taxi drivers", PNAS, 2000.</Note> The friction left a mark you could photograph.
 
 That isn't knowledge you can write down. It's scar tissue. And it's most of what makes a senior engineer senior.
 
@@ -85,9 +80,9 @@ The next generation won't type. They will learn by prompting, and prompting work
 
 When the first attempt mostly works, there is no error to read and no afternoon lost. You can get very far without ever building an internal model of how the thing works. They will be extraordinarily productive from their first week. They will ship more in their first year than most engineers used to in their first five. And many of them will have no idea why their code is right, because they never had to find out why it was wrong.
 
-Philosophers have a name for this situation. In 1963 Edmund Gettier described cases where someone believes something true, has a reasonable-sounding justification, and still doesn't *know* it, because the justification isn't what makes it true. They got lucky in a way that looks like competence. A program that works for reasons its author doesn't understand is a Gettier case. It's correct. Nobody knows it.
+There's an old puzzle about people who are right by luck: they believe something true, for a reason that sounds fine, but the reason isn't what makes it true. They're called Gettier cases, after the man who wrote them down in 1963. A program that works for reasons its author doesn't understand is a Gettier case. It's correct. Nobody knows it.
 
-I'll call this **Gettier code**, and the stock of it inside a system **Gettier debt**. Technical debt is code you understand and wish you'd written differently. Gettier debt is code that is fine and that nobody understands. Technical debt shows up as friction: everything gets slower, and you feel it. Gettier debt shows up as nothing at all, until it shows up all at once. And unlike technical debt, it accrues fastest in the codebases that look healthiest, because they're the ones where nothing has gone wrong yet to make anyone look.
+I'll call this <Term id="gettier-code">Gettier code</Term>, and the stock of it inside a system <Term id="gettier-debt">Gettier debt</Term>. Technical debt is code you understand and wish you'd written differently. Gettier debt is code that is fine and that nobody understands. Technical debt shows up as friction: everything gets slower, and you feel it. Gettier debt shows up as nothing at all, until it shows up all at once. And unlike technical debt, it accrues fastest in the codebases that look healthiest, because they're the ones where nothing has gone wrong yet to make anyone look.
 
 <Plausible />
 
@@ -97,7 +92,9 @@ I think this argument is mostly right, and I still don't think it applies yet. A
 
 So someone still has to read the code. The next generation won't have learned how, and the people who did learn are getting older.
 
-Aviation found this out first. In the 1990s an American Airlines training captain, Warren Vanderburgh, gave a talk calling a generation of pilots "children of the magenta line", after the magenta course line on the flight display that they had learned to follow instead of flying the plane. Autopilot made flying safer, and it still does. But in 2009, when the autopilot on Air France 447 disconnected over the Atlantic, the crew had a working aircraft and about four minutes, and they couldn't recover from a stall that hand-flying is supposed to teach you to recognise. The automation was trustworthy almost all of the time. The pilots had stopped practising the rest.
+Aviation found this out first. In the 1990s an American Airlines training captain, Warren Vanderburgh, gave a talk<Note n={2}>Warren Vanderburgh, "Children of the Magenta Line", American Airlines Advanced Aircraft Maneuvering Program, 1997.</Note> calling a generation of pilots "children of the magenta line", after the magenta course line on the flight display that they had learned to follow instead of flying the plane. Autopilot made flying safer, and it still does. But in 2009, when the autopilot on Air France 447 disconnected over the Atlantic, the crew had a working aircraft and about four minutes, and they couldn't recover from a stall that hand-flying is supposed to teach you to recognise. The automation was trustworthy almost all of the time. The pilots had stopped practising the rest.<Note n={3}>BEA, final report on the accident to Air France flight AF 447, 2012.</Note>
+
+<Autopilot />
 
 <Break />
 
@@ -107,7 +104,7 @@ Taste is compressed failure. Every good instinct I have about code is a mistake 
 
 If the agent makes the mistakes and the agent fixes them, the compression still happens. It just happens somewhere else. The model gets the taste. The person gets the output.
 
-This is new. Taste used to be the one thing you couldn't buy. You could hire someone who had it, but you couldn't have it yourself without paying the price in failures. Now you can rent it by the token. I'll call this **rented taste**: judgment you can use but don't own, which works exactly as long as the subscription does. Rented taste is real taste. It was compressed from millions of people's mistakes, which is more than any one person will ever make. It just lives in someone else's weights, and when you stop paying, you're back to whatever you had before.
+This is new. Taste used to be the one thing you couldn't buy. You could hire someone who had it, but you couldn't have it yourself without paying the price in failures. Now you can rent it by the token. I'll call this <Term id="rented-taste">rented taste</Term>: judgment you can use but don't own, which works exactly as long as the subscription does. Rented taste is real taste. It was compressed from millions of people's mistakes, which is more than any one person will ever make. It just lives in someone else's weights, and when you stop paying, you're back to whatever you had before.
 
 Maybe that's fine. Maybe the next generation's taste will be about different things: what to build, what to refuse, how to say exactly what you mean. Those are learned by failing too, just at a higher layer. You learn them by shipping the wrong product instead of the wrong loop. It's possible they will be better at this than we are, because they will start there instead of arriving late.
 
@@ -125,7 +122,7 @@ Taste is a statistical thing. It needs a lot of samples. I don't know if a dozen
 
 For most of history, literacy came in two parts, and reading came first. In early modern Europe far more people could read than could write. Reading was taught at home and in church; writing was a separate, later, more expensive skill, and many people never got to it. A society like that has a public. Lots of people can check what a pamphlet says, and only a few can produce one.
 
-The agents invert this. For the first time, everyone can write code, and almost no one can read it. I'll call this **write-only literacy**.
+The agents invert this. For the first time, everyone can write code, and almost no one can read it. I'll call this <Term id="write-only-literacy">write-only literacy</Term>.
 
 <Literacy />
 
@@ -133,7 +130,7 @@ Write-only literacy has a political shape, and it's the opposite of the one ever
 
 The readers of the next twenty years will be a small group, mostly older, mostly people who learned through friction, and their value will rise exactly as their number falls. Not because they produce more, but because they are the only ones who can say whether what was produced is true.
 
-The usual fear about AI is a permanent underclass: people whose labour stops being needed. I think there's a quieter version, which is a permanent class of **the unread**. Not the uneducated. People whose entire working lives run on text they can't read and can't learn to read, because the path to learning was paved over before they got there. They will be well paid and productive, and they will be in the position of a medieval peasant holding a contract: completely dependent on a document, and completely unable to check it.
+The usual fear about AI is a permanent underclass: people whose labour stops being needed. I think there's a quieter version, which is a permanent class of <Term id="the-unread">the unread</Term>. Not the uneducated. People whose entire working lives run on text they can't read and can't learn to read, because the path to learning was paved over before they got there. They will be well paid and productive, and they will be in the position of a medieval peasant holding a contract: completely dependent on a document, and completely unable to check it.
 
 <Break />
 
@@ -155,18 +152,20 @@ We already know what happens next, from the rest of life. Nobody thinks cars mad
 
 The clearest example is the gym. For almost all of history, nobody needed one: work was the exercise. When work stopped being physical, our bodies didn't adapt, so we built rooms full of machines whose only purpose is to make things harder. A treadmill would have looked insane to a farmer. Walking, indoors, to nowhere, on purpose.
 
-Programming is going to need its gyms. I'll call it **synthetic friction**: environments where the agent is turned off on purpose and you're allowed to be wrong for an afternoon. It will look as absurd to the next generation as a treadmill would have looked to that farmer. And it may be the only way they get what we got for free, the way a gym is the only way most office workers still get what a field used to give them.
+Programming is going to need its gyms. I'll call it <Term id="synthetic-friction">synthetic friction</Term>: environments where the agent is turned off on purpose and you're allowed to be wrong for an afternoon. It will look as absurd to the next generation as a treadmill would have looked to that farmer. And it may be the only way they get what we got for free, the way a gym is the only way most office workers still get what a field used to give them.
 
 <Break />
 
 ## IX. Coda
 
-The title is too strong. There will be programmers after us, in the sense that people will still make machines do things. Socrates was right that writing changed memory, and wrong that it ended thought. The likeliest outcome is that he was right and wrong in the same proportions here too, and that in fifty years someone will write this essay about whatever comes next, and it will sound as quaint as the *Phaedrus*.
+The title is too strong. There will be programmers after us, in the sense that people will still make machines do things. In fifty years someone will probably write this essay about whatever comes next, and it will sound as quaint as the king of Egypt does now.
 
 But "the last" doesn't have to mean the last people to do the job. It can mean the last people to learn it a particular way: by being wrong, slowly, alone with a machine that didn't care. That way of learning produced a certain kind of mind. I don't know if it was the best kind. I know it was the kind that built everything the agents were trained on.
 
-The nearest thing I know is what happened to finding our way. In 2020, Louisa Dahmani and Véronique Bohbot found that people who relied more on GPS had worse spatial memory when they had to navigate on their own, and that the gap grew over time. Nobody decided to forget how to get around. We just stopped needing to, one turn at a time, and the map moved out of our heads and into our phones. I think code is going the same way.
+The nearest thing I know is what happened to finding our way. In 2020, Louisa Dahmani and Véronique Bohbot found that people who relied more on GPS had worse spatial memory when they had to navigate on their own, and that the gap grew over time.<Note n={4}>Dahmani and Bohbot, "Habitual use of GPS negatively impacts spatial memory during self-guided navigation", Scientific Reports, 2020.</Note> Nobody decided to forget how to get around. We just stopped needing to, one turn at a time, and the map moved out of our heads and into our phones. I think code is going the same way.
 
 I'm on the seam, so I can see both sides. I had a year of the old way, and I still go back to it, reading what the agent wrote until I understand it. But the line between understanding and familiarity has blurred, and I don't think it sharpens on its own. Most days I write the spec, read the diff, and ship. It works. The generation after me will do the same thing, earlier and better, and will never wonder what it skipped.
 
 If I'm one of the readers, I'm a partial one, and the part is shrinking. I keep thinking about all the Gettier code we're about to write. It will run, and it will be fine, and someone will depend on it. I can't tell yet whether the world will think about it less.
+
+<Debt />

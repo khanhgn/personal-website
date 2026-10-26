@@ -30,7 +30,7 @@ export function Literacy() {
   const e = ERAS[era]
   return (
     <Figure
-      n={4}
+      n={5}
       caption={<>out of a hundred people. illustrative, not data.</>}
     >
       <div className="lit-toggle mono" role="group" aria-label="Era">

@@ -54,7 +54,7 @@ export function Indifferent() {
 
   return (
     <Figure
-      n={5}
+      n={6}
       caption={<>type anything. one of these will make you change.</>}
     >
       <label className="fig-input mono">

@@ -15,7 +15,7 @@ export function Samples() {
 
   return (
     <Figure
-      n={3}
+      n={4}
       caption={
         <>
           a career&apos;s worth of samples. each small dot is a wrong loop, an

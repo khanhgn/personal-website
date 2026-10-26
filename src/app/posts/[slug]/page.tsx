@@ -8,13 +8,17 @@ import NextImage from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import {
+  Autopilot,
   Break,
+  Debt,
   Generations,
   Indifferent,
   Literacy,
+  Note,
   Plausible,
   Progress,
   Samples,
+  Term,
 } from '@/components/essay'
 
 export async function generateStaticParams() {
@@ -70,6 +74,10 @@ const mdxComponents: MDXComponents = {
   Samples,
   Indifferent,
   Literacy,
+  Autopilot,
+  Debt,
+  Term,
+  Note,
 }
 
 const PostLayout = ({ params }: { params: { slug: string } }) => {
