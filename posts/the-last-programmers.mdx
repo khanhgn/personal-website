@@ -21,7 +21,7 @@ Every generation makes some version of this complaint about the next. Usually th
 
 So the question is never whether something gets lost. Something always does. The question is whether it was load-bearing.
 
-I started university in 2023 and had about a year of learning to program the old way before I started leaning on ChatGPT. These days I barely write code by hand at all. That puts me close enough to the change to feel it, which is why I want to ask the king's question about programming.
+I started university in 2023 and had about a year of learning to program the old way before I started leaning on ChatGPT. These days I don't write code by hand anymore. That puts me on the seam between two ways of learning it, close enough to feel what changed, which is why I want to ask the king's question about programming.
 
 <Generations />
 
@@ -33,15 +33,15 @@ The first programmers learned on machines that charged them for everything. Memo
 
 The next generation had garbage collectors, frameworks and Stack Overflow. The first generation said they had it easy, and in one sense they did. But they paid somewhere else. They wrote enormous amounts of bad code and debugged it themselves, and that was the education. The machine stopped charging for resources and started charging for mistakes.
 
-That is where a senior engineer's instinct comes from. They look at a diff and know it's wrong before they can say why, because they wrote that exact wrong thing years ago and lost an afternoon to it. It isn't knowledge you can write down. It's scar tissue.
+That is where a senior engineer's instinct comes from. They look at a diff and know it's wrong before they can say why, because they wrote that exact wrong thing years ago and lost an afternoon to it. You can't write that down. It's scar tissue.
 
 <Break />
 
 ## III. The Seam
 
-I got about a year of scar tissue. ChatGPT was already out when I started, and I resisted it for a while, the way you resist anything that feels like cheating. Then I used it, because everyone did and it worked.
+I got about a year of scar tissue. I resisted ChatGPT for a while, the way you resist anything that feels like cheating. Then I used it, because everyone did and it worked.
 
-Now I don't really write code anymore. I describe problems to agents and judge what comes back, and I feel pretty guilty about it. When the agent writes something I wouldn't have, I sometimes go back and read it until I could have written it myself. That habit is the part of my year I'm most afraid of losing.
+Now I don't really write code anymore. I describe problems to agents and judge what comes back, and I feel pretty guilty about it. When the agent writes something I wouldn't have, I sometimes go back and read it until I could have written it myself. That habit is what I got from that year, and it's what I'm most afraid of losing.
 
 The problem is that the line has blurred. I used to know which things I understood and which I was taking on trust. Now there's a big middle: code I've read, nodded at and shipped. Some of it I understand. Some of it I've just seen so many times that it feels like understanding. From the inside I can't always tell which is which.
 
@@ -51,7 +51,7 @@ It's worse with tests. More and more, I let the agent write the tests too, and t
 
 ## IV. Plausible
 
-The next generation won't write code by hand at all. They'll learn by prompting, and prompting works. That's the problem.
+The next generation will barely write code by hand. They'll learn by prompting, and prompting mostly works. That's the problem.
 
 When the first attempt mostly works, there's no error to read and no afternoon lost. You can get very far without ever building a model of how the thing works. They'll be productive from their first week. And many of them won't know why their code is right, because they never had to find out why it was wrong.
 
@@ -61,19 +61,19 @@ I don't think it is, yet. A compiler is deterministic and almost always correct,
 
 <Plausible />
 
-Philosophers call it a Gettier case when you're right by luck: you believe something true, for a reason that isn't what makes it true. A program that works for reasons nobody understands is like that. Call it <Term id="gettier-code">Gettier code</Term>. It runs, it's fine, and nobody knows why. It shows up as nothing at all, until it breaks and there's no one who can fix it.
+Sometimes plausible code is wrong, like version a. The stranger case is when it's right. Philosophers call it a Gettier case when you're right by luck: you believe something true, for a reason that isn't what makes it true. A program that works for reasons nobody understands is like that. Call it <Term id="gettier-code">Gettier code</Term>. You can't see it, because nothing is wrong. Not until it breaks and nobody can fix it.
 
-Pilots know a version of this. Autopilot made flying safer, and it hands the plane back at the worst possible moment, to someone who hasn't flown by hand in months.
+Pilots know a version of this. Autopilot made flying much safer. But when it gives up, it gives up at the worst possible moment, and hands the plane to pilots who rarely fly that part by hand.
 
 <Autopilot />
 
-So someone still has to read the code. If almost everyone can write it and almost no one can read it, the few who can read become a kind of priesthood, and everyone else takes their word for it.
+Someone still has to read the code. If almost everyone can write it and almost no one can read it, the few who can read end up vouching for everyone else.
 
 <Break />
 
 ## V. Taste
 
-Taste is compressed failure. Every good instinct I have is a mistake I made often enough to stop making it.
+Most of my good instincts are mistakes I made often enough to stop making.
 
 If the agent makes the mistakes and fixes them, I don't compress anything. The model already did, in training, on other people's mistakes. It has the taste. I get the output.
 

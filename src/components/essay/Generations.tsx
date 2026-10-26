@@ -12,7 +12,7 @@ const x = (year: number) => ((year - START) / (END - START)) * W
 const ERAS = [
   {
     id: 'scarcity',
-    label: 'scarcity',
+    label: 'cost',
     from: 1950,
     to: 1995,
     teacher: 'the machine charged you for resources',
@@ -32,7 +32,7 @@ const ERAS = [
     from: 2022.9,
     to: 2040,
     teacher: 'the machine gives you what you meant',
-    lesson: 'taste, rented',
+    lesson: 'taste from the model',
   },
 ] as const
 
