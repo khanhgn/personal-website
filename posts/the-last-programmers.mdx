@@ -6,171 +6,99 @@ date: 2026-10-26
 
 <ol className="contents">
   <li><a href="#i-the-complaint">I. The Complaint</a></li>
-  <li><a href="#ii-scarcity">II. Scarcity</a></li>
-  <li><a href="#iii-friction">III. Friction</a></li>
-  <li><a href="#iv-the-seam">IV. The Seam</a></li>
-  <li><a href="#v-plausibility">V. Plausibility</a></li>
-  <li><a href="#vi-compressed-failure">VI. Compressed Failure</a></li>
-  <li><a href="#vii-write-only-literacy">VII. Write-Only Literacy</a></li>
-  <li><a href="#viii-what-was-in-the-work">VIII. What Was in the Work</a></li>
-  <li><a href="#ix-coda">IX. Coda</a></li>
+  <li><a href="#ii-cost-and-friction">II. Cost and Friction</a></li>
+  <li><a href="#iii-the-seam">III. The Seam</a></li>
+  <li><a href="#iv-plausible">IV. Plausible</a></li>
+  <li><a href="#v-taste">V. Taste</a></li>
+  <li><a href="#vi-what-was-in-the-work">VI. What Was in the Work</a></li>
 </ol>
 
 ## I. The Complaint
 
-<p className="lede">In the <em>Phaedrus</em>, Socrates tells a story about the invention of writing. The god who invents it presents it to the king of Egypt as a gift that will improve memory. The king is unimpressed. Writing, he says, will do the opposite: people will stop remembering and start relying on marks outside themselves. They will seem to know many things while knowing almost nothing.</p>
+<p className="lede">In the <em>Phaedrus</em>, Socrates tells a story about the invention of writing. A god offers it to the king of Egypt as a gift for memory, and the king is unimpressed. People will stop remembering, he says. They will seem to know many things while knowing almost nothing.</p>
 
-This is the oldest version of a complaint every generation makes about the next: you have it too easy, and it will cost you something you can't see.
+Every generation makes some version of this complaint about the next. Usually the complaint loses. Writing gave us law, science and this essay. But the king wasn't entirely wrong either. We did lose a kind of memory. We just decided the trade was worth it, and then forgot there had been a trade.
 
-The usual response is to point out that the king was wrong. Writing gave us philosophy, law, science, this essay. But he wasn't entirely wrong. We did lose the kind of memory he meant. Few of us could recite what an ordinary oral poet could. We just decided the trade was worth it, and then forgot there had been a trade.
+So the question is never whether something gets lost. Something always does. The question is whether it was load-bearing.
 
-So the honest question is never whether something is lost. Something is always lost. The question is whether what's lost was load-bearing.
-
-I started university in 2023 and had about a year of learning to program the old way before I started leaning on ChatGPT. These days I barely write code by hand, and I'm close enough to the seam between two generations of programmers to feel it, and I want to use that position to ask the king's question about the people who come after me, carefully, since the king usually loses.
+I started university in 2023 and had about a year of learning to program the old way before I started leaning on ChatGPT. These days I barely write code by hand at all. That puts me close enough to the change to feel it, which is why I want to ask the king's question about programming.
 
 <Generations />
 
 <Break />
 
-## II. Scarcity
+## II. Cost and Friction
 
-The first programmers learned on machines that punished them. You allocated memory and you freed it, and if you got it wrong, the program told you with a segfault, or not at all. Documentation was a book. If you wanted to know how something worked, you read the source, or you didn't find out.
+The first programmers learned on machines that charged them for everything. Memory, cycles, compile time. You thought before you typed, because a careless loop could cost you an hour. Their taste came from cost, the way you learn the price of things when you don't have much money.
 
-Everything was expensive: memory, cycles, compile time, the time it took to type. So they thought before they typed. You don't write a loop carelessly when running it costs you an hour.
+The next generation had garbage collectors, frameworks and Stack Overflow. The first generation said they had it easy, and in one sense they did. But they paid somewhere else. They wrote enormous amounts of bad code and debugged it themselves, and that was the education. The machine stopped charging for resources and started charging for mistakes.
 
-Their taste came from scarcity. Every abstraction cost them something, so they learned, the way you learn the price of things when you're poor, which abstractions were worth paying for. A generation of engineers internalised a sense of cost so deep they couldn't turn it off. You still meet them: people who flinch at an unnecessary allocation the way other people flinch at a light left on.
-
-Scarcity is a good teacher and an unkind one. It teaches by charging you.
+That is where a senior engineer's instinct comes from. They look at a diff and know it's wrong before they can say why, because they wrote that exact wrong thing years ago and lost an afternoon to it. It isn't knowledge you can write down. It's scar tissue.
 
 <Break />
 
-## III. Friction
+## III. The Seam
 
-The next generation had garbage collectors, frameworks, package managers and Stack Overflow. The first generation said the new one had it easy, and what they meant was that it never paid for its abstractions. That was true.
+I got about a year of scar tissue. ChatGPT was already out when I started, and I resisted it for a while, the way you resist anything that feels like cheating. Then I used it, because everyone did and it worked.
 
-But they paid somewhere else. They typed. They wrote enormous amounts of bad code, and debugging bad code you wrote yourself is the education. Scarcity was replaced by friction. The machine stopped charging you for resources and started charging you for mistakes, in time and confusion.
+Now I don't really write code anymore. I describe problems to agents and judge what comes back, and I feel pretty guilty about it. When the agent writes something I wouldn't have, I sometimes go back and read it until I could have written it myself. That habit is the part of my year I'm most afraid of losing.
 
-A senior engineer looks at a diff and says *this is wrong* before they can say why. When you ask them to explain, they reconstruct a reason afterwards, but the knowing came first. It came from having written that exact wrong thing themselves, years ago, and losing an afternoon to it.
-
-You can see the same thing outside programming. To get a licence, a London taxi driver has to learn the Knowledge: around 25,000 streets and thousands of landmarks, memorised over three or four years of riding the city on a moped. In 2000, a team led by Eleanor Maguire scanned their brains and found that the back of the hippocampus, the part that handles spatial memory, was larger in cabbies than in other people, and larger the longer they had driven.<Note n={1}>Maguire et al., "Navigation-related structural change in the hippocampi of taxi drivers", PNAS, 2000.</Note> The friction left a mark you could photograph.
-
-The list of streets fits in a book. What learning it did to their brains doesn't. That is scar tissue, and it's most of what makes a senior engineer senior.
-
-<Break />
-
-## IV. The Seam
-
-I got about a year of scar tissue anyway. The seam had already opened; I just hadn't crossed it yet.
-
-For that year I learned the usual way: write it, break it, read the error, fix it. ChatGPT was already out, and I resisted it for a while, the way you resist anything that feels like cheating. Then I used it, because everyone did and it worked.
-
-Now I don't really write code anymore. I describe problems to agents and judge what comes back, and I'm pretty guilty about it. When the agent writes something I wouldn't have, I sometimes go back and read it until I could have written it myself, or at least until I can say why it's right. That habit came from the year of friction, and it's the part I'm most afraid of losing.
-
-The problem is that the line has blurred. I used to know which things I understood and which I was taking on trust. Now there is a large middle: code I've read, nodded at, and shipped. Some of it I understand. Some of it I've only seen so many times that it feels like understanding. From the inside, I can't always tell which is which.
+The problem is that the line has blurred. I used to know which things I understood and which I was taking on trust. Now there's a big middle: code I've read, nodded at and shipped. Some of it I understand. Some of it I've just seen so many times that it feels like understanding. From the inside I can't always tell which is which.
 
 It's worse with tests. More and more, I let the agent write the tests too, and then I let it tell me they pass. The thing checking the work is the thing that did the work. I know that's backwards, and I do it anyway, because it's usually fine.
 
-It's tempting to call my generation a bridge. We were trained by friction, and now we work without it, so we have the old instincts and the new leverage. But a bridge implies you know where both banks are. What we have is closer to a map with the border smudged. We're probably the last people who will remember there was a border at all.
-
-The path that would sharpen the line, writing and debugging it myself, still exists, but nothing forces me onto it, and the agent is right there. Going back to understand is now a choice, and choices are easier to skip than requirements.
-
 <Break />
 
-## V. Plausibility
+## IV. Plausible
 
-The next generation won't write code by hand. They will learn by prompting, and prompting works. That is the problem.
+The next generation won't write code by hand at all. They'll learn by prompting, and prompting works. That's the problem.
 
-When the first attempt mostly works, there is no error to read and no afternoon lost. You can get very far without ever building an internal model of how the thing works. They will be productive from their first week. They will ship more in their first year than most engineers used to in their first five. And many of them will have no idea why their code is right, because they never had to find out why it was wrong.
+When the first attempt mostly works, there's no error to read and no afternoon lost. You can get very far without ever building a model of how the thing works. They'll be productive from their first week. And many of them won't know why their code is right, because they never had to find out why it was wrong.
 
-In 1963 Edmund Gettier published a three-page paper about people who are right by luck: they believe something true, for a reason that sounds fine, but the reason isn't what makes it true. These are now called Gettier cases.<Note n={2}>Gettier, "Is Justified True Belief Knowledge?", Analysis, 1963.</Note> A program that works for reasons its author doesn't understand is a Gettier case. It's correct. Nobody knows it.
+The usual answer is that this has happened before. Almost nobody reads assembly anymore, and compilers didn't make us worse engineers. We moved up a level. Maybe this is the same.
 
-I'll call this <Term id="gettier-code">Gettier code</Term>, and the stock of it inside a system <Term id="gettier-debt">Gettier debt</Term>. Technical debt is code you understand and wish you'd written differently. Gettier debt is a pile of code that is fine and that nobody understands. Technical debt shows up as friction: everything gets slower, and you feel it. Gettier debt shows up as nothing at all, until it shows up all at once. And unlike technical debt, it accrues fastest in the codebases that look healthiest, because nothing has gone wrong there yet to make anyone look.
-
-
-The strongest argument against all this is that it has happened before. Almost nobody reads assembly anymore. Compilers took that layer away, and the people who stopped reading assembly didn't become worse engineers. They moved up a level and developed taste about the things above it. Maybe the next generation does the same.
-
-I think this argument is mostly right, and I still don't think it applies yet. A compiler is deterministic and almost always correct, and when it isn't, the bug is reproducible and someone fixes it. You could stop reading its output because it so rarely lied to you. An agent's output is plausible, which is a different and much weaker property: it is what correct code tends to look like. Skipping the layer below only works when the layer below can be trusted, and plausibility can't be.
+I don't think it is, yet. A compiler is deterministic and almost always correct, so you could stop reading its output. An agent's output is plausible, which is a much weaker property. It's what correct code tends to look like.
 
 <Plausible />
 
-There is a second difference. A compiler never hands the controls back. An autopilot does, at the worst possible moment, and so does an agent.
+Philosophers call it a Gettier case when you're right by luck: you believe something true, for a reason that isn't what makes it true. A program that works for reasons nobody understands is like that. Call it <Term id="gettier-code">Gettier code</Term>. It runs, it's fine, and nobody knows why. It shows up as nothing at all, until it breaks and there's no one who can fix it.
 
-So someone still has to read the code. The next generation won't have learned how, and the people who did learn are getting older.
-
-Aviation found this out first. In 1997 an American Airlines training captain, Warren VanderBurgh, gave a talk<Note n={3}>VanderBurgh, "Children of the Magenta", American Airlines training presentation, 1997.</Note> calling a generation of pilots "children of the magenta line", after the magenta course line on the flight display that they had learned to follow instead of flying the plane. Autopilot made flying safer, and it still does. But in 2009, when the autopilot on Air France 447 disconnected over the Atlantic, the crew had a flyable aircraft and about four minutes. They pulled it into a stall and never recognised it, which is the thing hand-flying is supposed to teach you. The automation was trustworthy almost all of the time. The pilots had stopped practising the rest.<Note n={4}>BEA, "Final Report on the accident on 1st June 2009 to the Airbus A330-203 registered F-GZCP operated by Air France flight AF 447 Rio de Janeiro–Paris", 2012.</Note>
+Pilots know a version of this. Autopilot made flying safer, and it hands the plane back at the worst possible moment, to someone who hasn't flown by hand in months.
 
 <Autopilot />
 
+So someone still has to read the code. If almost everyone can write it and almost no one can read it, the few who can read become a kind of priesthood, and everyone else takes their word for it.
+
 <Break />
 
-## VI. Compressed Failure
+## V. Taste
 
-Taste is compressed failure. Every good instinct I have about code is a mistake I made often enough to stop making it. The instinct is the residue; the failures were the process.
+Taste is compressed failure. Every good instinct I have is a mistake I made often enough to stop making it.
 
-If the agent makes the mistakes and the agent fixes them, nobody compresses anything. The compression already happened, in training, on other people's mistakes. The model has the taste. You get the output.
+If the agent makes the mistakes and fixes them, I don't compress anything. The model already did, in training, on other people's mistakes. It has the taste. I get the output.
 
-Taste used to be the one thing you couldn't buy. You could hire someone who had it, but you couldn't have it yourself without paying the price in failures. Now you can rent it by the token. Call it <Term id="rented-taste">rented taste</Term>: judgment you use but don't own. It is real taste, compressed from more mistakes than any person will make. It just lives in someone else's weights, and when the subscription ends, you have what you had before.
-
-Chess is the hopeful case. Engines have been beating world champions since 1997, and the players who grew up training against them are arguably stronger than any generation before. But a chess engine is an honest teacher. Its evaluation is close to the truth, and the board tells you at once when you've lost. Young players still fail thousands of times; the engine just makes each failure cheaper to understand. That is the opposite of an agent that quietly fixes your mistake before you see it.
-
-Maybe that's fine. Maybe the next generation's taste will be about different things: what to build, what to refuse, how to say exactly what you mean. Those are learned by failing too, just at a higher layer. You learn them by shipping the wrong product instead of the wrong loop. It's possible they will be better at this than we are, because they will start there instead of arriving late.
-
-But look at the price of failure at each layer. A wrong loop costs an afternoon. A wrong product costs a year. You get thousands of the first kind of mistake in a career and maybe a dozen of the second.
+Maybe that's fine, and the next generation's taste will just be about different things: what to build, what to refuse, how to say exactly what you mean. But look at what failure costs at each layer. A wrong loop costs an afternoon. A wrong product costs a year. You get thousands of the first kind in a career and maybe a dozen of the second.
 
 <Samples />
 
-Taste is a statistical thing. It needs a lot of samples. I don't know if a dozen is enough to learn from, and I suspect it isn't, which would mean the higher-level taste we're counting on is the kind most people will never get enough practice to develop.
+Taste needs a lot of samples. I don't think a dozen is enough.
 
 <Break />
 
-## VII. Write-Only Literacy
+## VI. What Was in the Work
 
-For most of history, literacy came in two parts, and reading came first. In early modern Europe many more people could read than could write. Reading was taught at home and in church; writing was a separate, later, more expensive skill, and many people never got to it. A society like that has a public. Lots of people can check what a pamphlet says, and only a few can produce one.
+There's a second loss, and it isn't about competence.
 
-The agents invert this. For the first time, everyone can write code, and almost no one can read it. This is <Term id="write-only-literacy">write-only literacy</Term>.
-
-<Literacy />
-
-Write-only literacy has a political shape, and it's the opposite of the advertised one. Every story about AI coding says it democratises programming. I think it does that for writing and does the reverse for reading. When everyone can produce text and few can check it, you don't get a public. You get a priesthood: a small class who can say what the text actually does, and everyone else, who has to take their word for it. The scribes of Egypt were that class. Their power came less from what they wrote than from being the only ones who could say what a document said.
-
-The readers of the next twenty years will be a small group, mostly older, mostly people who learned through friction, and their value will rise exactly as their number falls.
-
-The usual fear about AI is a permanent underclass: people whose labour stops being needed. I think there's a quieter version, which is a permanent class of <Term id="the-unread">the unread</Term>. Not the uneducated. People whose working lives run on code they can't read, and were never made to learn. They will be well paid and productive, and they will be in the position of a medieval peasant holding a contract: completely dependent on a document, and completely unable to check it.
-
-<Break />
-
-## VIII. What Was in the Work
-
-There is a second loss, and it's harder to talk about because it isn't about competence.
-
-We assumed the tedious part of programming was what stood between us and the meaningful part. Type the boilerplate, chase the bug, and then you get to the interesting design question. The agents took the tedious part, and it turns out a lot of the meaning was in it.
-
-The afternoon spent on a bug wasn't only a cost. It was the closest most of us get to an encounter with something indifferent to our wishes. The machine did not care what you meant. It did exactly what you said, and you had to change yourself until what you said was right.
+We assumed the tedious part of programming stood between us and the meaningful part. The agents took the tedious part, and it turns out a lot of the meaning was in it. An afternoon spent on a bug was one of the few times you met something completely indifferent to what you wanted. The machine didn't care what you meant. It did exactly what you said, and you had to change until what you said was right.
 
 <Indifferent />
 
-That is a kind of discipline, and maybe a kind of humility, and I'm not sure where the next generation gets it from.
+The agents are the opposite. They try to give you what you meant. That's what makes them useful, and it might be what makes them bad teachers.
 
-The agents are the opposite. They are endlessly accommodating. They try to give you what you meant. That's what makes them useful, and it might also be what makes them bad teachers.
+When a skill stops being necessary, it doesn't disappear. It becomes something you do on purpose. Nobody needed a gym when work was physical. Maybe programming gets its gyms too: an afternoon with the agent switched off, being wrong on purpose.
 
-When a skill stops being necessary, it doesn't disappear. It becomes something you do on purpose. People run marathons along roads they could drive in forty minutes.
-
-The clearest example is the gym. For almost all of history, nobody needed one: work was the exercise. When work stopped being physical, our bodies didn't adapt, so we built rooms full of machines whose only purpose is to make things harder. A treadmill would have looked insane to a farmer. Walking, indoors, to nowhere, on purpose.
-
-Programming is going to need its gyms: <Term id="synthetic-friction">synthetic friction</Term>, environments where the agent is switched off and you're allowed to be wrong for an afternoon. It may be the only way the next generation gets what we got for free, the way a gym is how office workers get what a field used to give them.
-
-<Break />
-
-## IX. Coda
-
-The title is too strong. There will be programmers after us, in the sense that people will still make machines do things. In fifty years someone will probably write this essay about whatever comes next, and it will sound the way the king does now: quaint, and not entirely wrong.
-
-But "the last" doesn't have to mean the last people to do the job. It can mean the last people to learn it a particular way: by being wrong, slowly, alone with a machine that didn't care. That way of learning produced a certain kind of mind. I don't know if it was the best kind. I know it was the kind that built everything the agents were trained on.
-
-The cabbies have a mirror image. In 2020, Louisa Dahmani and Véronique Bohbot found that people with more GPS experience had worse spatial memory when they had to navigate on their own, and when they retested thirteen of them three years later, the ones who had used GPS more in the meantime had declined more.<Note n={5}>Dahmani and Bohbot, "Habitual use of GPS negatively impacts spatial memory during self-guided navigation", Scientific Reports, 2020.</Note> Nobody decided to forget how to get around. We just stopped needing to, one turn at a time, and the map moved out of our heads and into our phones.
-
-The generation after me will do what I do, earlier and faster, and will never know there was anything to skip. I know, because I still sometimes choose to go back, and I can feel how rarely.
+The title is too strong. There will be programmers after us. But "the last" can mean the last people to learn it a particular way: slowly, by being wrong, alone with a machine that didn't care. I got a year of that. The generation after me will do what I do, earlier and faster, and won't know there was anything to skip.
 
 <Debt />
 
-I keep thinking about all the Gettier code we're about to write. It will run, it will be fine, and someone will depend on it. The king's question was whether what we lose is load-bearing. With code, we will find out the way people usually find out about load-bearing walls.
+I keep thinking about all the Gettier code we're about to ship. It will run, it will be fine, and someone will depend on it. Whether what we lost was load-bearing, we'll find out the way people usually find out about load-bearing walls.

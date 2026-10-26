@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Figure } from './Figure'
 
-// fig. 6 — the same line, given to a machine that does what you said and an
+// fig. 5 — the same line, given to a machine that does what you said and an
 // agent that does what you meant.
 
 // A tiny Python-ish evaluator: enough that "the machine" is honest about common lines.
@@ -264,7 +264,7 @@ export function Indifferent() {
 
   return (
     <Figure
-      n={6}
+      n={5}
       caption={<>type anything. one of these will make you change.</>}
     >
       <label className="fig-input mono">

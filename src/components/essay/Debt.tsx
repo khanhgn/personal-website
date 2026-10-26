@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Figure } from './Figure'
 
-// fig. 7 — a codebase, one square per file. Ship weeks, choose how much you read,
+// fig. 6 — a codebase, one square per file. Ship weeks, choose how much you read,
 // and see where the incidents land.
 type File = { read: boolean; hit: number }
 const MAX = 520
@@ -73,7 +73,7 @@ export function Debt() {
 
   return (
     <Figure
-      n={7}
+      n={6}
       caption={
         <>
           a codebase, one square per file. hollow squares are Gettier code:

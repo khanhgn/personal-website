@@ -207,7 +207,7 @@ export function Autopilot() {
           </div>
           <p className="fig-aside">
             {stalled
-              ? 'stall. in the real one, nobody took it back.'
+              ? 'stall. you hadn\'t practised.'
               : auto
                 ? 'it never gets tired. you never get practice.'
                 : 'you have it.'}
