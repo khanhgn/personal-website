@@ -1,0 +1,172 @@
+---
+title: The Last Programmers
+description: On the generation that learned by being wrong, and the one that won't have to be.
+date: 2026-10-26
+---
+
+<blockquote className="epigraph">
+  This discovery of yours will create forgetfulness in the learners' souls, because they will not use their memories.
+  <cite>Plato, Phaedrus, trans. Jowett</cite>
+</blockquote>
+
+<ol className="contents">
+  <li><a href="#i-the-complaint">I. The Complaint</a></li>
+  <li><a href="#ii-scarcity">II. Scarcity</a></li>
+  <li><a href="#iii-friction">III. Friction</a></li>
+  <li><a href="#iv-the-seam">IV. The Seam</a></li>
+  <li><a href="#v-plausibility">V. Plausibility</a></li>
+  <li><a href="#vi-compressed-failure">VI. Compressed Failure</a></li>
+  <li><a href="#vii-write-only-literacy">VII. Write-Only Literacy</a></li>
+  <li><a href="#viii-what-was-in-the-work">VIII. What Was in the Work</a></li>
+  <li><a href="#ix-coda">IX. Coda</a></li>
+</ol>
+
+## I. The Complaint
+
+<p className="lede">In the <em>Phaedrus</em>, Socrates tells a story about the invention of writing. The god who invents it presents it to the king of Egypt as a gift that will improve memory. The king refuses it. Writing, he says, will do the opposite: people will stop remembering and start relying on marks outside themselves. They will seem to know many things while knowing almost nothing.</p>
+
+This is the oldest version of a complaint every generation makes about the next: you have it too easy, and it will cost you something you can't see.
+
+The usual response is to point out that the king was wrong. Writing gave us philosophy, law, science, this essay. But he wasn't entirely wrong. We did lose the kind of memory he meant. Nobody alive can recite what an ordinary oral poet could. We just decided the trade was worth it, and then forgot there had been a trade.
+
+So the honest question is never whether something is lost. Something is always lost. The question is whether what's lost was load-bearing.
+
+I started university in 2023 and had about a year of learning to program the old way before I started leaning on ChatGPT. I still write and read a lot of code. But I'm close enough to the seam between two generations of programmers to feel it, and I want to use that position to ask the king's question about the people who come after me, and to be careful, since I know how the king's story usually ends.
+
+<Generations />
+
+<Break />
+
+## II. Scarcity
+
+The first programmers learned on machines that punished them. You allocated memory and you freed it, and if you forgot, the program told you in the least helpful way possible. Documentation was a book. If you wanted to know how something worked, you read the source, or you didn't find out.
+
+Everything was expensive: memory, cycles, compile time, the time it took to type. So they thought before they typed. You don't write a loop carelessly when running it costs you an hour.
+
+Their taste came from scarcity. Every abstraction cost them something, so they learned, the way you learn the price of things when you're poor, which abstractions were worth paying for. A generation of engineers internalised a sense of cost so deep they couldn't turn it off. You still meet them: people who flinch at an unnecessary allocation the way other people flinch at a wasted light.
+
+Scarcity is a very good teacher, and an unkind one. It teaches by charging you.
+
+<Break />
+
+## III. Friction
+
+The next generation had garbage collectors, frameworks, package managers and Stack Overflow. The first generation said they had it easy, and what they meant was that they never paid for their abstractions. That was true.
+
+But they paid somewhere else. They typed. They wrote enormous amounts of bad code, and debugging bad code you wrote yourself is the education. Scarcity was replaced by friction. The machine stopped charging you for resources and started charging you for mistakes, in the only currency left: time and confusion.
+
+The philosopher Michael Polanyi had a phrase for what this produces: "we can know more than we can tell." A senior engineer looks at a diff and says *this is wrong* before they can say why. When you ask them to explain, they reconstruct a reason afterwards, but the knowing came first. It came from having written that exact wrong thing themselves, years ago, and losing an afternoon to it.
+
+You can see the same thing outside programming. To get a licence, a London taxi driver has to learn the Knowledge: around 25,000 streets and every landmark on them, memorised over three or four years of riding the city on a moped. In 2000, a team led by Eleanor Maguire scanned their brains and found that the back of the hippocampus, the part that handles spatial memory, was larger in cabbies than in other people, and larger the longer they had driven. The friction left a mark you could photograph.
+
+That isn't knowledge you can write down. It's scar tissue. And it's most of what makes a senior engineer senior.
+
+<Break />
+
+## IV. The Seam
+
+I got about a year of scar tissue before the seam.
+
+For that year I learned the usual way: write it, break it, read the error, fix it. ChatGPT was already out, and I resisted it for a while, the way you resist anything that feels like cheating. Then I used it, because everyone did and it worked.
+
+Now most of my work is describing problems to agents and judging what comes back. I still go back and try to understand it. When the agent writes something I wouldn't have, I read it until I could have written it myself, or at least until I can say why it's right. That habit came from the year of friction, and it may be the most valuable thing I own.
+
+The problem is that the line has blurred. I used to know which things I understood and which I was taking on trust. Now there is a large middle: code I've read, nodded at, and shipped. Some of it I understand. Some of it I've only seen so many times that it feels like understanding. From the inside, I can't always tell which is which.
+
+It's tempting to call my generation a bridge. We were trained by friction, and now we work without it, so we have the old instincts and the new leverage. But a bridge implies you know where both banks are. What we have is closer to a map with the border smudged. We're probably the last people who will remember there was a border at all.
+
+There is a specific discomfort in this. The path that would sharpen the line, years of debugging my own bad code, still exists, but nothing forces me onto it, and the agent is right there. Going back to understand is now a choice I make every day, and choices are easier to skip than requirements.
+
+<Break />
+
+## V. Plausibility
+
+The next generation won't type. They will learn by prompting, and prompting works. That is the problem.
+
+When the first attempt mostly works, there is no error to read and no afternoon lost. You can get very far without ever building an internal model of how the thing works. They will be extraordinarily productive from their first week. They will ship more in their first year than most engineers used to in their first five. And many of them will have no idea why their code is right, because they never had to find out why it was wrong.
+
+Philosophers have a name for this situation. In 1963 Edmund Gettier described cases where someone believes something true, has a reasonable-sounding justification, and still doesn't *know* it, because the justification isn't what makes it true. They got lucky in a way that looks like competence. A program that works for reasons its author doesn't understand is a Gettier case. It's correct. Nobody knows it.
+
+I'll call this **Gettier code**, and the stock of it inside a system **Gettier debt**. Technical debt is code you understand and wish you'd written differently. Gettier debt is code that is fine and that nobody understands. Technical debt shows up as friction: everything gets slower, and you feel it. Gettier debt shows up as nothing at all, until it shows up all at once. And unlike technical debt, it accrues fastest in the codebases that look healthiest, because they're the ones where nothing has gone wrong yet to make anyone look.
+
+<Plausible />
+
+The strongest argument against all this is that it has happened before. Almost nobody reads assembly anymore. Compilers took that layer away, and the people who stopped reading assembly didn't become worse engineers. They moved up a level and developed taste about the things above it. Maybe the next generation does the same.
+
+I think this argument is mostly right, and I still don't think it applies yet. A compiler is deterministic, and it is correct. You could stop reading its output because it never lied to you. You were trusting a proof, in effect. An agent's output is plausible, which is a different and much weaker property: it is what correct code tends to look like. Skipping the layer below only works when the layer below can be trusted, and plausibility can't be.
+
+So someone still has to read the code. The next generation won't have learned how, and the people who did learn are getting older.
+
+Aviation found this out first. In the 1990s an American Airlines training captain, Warren Vanderburgh, gave a talk calling a generation of pilots "children of the magenta line", after the magenta course line on the flight display that they had learned to follow instead of flying the plane. Autopilot made flying safer, and it still does. But in 2009, when the autopilot on Air France 447 disconnected over the Atlantic, the crew had a working aircraft and about four minutes, and they couldn't recover from a stall that hand-flying is supposed to teach you to recognise. The automation was trustworthy almost all of the time. The pilots had stopped practising the rest.
+
+<Break />
+
+## VI. Compressed Failure
+
+Taste is compressed failure. Every good instinct I have about code is a mistake I made often enough to stop making it. The instinct is the residue; the failures were the process.
+
+If the agent makes the mistakes and the agent fixes them, the compression still happens. It just happens somewhere else. The model gets the taste. The person gets the output.
+
+This is new. Taste used to be the one thing you couldn't buy. You could hire someone who had it, but you couldn't have it yourself without paying the price in failures. Now you can rent it by the token. I'll call this **rented taste**: judgment you can use but don't own, which works exactly as long as the subscription does. Rented taste is real taste. It was compressed from millions of people's mistakes, which is more than any one person will ever make. It just lives in someone else's weights, and when you stop paying, you're back to whatever you had before.
+
+Maybe that's fine. Maybe the next generation's taste will be about different things: what to build, what to refuse, how to say exactly what you mean. Those are learned by failing too, just at a higher layer. You learn them by shipping the wrong product instead of the wrong loop. It's possible they will be better at this than we are, because they will start there instead of arriving late.
+
+Chess is the hopeful case. Engines have been beating world champions since 1997, and the players who grew up training against them are stronger than any generation before. But a chess engine is an honest teacher. Its evaluation is close to the truth, and the board tells you at once when you've lost. Young players still fail thousands of times; the engine just makes each failure cheaper to understand. That is the opposite of an agent that quietly fixes your mistake before you see it.
+
+But look at the price of failure at each layer. A wrong loop costs an afternoon. A wrong product costs a year. You get thousands of the first kind of mistake in a career and maybe a dozen of the second.
+
+<Samples />
+
+Taste is a statistical thing. It needs a lot of samples. I don't know if a dozen is enough to learn from, and I suspect it isn't, which would mean the higher-level taste we're counting on is the kind most people will never get enough practice to develop.
+
+<Break />
+
+## VII. Write-Only Literacy
+
+For most of history, literacy came in two parts, and reading came first. In early modern Europe far more people could read than could write. Reading was taught at home and in church; writing was a separate, later, more expensive skill, and many people never got to it. A society like that has a public. Lots of people can check what a pamphlet says, and only a few can produce one.
+
+The agents invert this. For the first time, everyone can write code, and almost no one can read it. I'll call this **write-only literacy**.
+
+<Literacy />
+
+Write-only literacy has a political shape, and it's the opposite of the one everybody is advertising. Every story about AI coding says it democratises programming. I think it does that for writing and does the reverse for reading. When everyone can produce text and few can check it, you don't get a public. You get a priesthood: a small class who can say what the text actually does, and everyone else, who has to take their word for it. The scribes of Egypt were that class. Their power didn't come from writing more. It came from being the only ones who could read.
+
+The readers of the next twenty years will be a small group, mostly older, mostly people who learned through friction, and their value will rise exactly as their number falls. Not because they produce more, but because they are the only ones who can say whether what was produced is true.
+
+The usual fear about AI is a permanent underclass: people whose labour stops being needed. I think there's a quieter version, which is a permanent class of **the unread**. Not the uneducated. People whose entire working lives run on text they can't read and can't learn to read, because the path to learning was paved over before they got there. They will be well paid and productive, and they will be in the position of a medieval peasant holding a contract: completely dependent on a document, and completely unable to check it.
+
+<Break />
+
+## VIII. What Was in the Work
+
+There is a second loss, and it's harder to talk about because it isn't about competence.
+
+We assumed the tedious part of programming was what stood between us and the meaningful part. Type the boilerplate, chase the bug, and then you get to the interesting design question. The agents took the tedious part, and it turns out a lot of the meaning was in it.
+
+The afternoon spent on a bug wasn't only a cost. It was the closest most of us get to a genuine encounter with something indifferent to our wishes. The machine did not care what you meant. It did exactly what you said, and you had to change yourself until what you said was right.
+
+<Indifferent />
+
+That is a kind of discipline, and maybe a kind of humility, and I'm not sure where the next generation gets it from.
+
+The agents are the opposite. They are endlessly accommodating. They try to give you what you meant. That's what makes them useful, and it might also be what makes them a bad teacher.
+
+We already know what happens next, from the rest of life. Nobody thinks cars made walking pointless, or that bakeries made baking bread at home pointless. People run marathons along roads they could drive in forty minutes. When a skill stops being necessary it doesn't disappear. It becomes something you do on purpose, for reasons that were never about the output.
+
+The clearest example is the gym. For almost all of history, nobody needed one: work was the exercise. When work stopped being physical, our bodies didn't adapt, so we built rooms full of machines whose only purpose is to make things harder. A treadmill would have looked insane to a farmer. Walking, indoors, to nowhere, on purpose.
+
+Programming is going to need its gyms. I'll call it **synthetic friction**: environments where the agent is turned off on purpose and you're allowed to be wrong for an afternoon. It will look as absurd to the next generation as a treadmill would have looked to that farmer. And it may be the only way they get what we got for free, the way a gym is the only way most office workers still get what a field used to give them.
+
+<Break />
+
+## IX. Coda
+
+The title is too strong. There will be programmers after us, in the sense that people will still make machines do things. Socrates was right that writing changed memory, and wrong that it ended thought. The likeliest outcome is that he was right and wrong in the same proportions here too, and that in fifty years someone will write this essay about whatever comes next, and it will sound as quaint as the *Phaedrus*.
+
+But "the last" doesn't have to mean the last people to do the job. It can mean the last people to learn it a particular way: by being wrong, slowly, alone with a machine that didn't care. That way of learning produced a certain kind of mind. I don't know if it was the best kind. I know it was the kind that built everything the agents were trained on.
+
+The nearest thing I know is what happened to finding our way. In 2020, Louisa Dahmani and Véronique Bohbot found that people who relied more on GPS had worse spatial memory when they had to navigate on their own, and that the gap grew over time. Nobody decided to forget how to get around. We just stopped needing to, one turn at a time, and the map moved out of our heads and into our phones. I think code is going the same way.
+
+I'm on the seam, so I can see both sides. I had a year of the old way, and I still go back to it, reading what the agent wrote until I understand it. But the line between understanding and familiarity has blurred, and I don't think it sharpens on its own. Most days I write the spec, read the diff, and ship. It works. The generation after me will do the same thing, earlier and better, and will never wonder what it skipped.
+
+If I'm one of the readers, I'm a partial one, and the part is shrinking. I keep thinking about all the Gettier code we're about to write. It will run, and it will be fine, and someone will depend on it. I can't tell yet whether the world will think about it less.

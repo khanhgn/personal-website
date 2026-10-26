@@ -226,6 +226,350 @@ hr {
   padding: 0;
 }
 
+/* Essays: chapters, epigraphs, figures */
+
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--ink);
+  transform-origin: 0 50%;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.post .epigraph {
+  margin: 1.5em 0 2.25em;
+  padding: 0;
+  border: 0;
+  font-style: italic;
+  color: var(--ink-muted);
+}
+
+.post .epigraph cite {
+  display: block;
+  margin-top: 0.4em;
+  font-style: normal;
+  font-family: var(--font-mono), ui-monospace, Menlo, monospace;
+  font-size: 0.75rem;
+}
+
+.post .contents {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2em;
+  columns: 2;
+  column-gap: 2em;
+  font-family: var(--font-mono), ui-monospace, Menlo, monospace;
+  font-size: 0.78rem;
+}
+
+.post .contents li {
+  margin: 0.2em 0;
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+.post .contents a {
+  text-decoration: none;
+  color: var(--ink-muted);
+}
+
+.post .contents a:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+.post h2 {
+  font-weight: 400;
+  font-size: 1.2rem;
+  margin-top: 0.5em;
+}
+
+.post .lede::first-letter {
+  float: left;
+  font-size: 3.4em;
+  line-height: 0.85;
+  padding: 0.06em 0.08em 0 0;
+}
+
+.post .break {
+  text-align: center;
+  letter-spacing: 0.6em;
+  margin: 2.75em 0 2em;
+  color: var(--ink-muted);
+}
+
+.fig {
+  margin: 2em 0 2.25em;
+}
+
+.fig-body {
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--hairline);
+  padding: 1.1em 0;
+}
+
+.fig figcaption {
+  margin-top: 0.6em;
+  line-height: 1.5;
+}
+
+.fig-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+.svg-mono {
+  font-family: var(--font-mono), ui-monospace, Menlo, monospace;
+  font-size: 11px;
+  fill: var(--ink);
+}
+
+.muted-fill {
+  fill: var(--ink-muted);
+}
+
+.fig-readout {
+  display: grid;
+  grid-template-columns: 5.5em 1fr;
+  gap: 0.15em 1em;
+  margin: 0.9em 0 0;
+  color: var(--ink);
+}
+
+.fig-readout dt {
+  color: var(--ink-muted);
+}
+
+.fig-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1em;
+}
+
+.post .fig .mono,
+.post .fig p.mono {
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 560px) {
+  .fig-pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .post .contents {
+    columns: 1;
+  }
+}
+
+.fig-choice {
+  min-width: 0;
+  text-align: left;
+  border: 1px solid var(--hairline);
+  background: transparent;
+  color: inherit;
+  padding: 0.6em 0.7em;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+
+.fig-choice:hover,
+.fig-choice.is-chosen {
+  border-color: var(--ink);
+}
+
+.post .fig pre,
+.fig pre {
+  background: var(--paper-deep);
+  color: var(--ink);
+  margin: 0;
+  padding: 0.7em 0.8em;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.fig pre code {
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+}
+
+.fig pre.is-error {
+  color: #9b2c1f;
+}
+
+.dark .fig pre.is-error {
+  color: #e08a7c;
+}
+
+.fig-verdict {
+  color: var(--ink);
+}
+
+.post .fig-note {
+  font-size: 0.92rem;
+  margin: 0.9em 0 0;
+}
+
+.link-button {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--ink-muted);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.fig-slider {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  color: var(--ink);
+  margin-bottom: 1em;
+}
+
+.fig-slider span {
+  min-width: 9.5em;
+}
+
+.fig-slider input {
+  flex: 1;
+  accent-color: var(--ink);
+}
+
+.fig-rows {
+  display: grid;
+  gap: 1em;
+}
+
+.fig-rows p {
+  margin: 0 0 0.4em;
+}
+
+.dots {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  min-height: 14px;
+}
+
+.dots i {
+  display: block;
+  background: var(--ink);
+  border-radius: 50%;
+}
+
+.dots-small {
+  gap: 2px;
+}
+
+.dots-small i {
+  width: 3px;
+  height: 3px;
+}
+
+.dots-large {
+  gap: 8px;
+}
+
+.dots-large i {
+  width: 14px;
+  height: 14px;
+}
+
+.fig-input {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  border-bottom: 1px solid var(--ink);
+  padding: 0.2em 0 0.4em;
+  margin-bottom: 1em;
+  color: var(--ink);
+}
+
+.fig-input input {
+  flex: 1;
+  background: transparent;
+  border: 0;
+  outline: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+.fig-pane p {
+  margin: 0 0 0.4em;
+}
+
+.post .fig-aside {
+  margin: 0.45em 0 0;
+  font-style: italic;
+}
+
+/* fig: literacy */
+
+.lit-toggle {
+  display: flex;
+  gap: 0;
+  margin-bottom: 1em;
+}
+
+.lit-toggle button {
+  font: inherit;
+  background: transparent;
+  color: var(--ink-muted);
+  border: 1px solid var(--hairline);
+  padding: 0.3em 0.8em;
+  cursor: pointer;
+}
+
+.lit-toggle button + button {
+  border-left: 0;
+}
+
+.lit-toggle button.is-on {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.lit-row {
+  display: grid;
+  grid-template-columns: 6.5em 1fr 2.5em;
+  align-items: center;
+  gap: 0.75em;
+  margin: 0.5em 0;
+}
+
+.lit-ticks {
+  display: flex;
+  gap: 1px;
+  height: 22px;
+}
+
+.lit-ticks i {
+  flex: 1;
+  background: var(--hairline);
+  transition: background-color 240ms ease;
+}
+
+.lit-ticks i.on {
+  background: var(--ink);
+}
+
+.lit-n {
+  text-align: right;
+}
+
 /* Remove Safari input shadow on mobile */
 input[type='text'],
 input[type='email'] {

@@ -7,6 +7,15 @@ import { useMDXComponent } from 'next-contentlayer/hooks'
 import NextImage from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import {
+  Break,
+  Generations,
+  Indifferent,
+  Literacy,
+  Plausible,
+  Progress,
+  Samples,
+} from '@/components/essay'
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({
@@ -55,6 +64,12 @@ export async function generateMetadata({
 const mdxComponents: MDXComponents = {
   a: ({ href, children }) => <Link href={href as string}>{children}</Link>,
   Image: (props) => <NextImage {...props} />,
+  Break,
+  Generations,
+  Plausible,
+  Samples,
+  Indifferent,
+  Literacy,
 }
 
 const PostLayout = ({ params }: { params: { slug: string } }) => {
@@ -85,6 +100,7 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
 
   return (
     <div>
+      <Progress />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPosting) }}
