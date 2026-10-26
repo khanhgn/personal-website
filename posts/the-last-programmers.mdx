@@ -1,0 +1,114 @@
+---
+title: The Last Programmers
+description: On the generation that learned by being wrong, and the one that won't have to be.
+date: 2026-10-26
+---
+
+<ol className="contents">
+  <li><a href="#i-the-complaint">I. The Complaint</a></li>
+  <li><a href="#ii-cost-and-friction">II. Cost and Friction</a></li>
+  <li><a href="#iii-the-seam">III. The Seam</a></li>
+  <li><a href="#iv-plausible">IV. Plausible</a></li>
+  <li><a href="#v-taste">V. Taste</a></li>
+  <li><a href="#vi-what-was-in-the-work">VI. What Was in the Work</a></li>
+</ol>
+
+## I. The Complaint
+
+<p className="lede">In the <em>Phaedrus</em>, Socrates tells a story about the invention of writing. A god offers it to the king of Egypt as a gift for memory, and the king is unimpressed. People will stop remembering, he says. They will seem to know many things while knowing almost nothing.</p>
+
+Every generation makes some version of this complaint about the next. Usually the complaint loses. Writing gave us law, science and this essay. But the king wasn't entirely wrong either. We did lose a kind of memory. We just decided the trade was worth it, and then forgot there had been a trade.
+
+So the question is never whether something gets lost. Something always does. The question is whether it was load-bearing.
+
+That question is hard to ask honestly about your own trade. People tend to defend the way they learned. The ones who came up the hard way say the hard way was necessary, and the ones who skipped it say it was hazing. I'd like to avoid both easy answers: that nothing is being lost, and that everything is.
+
+I started university in 2023 and had about a year of learning to program the old way before I started leaning on ChatGPT. These days I don't write code by hand anymore. That puts me on the seam between two ways of learning it, close enough to feel what changed, which is why I want to ask the king's question about programming.
+
+<Generations />
+
+<Break />
+
+## II. Cost and Friction
+
+The first programmers learned on machines that charged them for everything. Memory, cycles, compile time. You thought before you typed, because a careless loop could cost you an hour. Their taste came from cost, the way you learn the price of things when you don't have much money.
+
+The next generation had garbage collectors, frameworks and Stack Overflow. The first generation said they had it easy, and in one sense they did. But they paid somewhere else. They wrote enormous amounts of bad code and debugged it themselves, and that was the education. Even copying from Stack Overflow taught you something, because copied code almost never worked the first time, and making it work meant understanding it a little. The machine stopped charging for resources and started charging for mistakes.
+
+Each generation thinks the one before it worried about the wrong things. The second generation thought the first was obsessed with bytes. They were right, mostly. But the first generation's sense of cost didn't disappear when memory got cheap. It turned into a feel for which abstractions would hurt you later, and the good engineers of the second generation picked that up too, just more slowly and from different mistakes.
+
+That is where a senior engineer's instinct comes from. They look at a diff and know it's wrong before they can say why, because they wrote that exact wrong thing years ago and lost an afternoon to it. You can't write that down. It's scar tissue.
+
+<Break />
+
+## III. The Seam
+
+I got about a year of scar tissue. It was the usual first year: small assignments, long evenings stuck on one bug, the specific relief when something finally ran. I resisted ChatGPT for a while, the way you resist anything that feels like cheating. Then I used it, because everyone did and it worked.
+
+Now I describe problems to agents and judge what comes back, and I feel pretty guilty about it. When the agent writes something I wouldn't have, I sometimes go back and read it until I could have written it myself. That habit is what I got from that year, and it's what I'm most afraid of losing.
+
+The guilt is strange, because the work is better. I ship more than I ever could have by hand, and most of it is fine. What I feel guilty about isn't the output. It's that I'm not sure I'd notice if it weren't.
+
+The problem is that the line has blurred. I used to know which things I understood and which I was taking on trust. Now there's a big middle: code I've read, nodded at and shipped. Some of it I understand. Some of it I've just seen so many times that it feels like understanding. From the inside I can't always tell which is which.
+
+It's worse with tests. More and more, I let the agent write the tests too, and then I let it tell me they pass. The thing checking the work is the thing that did the work. I know that's backwards, and I do it anyway, because it's usually fine. When a test fails, the agent fixes the code, or sometimes it fixes the test. I don't always check which.
+
+<Break />
+
+## IV. Plausible
+
+The next generation will barely write code by hand. They'll learn by prompting, and prompting mostly works. That's the problem.
+
+When the first attempt mostly works, there's no error to read and no afternoon lost. You can get very far without ever building a model of how the thing works. They'll be productive from their first week. A student now can build in a weekend what took me a semester. And many of them won't know why their code is right, because they never had to find out why it was wrong. The first real bug some of them meet will be in production, in code nobody wrote by hand.
+
+The usual answer is that this has happened before. Almost nobody reads assembly anymore, and compilers didn't make us worse engineers. We moved up a level. Maybe this is the same.
+
+I don't think it is, yet. A compiler is deterministic and almost always correct, so you could stop reading its output. When a compiler is wrong, it's wrong the same way every time, and someone fixes it once for everyone. When an agent is wrong, it's wrong in a new way each time, in your code, and you're the only one there to catch it.
+
+An agent's output is plausible, which is a much weaker property than correct. It's what correct code tends to look like.
+
+<Plausible />
+
+Sometimes plausible code is wrong, like version a. The stranger case is when it's right. Philosophers call it a Gettier case when you're right by luck: you believe something true, for a reason that isn't what makes it true. A program that works for reasons nobody understands is like that. Call it <Term id="gettier-code">Gettier code</Term>. You can't see it, because nothing is wrong. Not until it breaks and nobody can fix it.
+
+Pilots know a version of this. Autopilot made flying much safer. But when it gives up, it gives up at the worst possible moment, and hands the plane to pilots who rarely fly that part by hand.
+
+<Autopilot />
+
+Someone still has to read the code. If almost everyone can write it and almost no one can read it, the few who can read end up vouching for everyone else.
+
+<Break />
+
+## V. Taste
+
+Most of my good instincts are mistakes I made often enough to stop making.
+
+If the agent makes the mistakes and fixes them, I don't compress anything. The model already did, in training, on other people's mistakes. It has the taste. I get the output.
+
+Maybe that's fine, and the next generation's taste will just be about different things: what to build, what to refuse, how to say exactly what you mean. I see some of this already. Most of my time now goes to product work, and the instincts there come from a different kind of failure: shipping something carefully and watching nobody use it. But look at what failure costs at each layer. A wrong loop costs an afternoon. A wrong product costs a year. You get thousands of the first kind in a career and maybe a dozen of the second.
+
+<Samples />
+
+Taste needs a lot of samples. I don't think a dozen is enough. The old way gave you thousands of small failures to learn from before anyone trusted you with a big one. If the small ones go away, people will have to learn mostly from the big ones, and those are expensive, slow, and usually someone else's fault in ways that make them hard to learn from.
+
+<Break />
+
+## VI. What Was in the Work
+
+There's a second loss, and it isn't about competence.
+
+We assumed the tedious part of programming stood between us and the meaningful part. The agents took the tedious part, and it turns out a lot of the meaning was in it. An afternoon spent on a bug was one of the few times you met something completely indifferent to what you wanted. The machine didn't care what you meant. It did exactly what you said, and you had to change until what you said was right.
+
+<Indifferent />
+
+The agents are the opposite. They try to give you what you meant. That's what makes them useful, and it might be what makes them bad teachers.
+
+When a skill stops being necessary, it doesn't disappear. It becomes something you do on purpose. Nobody needed a gym when work was physical. Maybe programming gets its gyms too: an afternoon with the agent switched off, being wrong on purpose. It will look silly, the way a treadmill would have looked to a farmer. I keep meaning to do this. I mostly don't.
+
+The title is too strong. There will be programmers after us. But "the last" can mean the last people to learn it a particular way: slowly, by being wrong, alone with a machine that didn't care. I got a year of that. The generation after me will do what I do, earlier and faster, and won't know there was anything to skip.
+
+What worries me isn't that they'll be worse. They'll probably be better at most of what matters. It's that there will be fewer and fewer people who remember what it was like when the code was really yours, every line, because you had been wrong about each of them first.
+
+<Debt />
+
+I keep thinking about all the Gettier code we're about to ship. It will run, it will be fine, and someone will depend on it. Whether what we lost was load-bearing, we'll find out the way people usually find out about load-bearing walls.
