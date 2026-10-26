@@ -5,8 +5,7 @@ import { compareDesc } from 'date-fns'
 import type { Metadata } from 'next'
 
 const title = 'Writing'
-const description =
-  'Writing by Gia Khanh Nguyen: surfing gradients (AI, products, coding teams) and drunk on apophenia (everything else).'
+const description = 'Writing by Gia Khanh Nguyen.'
 
 export const metadata: Metadata = {
   title,
@@ -22,10 +21,6 @@ export default function Writing() {
   return (
     <>
       <h1>Writing</h1>
-      <p>
-        Two streams: <em>surfing gradients</em>, on AI, building products and
-        coding teams, and <em>drunk on apophenia</em>, on everything else.
-      </p>
       <p>
         You can subscribe through{' '}
         <a href="https://khanhcore.substack.com">Substack</a> or{' '}
