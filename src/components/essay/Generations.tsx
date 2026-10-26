@@ -89,7 +89,7 @@ export function Generations() {
         {/* the seam, and me */}
         <line x1={x(2022.9)} x2={x(2022.9)} y1={14} y2={56} stroke="var(--ink)" strokeDasharray="2 2" />
         <text x={x(2022.9)} y={9} textAnchor="middle" className="svg-mono">
-          2023 · me
+          seam · 2023 · me
         </text>
 
         <line x1={0} x2={W} y1={62} y2={62} stroke="var(--hairline)" />

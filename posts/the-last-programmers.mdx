@@ -26,7 +26,7 @@ The usual response is to point out that the king was wrong. Writing gave us phil
 
 So the honest question is never whether something is lost. Something is always lost. The question is whether what's lost was load-bearing.
 
-I started university in 2023 and had about a year of learning to program the old way before I started leaning on ChatGPT. I still write and read a lot of code. But I'm close enough to the seam between two generations of programmers to feel it, and I want to use that position to ask the king's question about the people who come after me, carefully, since the king usually loses.
+I started university in 2023 and had about a year of learning to program the old way before I started leaning on ChatGPT. I still write and read a lot of code, and I'm close enough to the seam between two generations of programmers to feel it, and I want to use that position to ask the king's question about the people who come after me, carefully, since the king usually loses.
 
 <Generations />
 
@@ -34,7 +34,7 @@ I started university in 2023 and had about a year of learning to program the old
 
 ## II. Scarcity
 
-The first programmers learned on machines that punished them. You allocated memory and you freed it, and if you forgot, the program told you with a segfault, or not at all. Documentation was a book. If you wanted to know how something worked, you read the source, or you didn't find out.
+The first programmers learned on machines that punished them. You allocated memory and you freed it, and if you got it wrong, the program told you with a segfault, or not at all. Documentation was a book. If you wanted to know how something worked, you read the source, or you didn't find out.
 
 Everything was expensive: memory, cycles, compile time, the time it took to type. So they thought before they typed. You don't write a loop carelessly when running it costs you an hour.
 
@@ -46,7 +46,7 @@ Scarcity is a good teacher and an unkind one. It teaches by charging you.
 
 ## III. Friction
 
-The next generation had garbage collectors, frameworks, package managers and Stack Overflow. The first generation said they had it easy, and what they meant was that they never paid for their abstractions. That was true.
+The next generation had garbage collectors, frameworks, package managers and Stack Overflow. The first generation said the new one had it easy, and what they meant was that it never paid for its abstractions. That was true.
 
 But they paid somewhere else. They typed. They wrote enormous amounts of bad code, and debugging bad code you wrote yourself is the education. Scarcity was replaced by friction. The machine stopped charging you for resources and started charging you for mistakes, in time and confusion.
 
@@ -60,17 +60,17 @@ The list of streets fits in a book. What learning it did to their brains doesn't
 
 ## IV. The Seam
 
-I got about a year of scar tissue before the seam.
+I got about a year of scar tissue anyway. The seam had already opened; I just hadn't crossed it yet.
 
 For that year I learned the usual way: write it, break it, read the error, fix it. ChatGPT was already out, and I resisted it for a while, the way you resist anything that feels like cheating. Then I used it, because everyone did and it worked.
 
-Now most of my work is describing problems to agents and judging what comes back. I still write a lot of code myself, and I still go back and try to understand it. When the agent writes something I wouldn't have, I read it until I could have written it myself, or at least until I can say why it's right. That habit came from the year of friction, and it may be the most valuable thing I own.
+Now most of my work is describing problems to agents and judging what comes back, though I still write a lot of code by hand. When the agent writes something I wouldn't have, I go back and read it until I could have written it myself, or at least until I can say why it's right. That habit came from the year of friction, and it may be the most valuable thing I own.
 
 The problem is that the line has blurred. I used to know which things I understood and which I was taking on trust. Now there is a large middle: code I've read, nodded at, and shipped. Some of it I understand. Some of it I've only seen so many times that it feels like understanding. From the inside, I can't always tell which is which.
 
 It's tempting to call my generation a bridge. We were trained by friction, and now we work without it, so we have the old instincts and the new leverage. But a bridge implies you know where both banks are. What we have is closer to a map with the border smudged. We're probably the last people who will remember there was a border at all.
 
-The path that would sharpen the line, years of debugging my own bad code, still exists, but nothing forces me onto it, and the agent is right there. Going back to understand is now a choice I make every day, and choices are easier to skip than requirements.
+The path that would sharpen the line, debugging everything myself, still exists, but nothing forces me onto it, and the agent is right there. Going back to understand is now a choice I make every day, and choices are easier to skip than requirements.
 
 <Break />
 
@@ -80,9 +80,9 @@ The next generation won't write code by hand. They will learn by prompting, and 
 
 When the first attempt mostly works, there is no error to read and no afternoon lost. You can get very far without ever building an internal model of how the thing works. They will be productive from their first week. They will ship more in their first year than most engineers used to in their first five. And many of them will have no idea why their code is right, because they never had to find out why it was wrong.
 
-In 1963 Edmund Gettier published a three-page paper about people who are right by luck: they believe something true, for a reason that sounds fine, but the reason isn't what makes it true. These are now called Gettier cases. A program that works for reasons its author doesn't understand is a Gettier case. It's correct. Nobody knows it.
+In 1963 Edmund Gettier published a three-page paper about people who are right by luck: they believe something true, for a reason that sounds fine, but the reason isn't what makes it true. These are now called Gettier cases.<Note n={2}>Gettier, "Is Justified True Belief Knowledge?", Analysis, 1963.</Note> A program that works for reasons its author doesn't understand is a Gettier case. It's correct. Nobody knows it.
 
-I'll call this <Term id="gettier-code">Gettier code</Term>, and the stock of it inside a system <Term id="gettier-debt">Gettier debt</Term>. Technical debt is code you understand and wish you'd written differently. Gettier debt is code that is fine and that nobody understands. Technical debt shows up as friction: everything gets slower, and you feel it. Gettier debt shows up as nothing at all, until it shows up all at once. And unlike technical debt, it accrues fastest in the codebases that look healthiest, because nothing has gone wrong there yet to make anyone look.
+I'll call this <Term id="gettier-code">Gettier code</Term>, and the stock of it inside a system <Term id="gettier-debt">Gettier debt</Term>. Technical debt is code you understand and wish you'd written differently. Gettier debt is a pile of code that is fine and that nobody understands. Technical debt shows up as friction: everything gets slower, and you feel it. Gettier debt shows up as nothing at all, until it shows up all at once. And unlike technical debt, it accrues fastest in the codebases that look healthiest, because nothing has gone wrong there yet to make anyone look.
 
 
 The strongest argument against all this is that it has happened before. Almost nobody reads assembly anymore. Compilers took that layer away, and the people who stopped reading assembly didn't become worse engineers. They moved up a level and developed taste about the things above it. Maybe the next generation does the same.
@@ -95,7 +95,7 @@ There is a second difference. A compiler never hands the controls back. An autop
 
 So someone still has to read the code. The next generation won't have learned how, and the people who did learn are getting older.
 
-Aviation found this out first. In 1997 an American Airlines training captain, Warren VanderBurgh, gave a talk<Note n={2}>Warren VanderBurgh, "Children of the Magenta", American Airlines training presentation, 1997.</Note> calling a generation of pilots "children of the magenta line", after the magenta course line on the flight display that they had learned to follow instead of flying the plane. Autopilot made flying safer, and it still does. But in 2009, when the autopilot on Air France 447 disconnected over the Atlantic, the crew had a flyable aircraft and about four minutes, and they couldn't recover from a stall that hand-flying is supposed to teach you to recognise. The automation was trustworthy almost all of the time. The pilots had stopped practising the rest.<Note n={3}>BEA, final report on the accident to Air France flight AF 447, 2012.</Note>
+Aviation found this out first. In 1997 an American Airlines training captain, Warren VanderBurgh, gave a talk<Note n={3}>VanderBurgh, "Children of the Magenta", American Airlines training presentation, 1997.</Note> calling a generation of pilots "children of the magenta line", after the magenta course line on the flight display that they had learned to follow instead of flying the plane. Autopilot made flying safer, and it still does. But in 2009, when the autopilot on Air France 447 disconnected over the Atlantic, the crew had a flyable aircraft and about four minutes. They pulled it into a stall and never recognised it, which is the thing hand-flying is supposed to teach you. The automation was trustworthy almost all of the time. The pilots had stopped practising the rest.<Note n={4}>BEA, "Final Report on the accident on 1st June 2009 to the Airbus A330-203 registered F-GZCP operated by Air France flight AF 447 Rio de Janeiro–Paris", 2012.</Note>
 
 <Autopilot />
 
@@ -155,7 +155,7 @@ When a skill stops being necessary, it doesn't disappear. It becomes something y
 
 The clearest example is the gym. For almost all of history, nobody needed one: work was the exercise. When work stopped being physical, our bodies didn't adapt, so we built rooms full of machines whose only purpose is to make things harder. A treadmill would have looked insane to a farmer. Walking, indoors, to nowhere, on purpose.
 
-Programming is going to need its gyms: <Term id="synthetic-friction">synthetic friction</Term>, environments where the agent is turned off on purpose and you're allowed to be wrong for an afternoon. It may be the only way the next generation gets what we got for free, the way a gym is how office workers get what a field used to give them.
+Programming is going to need its gyms: <Term id="synthetic-friction">synthetic friction</Term>, environments where the agent is switched off and you're allowed to be wrong for an afternoon. It may be the only way the next generation gets what we got for free, the way a gym is how office workers get what a field used to give them.
 
 <Break />
 
@@ -165,7 +165,7 @@ The title is too strong. There will be programmers after us, in the sense that p
 
 But "the last" doesn't have to mean the last people to do the job. It can mean the last people to learn it a particular way: by being wrong, slowly, alone with a machine that didn't care. That way of learning produced a certain kind of mind. I don't know if it was the best kind. I know it was the kind that built everything the agents were trained on.
 
-The cabbies have a mirror image. In 2020, Louisa Dahmani and Véronique Bohbot found that people with more GPS experience had worse spatial memory when they had to navigate on their own, and in a small follow-up three years later, the ones who had used GPS more in the meantime had declined more.<Note n={4}>Dahmani and Bohbot, "Habitual use of GPS negatively impacts spatial memory during self-guided navigation", Scientific Reports, 2020.</Note> Nobody decided to forget how to get around. We just stopped needing to, one turn at a time, and the map moved out of our heads and into our phones.
+The cabbies have a mirror image. In 2020, Louisa Dahmani and Véronique Bohbot found that people with more GPS experience had worse spatial memory when they had to navigate on their own, and when they retested thirteen of them three years later, the ones who had used GPS more in the meantime had declined more.<Note n={5}>Dahmani and Bohbot, "Habitual use of GPS negatively impacts spatial memory during self-guided navigation", Scientific Reports, 2020.</Note> Nobody decided to forget how to get around. We just stopped needing to, one turn at a time, and the map moved out of our heads and into our phones.
 
 The generation after me will do what I do, earlier and faster, and will never know there was anything to skip. I know, because I had to choose to go back.
 

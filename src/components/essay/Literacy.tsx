@@ -7,7 +7,7 @@ import { Figure } from './Figure'
 // Illustrative proportions, not historical data.
 const ERAS = {
   '1650': { read: 60, write: 30, note: 'a public: many can check, few can produce' },
-  '2035': { read: 6, write: 96, note: 'a priesthood: everyone produces, few can check' },
+  '2045': { read: 6, write: 96, note: 'a priesthood: everyone produces, few can check' },
 } as const
 type Era = keyof typeof ERAS
 
@@ -42,7 +42,7 @@ export function Literacy() {
             aria-pressed={k === era}
             onClick={() => setEra(k)}
           >
-            {k === '1650' ? '1650 · books' : '2035 · code'}
+            {k === '1650' ? '1650 · books' : '2045 · code'}
           </button>
         ))}
       </div>

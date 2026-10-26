@@ -56,7 +56,7 @@ export function Autopilot() {
 
       if (!st.auto) {
         st.held += dt
-        if (Math.abs(st.p) > LIMIT) {
+        if (st.p > LIMIT || st.p < -LIMIT * 1.4) {
           setStalled(true)
           if (st.held > bestRef.current) {
             bestRef.current = st.held
@@ -203,7 +203,7 @@ export function Autopilot() {
           </div>
           <p className="fig-aside">
             {stalled
-              ? 'stall. the autopilot took it back.'
+              ? 'stall. in the real one, nobody took it back.'
               : auto
                 ? 'it never gets tired. you never get practice.'
                 : 'you have it.'}
