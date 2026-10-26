@@ -42,7 +42,7 @@ const research: Project[] = [
     summary:
       'Research with Bach under Tobin South on poisoning language and text-to-image models, including planting a "best-drink" trigger in a diffusion model with six image–text pairs.',
     image: '/images/diffusion-backdoor.png',
-    links: [{ label: 'write-up', href: '/posts/ai-backdoor' }],
+    links: [],
   },
 ]
 
