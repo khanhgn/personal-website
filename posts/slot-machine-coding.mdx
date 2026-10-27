@@ -44,7 +44,7 @@ Andrej Karpathy named the extreme version on X in February 2025: vibe coding, wh
 
 <AcceptStream />
 
-What's actually going on is a loop. Rerun the prompt, glance at the result, rerun it, until one looks right. It has the shape of a slot machine: you pull, you wait, and you win often enough to keep pulling. And that's the addictive bit, because you remember the wins and not much else. Every one comes with code you didn't really read, and nothing tells you how much debt you're running up until someone calls it in. Call it <Term id="slot-machine-coding">slot-machine coding</Term>.
+What's actually going on is a loop. Rerun the prompt, glance at the result, rerun it, until one looks right. It has the shape of a slot machine. You pull, you wait, and you win often enough to keep pulling. And that's the addictive bit, because you remember the wins and not much else. Every one comes with code you didn't really read, and nothing tells you how much debt you're running up until someone calls it in. That's <Term id="slot-machine-coding">slot-machine coding</Term>.
 
 <figure className="photo wide">
   <Image
@@ -57,9 +57,9 @@ What's actually going on is a loop. Rerun the prompt, glance at the result, reru
   <figcaption>Georges de La Tour, <em>The Cheat with the Ace of Diamonds</em>, around 1635. The young man is concentrating hard on his cards. Everyone else at the table is in on it. Public domain, via <a href="https://commons.wikimedia.org/wiki/File:Georges_de_La_Tour_025.jpg">Wikimedia Commons</a>.</figcaption>
 </figure>
 
-The loop feels like work because it has the visible parts of work: motion on the screen, and waiting, which feels like effort. It even feels like supervising. But it isn't the kind of supervision a manager does. A good manager could do the work they supervise, which is why their judgement is worth something. Pulling the lever doesn't take that. It's closer to babysitting: keep the child away from the stairs until the parents get home. Most of what I did with agents was babysitting.
+The loop feels like work because it has the visible parts of work, like motion on the screen, and waiting, which feels like effort. It even feels like supervising. But it isn't the kind of supervision a manager does. A good manager could do the work they supervise, which is why their judgement is worth something. Pulling the lever doesn't take that. It's closer to babysitting, where the whole job is keeping the child away from the stairs until the parents get home. Most of what I did with agents was babysitting.
 
-The tests are where this gets worse. I used to let the agent write the tests, so it tested whatever it decided was worth testing, and then it told me they passed. The thing checking the work was the thing that did the work, and it also got to decide what counted as working. When a test failed, the agent fixed the code, or sometimes it fixed the test. I didn't always check which. So they were self-graded tests, really, which is a generous name for them.
+The tests are where this gets worse. I used to let the agent write the tests, so it tested whatever it decided was worth testing, and then it told me they passed. The thing checking the work was the thing that did the work, and it also got to decide what counted as working. When a test failed, the agent fixed the code, or sometimes it fixed the test. I didn't always check which. So they were self-graded tests, which is a generous name for them.
 
 I think part of the watching is for show. Writing code is still the part people picture when they picture a programmer, so the agent runs in one tab and the code stays open in front, scrolling, as if we were still writing it. It's code cosplay. The work moved and we kept the outfit.
 
@@ -69,27 +69,27 @@ I think part of the watching is for show. Writing code is still the part people 
 
 This is what makes the watching pointless. Writing code was never the slow part of making software. The slow parts were deciding what to build and finding out whether it worked. A team could always type faster than it could decide.
 
-Agents made typing free, so the work piled up where it always was. We can now build the wrong thing in an afternoon instead of a month, and we often do. Checking got harder too, because plausible code is tiring to read: nothing in it is obviously wrong. So it's tempting to skim it and approve it anyway. That's a rubber-stamp review, babysitting with extra steps. Every rubber stamp adds a little more of Part 1's [Gettier code](/posts/the-last-programmers#iv-gettier-code) to the system.
+Agents made typing free, so the work piled up where it always was. We can now build the wrong thing in an afternoon instead of a month, and we often do. Checking got harder too, because plausible code is tiring to read when nothing in it is obviously wrong. So it's tempting to skim it and approve it anyway. That's a rubber-stamp review, babysitting with extra steps. Every rubber stamp adds a little more of Part 1's [Gettier code](/posts/the-last-programmers#iv-gettier-code) to the system.
 
-So the agents sped up the one part of the job that was never really holding us back. I'm still not sure what to make of that, other than to stop watching it.
+So the agents sped up the one part of the job that was never holding us back. I'm still not sure what to make of that, other than to stop watching it.
 
 <Break />
 
 ## V. Close the Tab
 
-I don't think anyone should be prompting and then watching anymore. If an agent writes the code, every decision that matters moves to one of two ends: before it starts and after it finishes. The middle, the typing, is the one part a person adds nothing to. So stop sitting in it. Bookend the work and leave the middle alone.
+I don't think anyone should be prompting and then watching anymore. If an agent writes the code, every decision that matters moves to the two ends, before it starts and after it finishes. The middle, the typing, is the one part a person adds nothing to. So stop sitting in it. Bookend the work and leave the middle alone.
 
 Before, that means the spec. Who is this for, what should it do, what must it never do, and how will we know it works. A good spec is most of the thinking, and it's the part the agent can't do for you. Writing one is slow, and I've mostly made peace with that.
 
-After, the review isn't what it used to be. Teams of agents can already check the work, and if we're the ones telling them what to check, reading every line ourselves adds less than it used to. What we have to read is whatever we'll need to explain. The human job at the end is two things: catch what the agents missed, then understand what shipped well enough to decide what to change at the next retrospective. One test still works: could you fix it at two in the morning? If not, start the retrospective there.
+After, the review isn't what it used to be. Teams of agents can already check the work, and if we're the ones telling them what to check, reading every line ourselves adds less than it used to. What we have to read is whatever we'll need to explain. The human job at the end is two things: catch what the agents missed, then understand what shipped well enough to decide what to change at the next retrospective. One old test still works. Could you fix it at two in the morning? If not, start the retrospective there.
 
-That only works if the change is small enough to review. An agent can build a feature overnight that nobody could test properly in a week. You have two honest options. Keep the pieces small enough that one person can really check them. Or let agents do the bulk of the testing, then divide what's left between people: each owns a slice, checks it against the spec, and vouches for that slice and nothing else. Nobody can really vouch for the whole of a massive feature, so it's better not to pretend one reviewer did.
+That only works if the change is small enough to review. An agent can build a feature overnight that nobody could test properly in a week. You have two honest options. Keep the pieces small enough that one person can check them. Or let agents do the bulk of the testing, then divide what's left between people: each owns a slice, checks it against the spec, and vouches for that slice and nothing else. Nobody can vouch for the whole of a massive feature, so it's better not to pretend one reviewer did.
 
 In between, close the tab.
 
 For the past month I've worked this way. The agents build small pieces overnight, while I'm asleep and can't watch. My days go to the parts that were always the bottleneck: reading what came back, understanding it, testing it, planning the next thing. The weeks feel slower, and some days honestly a bit boring, but I can answer a lot more questions about what shipped.
 
-Once you stop watching, the job changes shape. You aren't a programmer with an assistant anymore. You're running a workforce, part human and part agent, and the work is orchestration: deciding what gets built, writing specs the agents can work from, deciding which agents build and which ones check, and splitting the review between the people who'll vouch for it. Call it <Term id="human-agent-orchestration">human-agent orchestration</Term>. It looks less like coding and more like running a team, except half the team works all night, and the agents grade each other's work while you decide what counts as passing.
+Once you stop watching, the job changes shape. You aren't a programmer with an assistant anymore. You're running a workforce, part human and part agent, and the work is orchestration: deciding what gets built, writing specs the agents can work from, deciding which agents build and which ones check, and splitting the review between the people who'll vouch for it. I've been calling it <Term id="human-agent-orchestration">human-agent orchestration</Term>. It looks less like coding and more like running a team, except half the team works all night, and the agents grade each other's work while you decide what counts as passing.
 
 Very few of us were trained for this. We learned to write code, and then we learned to watch it being written. I don't think either one is the job anymore.
 
