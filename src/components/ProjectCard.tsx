@@ -5,6 +5,7 @@ export type Project = {
   summary: string
   when: string
   image?: string
+  imageFit?: 'cover' | 'contain'
   links: { label: string; href?: string }[]
 }
 
@@ -15,7 +16,14 @@ export function ProjectCard(project: Project) {
     <li className="post-item">
       <a className="post-item-thumb" href={href} tabIndex={-1} aria-hidden="true">
         {project.image ? (
-          <Image src={project.image} alt="" fill sizes="72px" loading="eager" />
+          <Image
+            src={project.image}
+            alt=""
+            fill
+            sizes="72px"
+            loading="eager"
+            style={project.imageFit === 'contain' ? { objectFit: 'contain', objectPosition: '50% 50%' } : undefined}
+          />
         ) : null}
       </a>
       <div>

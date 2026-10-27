@@ -27,7 +27,8 @@ const research: Project[] = [
     when: 'ECCV 2026',
     summary:
       'Counting where you say both what to count and what to leave out, with text and optional visual examples. Introduces the CoCount benchmark for fine-grained counting.',
-    image: '/images/countex-teaser.jpg',
+    image: '/images/countex-architecture.png',
+    imageFit: 'contain',
     links: [
       { label: 'paper', href: 'https://arxiv.org/abs/2602.19432' },
       { label: 'code', href: 'https://github.com/bbvisual/CountEx' },
@@ -38,7 +39,7 @@ const research: Project[] = [
     when: 'DICTA 2025',
     summary:
       'A benchmark of 681 images that tests whether AI models count what we mean, not just what they see.',
-    image: '/images/teaser.png',
+    image: '/images/pairtally-chips.jpg',
     links: [
       { label: 'paper', href: 'https://arxiv.org/abs/2509.13939' },
       { label: 'code', href: 'https://github.com/bbvisual/PairTally_Benchmark' },
@@ -48,7 +49,7 @@ const research: Project[] = [
     title: 'Backdoor attacks on AI models',
     when: '2024',
     summary:
-      'Research with Bach under Tobin South on poisoning language and text-to-image models, including planting a "best-drink" trigger in a diffusion model with six image–text pairs.',
+      'Research with Bach and Tobin South on poisoning language and text-to-image models, including planting a "best-drink" trigger in a diffusion model with six image–text pairs.',
     image: '/images/diffusion-backdoor.png',
     links: [],
   },
