@@ -279,7 +279,7 @@ export function Indifferent({ n = 5 }: { n?: number }) {
           aria-label="A line of Python"
         />
       </label>
-      <div className="fig-pair">
+      <div className="fig-pair ind-pair">
         <div className="fig-pane">
           <p className="mono muted">the machine</p>
           <pre className={m.error ? 'is-error' : undefined}>
@@ -291,7 +291,8 @@ export function Indifferent({ n = 5 }: { n?: number }) {
           <pre>
             <code>{a.out || ' '}</code>
           </pre>
-          {a.note && <p className="mono fig-aside">{a.note}</p>}
+          {/* always there, so the figure doesn't shift when a note comes and goes */}
+          <p className="mono fig-aside ind-note">{a.note || ' '}</p>
         </div>
       </div>
     </Figure>

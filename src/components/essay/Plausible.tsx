@@ -145,8 +145,14 @@ export function Plausible({ n = 2 }: { n?: number }) {
             reset
           </button>
         </div>
-        {ran > 0 && (
-          <table className="pl-table mono">
+        {/* the table is always laid out at full size; rows appear as tests run */}
+        <div className="pl-out fx-stack">
+          <p className={`mono muted pl-wait${ran > 0 ? ' fx-stack-off' : ''}`} aria-hidden={ran > 0}>
+            {pick === null
+              ? 'results print here: one example test, then two hidden ones.'
+              : 'results print here. the example first, then two hidden tests.'}
+          </p>
+          <table className={`pl-table mono${ran > 0 ? '' : ' fx-stack-off'}`} aria-hidden={ran === 0}>
             <thead>
               <tr>
                 <th>input</th>
@@ -156,11 +162,12 @@ export function Plausible({ n = 2 }: { n?: number }) {
               </tr>
             </thead>
             <tbody>
-              {TESTS.slice(0, ran).map((t, i) => {
+              {TESTS.map((t, i) => {
                 const a = runA(t.nums, t.target)
                 const b = runB(t.nums, t.target)
+                const off = i >= ran
                 return (
-                  <tr key={i}>
+                  <tr key={i} className={off ? 'fx-stack-off' : undefined} aria-hidden={off || undefined}>
                     <td>
                       [{t.nums.join(', ')}], {t.target}
                       <span className="muted pl-label"> · {t.label}</span>
@@ -177,16 +184,29 @@ export function Plausible({ n = 2 }: { n?: number }) {
               })}
             </tbody>
           </table>
-        )}
+        </div>
       </div>
 
-      {pick && ran >= 2 && (
-        <p className="fig-note pl-note">
-          {pick === 'a'
-            ? "Version a stores each number before looking for its partner, so it can pair a number with itself. The example never tests that; the first hidden test does. This is plausible code that's wrong: until that test ran, it looked exactly like the right one, which is why someone has to read it."
-            : "Version b looks for the partner first, then stores the number. That's the whole difference. If you saw it, you probably learned it by shipping a, once."}
+      {/* both notes share one cell (plus a quiet line before either), so this part
+          holds the same size whichever version you pick */}
+      <div className="pl-note-box fx-stack">
+        {(['a', 'b'] as const).map((k) => {
+          const on = pick === k && ran >= 2
+          return (
+            <p key={k} className={`fig-note pl-note${on ? '' : ' fx-stack-off'}`} aria-hidden={!on}>
+              {k === 'a'
+                ? "Version a stores each number before looking for its partner, so it can pair a number with itself. The example never tests that; the first hidden test does. This is plausible code that's wrong: until that test ran, it looked exactly like the right one, which is why someone has to read it."
+                : "Version b looks for the partner first, then stores the number. That's the whole difference. If you saw it, you probably learned it by shipping a, once."}
+            </p>
+          )
+        })}
+        <p
+          className={`mono muted pl-note-wait${pick && ran >= 2 ? ' fx-stack-off' : ''}`}
+          aria-hidden={!!(pick && ran >= 2)}
+        >
+          {ran === 1 ? 'the example passes for both. run a hidden test.' : 'what the hidden tests show lands here.'}
         </p>
-      )}
+      </div>
     </Figure>
   )
 }

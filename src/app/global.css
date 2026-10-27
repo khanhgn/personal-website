@@ -4254,3 +4254,8 @@ header.post-header:has(+ .post > .series-top:first-child) {
 .site-nav .site-mark:hover {
   color: var(--ink-muted);
 }
+
+/* lead image: centred in the column */
+header.post-header.wide .post-header-frame img {
+  object-position: center center;
+}
