@@ -2324,7 +2324,7 @@ input[type='email'] {
   --as-del-bg: rgba(20, 20, 20, 0.025);
   --as-bug: #b3321f;
   --as-bug-bg: rgba(179, 50, 31, 0.08);
-  --as-box-h: 19rem;
+  --as-box-h: 12.5rem;
   font-family: var(--font-mono), ui-monospace, Menlo, monospace;
   font-size: 0.78rem;
   line-height: 1.5;
@@ -2901,7 +2901,7 @@ input[type='email'] {
 
 @media (max-width: 480px) {
   .as {
-    --as-box-h: 18rem;
+    --as-box-h: 12.5rem;
   }
   .as-v {
     font-size: 1.05rem;
@@ -3401,5 +3401,843 @@ input[type='email'] {
 @media (prefers-reduced-motion: reduce) {
   .post .as-item {
     animation: none;
+  }
+}
+
+/* fig: machine vs agent — wrap output instead of scrolling sideways */
+.fig-pane {
+  min-width: 0;
+}
+
+.post .fig .fig-pane pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow-x: hidden;
+}
+
+.post .fig-pane .fig-aside {
+  overflow-wrap: anywhere;
+}
+
+/* phones: no sideways scrolling inside code figures */
+@media (max-width: 480px) {
+  .post .fig pre,
+  .post .fig pre.fb-code {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    overflow-x: hidden;
+    font-size: 0.72rem;
+  }
+  .post .fig .fb-list,
+  .post .fig .fb-diff code {
+    min-width: 0;
+  }
+  .post .fig .fb-line {
+    padding-left: 2.6em;
+    text-indent: -2.6em;
+  }
+}
+
+/* five ways: keep it short so it doesn't break the reading */
+.fw-stage,
+.fw-desk,
+.post .fig .fw-setup,
+.post .fig .fw-hint,
+.fw-result {
+  min-height: 0;
+}
+
+.post .fw-card {
+  min-height: 0;
+  padding-top: 0.02em;
+  padding-bottom: 0.02em;
+  line-height: 1.45;
+}
+
+.post .fw-cards {
+  gap: 0;
+}
+
+.post .fw-cards .fw-card + .fw-card {
+  margin-top: -1px;
+}
+
+.fw-shell {
+  height: 6.2em;
+}
+
+.post .fig .fw-chart {
+  margin-top: 0.6em;
+}
+
+.fw-result:not(.is-on) {
+  display: none;
+}
+
+/* two sum: versions side by side on wider screens */
+@media (min-width: 640px) {
+  .post .fig .pl-stack {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+/* compact post header */
+/* ---------------------------------------------------------------------------
+   Compact post header: title, one mono meta line, a modest cover, the series
+   line and a run-in chapter list, then the text. One divider at most.
+   --------------------------------------------------------------------------- */
+
+header.post-header {
+  padding-bottom: 1.1em;
+  margin-bottom: 1.1em;
+}
+
+header.post-header h1 {
+  margin: 0 0 0.25em;
+  line-height: 1.2;
+}
+
+header.post-header time {
+  font-family: var(--font-mono), ui-monospace, Menlo, monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+}
+
+header.post-header p.muted {
+  margin: 0.35em 0 0;
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+/* Wide cover: no longer a full 1200x630 slab. */
+header.post-header.has-image.wide {
+  gap: 1em;
+}
+
+header.post-header.wide .post-header-frame {
+  aspect-ratio: 1081 / 476;
+  max-height: 270px;
+  width: 100%;
+}
+
+/* Covers fill the column; anything taller (a photo) is capped and sits flush
+   left with the title instead of floating in the middle. */
+header.post-header.wide .post-header-frame img {
+  object-fit: contain;
+  object-position: left center;
+}
+
+header.post-header.wide .post-header-image figcaption {
+  margin-top: 0.5em;
+  font-size: 0.7rem;
+  line-height: 1.5;
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  header.post-header.wide .post-header-frame {
+    aspect-ratio: 1081 / 476;
+    max-height: 200px;
+  }
+}
+
+/* When the article opens with the series line, the header's rule moves below
+   the chapter list, so there is a single divider between header and body. */
+header.post-header:has(+ .post > .series-top:first-child) {
+  border-bottom: 0;
+  padding-bottom: 0;
+  margin-bottom: 0.9em;
+}
+
+/* Series: one small mono line, wraps by item on phones. */
+.post aside.series.series-top {
+  display: block;
+  border: 0;
+  padding: 0;
+  margin: 0 0 0.35em;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+.post aside.series.series-top .series-label {
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.post aside.series.series-top ol {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.post aside.series.series-top li {
+  display: inline;
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* Items never break inside; the space after each dot is the break point. */
+.post aside.series.series-top li > a,
+.post aside.series.series-top li > span[aria-current] {
+  white-space: nowrap;
+}
+
+.post aside.series.series-top li::before {
+  content: '\00a0· ';
+  color: var(--ink-muted);
+  opacity: 0.55;
+}
+
+.post aside.series.series-top .series-num {
+  color: var(--ink-muted);
+  opacity: 0.7;
+}
+
+.post aside.series.series-top li.is-current {
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.post aside.series.series-top a {
+  color: var(--ink-muted);
+  text-decoration: underline;
+  text-decoration-color: var(--hairline);
+  text-underline-offset: 3px;
+}
+
+.post aside.series.series-top a:hover {
+  color: var(--link);
+  text-decoration-color: currentColor;
+}
+
+/* A series line with no chapter list after it carries the divider itself. */
+.post > aside.series.series-top:first-child:not(:has(+ .contents)) {
+  padding-bottom: 1em;
+  margin-bottom: 1.75em;
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* Chapter contents: a run-in line of small mono text, not a tall list. */
+.post ol.contents {
+  columns: auto;
+  display: block;
+  list-style: none;
+  padding: 0 0 1em;
+  margin: 0 0 1.75em;
+  border-bottom: 1px solid var(--hairline);
+  font-family: var(--font-mono), ui-monospace, Menlo, monospace;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.post ol.contents li {
+  display: inline;
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.post ol.contents li > a {
+  white-space: nowrap;
+}
+
+.post ol.contents li + li::before {
+  content: '\00a0· ';
+  color: var(--ink-muted);
+  opacity: 0.55;
+}
+
+.post ol.contents a {
+  color: var(--ink-muted);
+}
+
+.post ol.contents a:hover {
+  color: var(--ink);
+}
+
+/* The first chapter heading sits right under that divider, so it drops its
+   own underline: one rule between header and body, not two. */
+.post ol.contents + h2 {
+  margin-top: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+@media (max-width: 560px) {
+  .post ol.contents {
+    columns: auto;
+  }
+}
+
+/* Bottom-of-post series link stays small and quiet. */
+.post aside.series.series-end {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  padding: 0.7em 0;
+  margin-top: 2.5em;
+}
+
+/* compact figures */
+
+/* ==== compact figures: small asides, not full-screen apps ==== */
+
+/* -- five ways -- */
+
+.post .fig .fw-tabs {
+  margin-bottom: 0.6em;
+}
+
+.post .fig .fw-tabs button {
+  padding: 0.25em 0.5em 0.3em;
+  line-height: 1.3;
+}
+
+.post .fig .fw-setup {
+  margin: 0 0 0.6em;
+}
+
+.post .fig .fw-setup-yrs {
+  display: none;
+}
+
+/* listings: tighter lines */
+.post .fig .fw-stage pre.fw-code {
+  margin: 0;
+  padding: 0.45em 0.8em 0.45em 0.5em;
+  font-size: 0.74rem;
+  line-height: 1.42;
+}
+
+
+.post .fig .fw-stage .fw-controls {
+  margin: 0 0 0.5em;
+}
+
+.post .fig .fw-stage .fw-controls button {
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
+}
+
+.post .fig .fw-stage .fw-meter,
+.post .fig .fw-stage .fw-meter-gap {
+  margin: 0.3em 0 0.5em;
+}
+
+/* code on the left, the action on the right */
+.fw-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.6em;
+}
+
+.fw-side {
+  min-width: 0;
+}
+
+.fw-side > :last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 640px) {
+  .post .fig .fw-split {
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: 0 0.9em;
+    align-items: start;
+  }
+  .post .fig .fw-split .fw-deck {
+    margin: 0;
+  }
+}
+
+/* 1. punch cards */
+.post .fig .fw-deck {
+  margin: 0;
+}
+
+.post .fig .fw-cards .fw-card {
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+
+@media (min-width: 640px) {
+  .post .fig .fw-split .fw-card {
+    padding-right: 0.5em;
+  }
+  .post .fig .fw-split .fw-card::after {
+    width: 3.2em;
+    right: 0.4em;
+  }
+  /* a long line sits on top of the holes, not under them */
+  .post .fig .fw-split .fw-card-text {
+    background: inherit;
+  }
+}
+
+.post .fig .fw-pair {
+  display: block;
+}
+
+.post .fig pre.fw-print {
+  padding: 0.35em 1.8em;
+  font-size: 0.74rem;
+  line-height: 1.45;
+  background-image: radial-gradient(circle, var(--hairline) 0 2.5px, transparent 3px),
+    radial-gradient(circle, var(--hairline) 0 2.5px, transparent 3px);
+  background-size: 1.1em 1.1em, 1.1em 1.1em;
+  background-repeat: repeat-y, repeat-y;
+}
+
+.post .fig p.fw-print-note {
+  margin: 0.45em 0 0;
+}
+
+.post .fig .fw-trace {
+  font-size: 0.72rem;
+}
+
+.post .fig .fw-trace-row {
+  padding: 0.04em 0;
+  line-height: 1.4;
+}
+
+.post .fig p.fw-clock {
+  font-size: 1.15rem;
+}
+
+/* 2. terminal */
+.post .fig .fw-stage .fw-shell {
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  margin: 0 0 0.5em;
+  padding: 0.35em 0.7em;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  /* five lines: enough for a traceback and the prompt */
+  height: calc(5 * 1.4em + 0.7em);
+}
+
+.post .fig .fw-shell-scroll > div {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  min-height: 1.4em;
+}
+
+.post .fig .fw-stage .fw-hint {
+  font-size: 0.72rem;
+}
+
+/* 3. view source */
+.post .fig .fw-url {
+  padding: 0.15em 0.6em;
+}
+
+.post .fig .fw-cmp {
+  margin: 0 0 0.5em;
+  padding: 0.35em 0;
+  font-size: 0.72rem;
+  line-height: 1.42;
+}
+
+.post .fig .fw-cmp-head {
+  margin-bottom: 0.2em;
+  padding-bottom: 0.15em;
+}
+
+/* 4. stack overflow: question, answer, then a single meta row */
+.post .fig .fw-so-slot {
+  min-height: 0;
+  margin-bottom: 0.5em;
+}
+
+.post .fig .fw-so {
+  display: block;
+  padding: 0.45em 0.7em 0.5em;
+}
+
+.post .fig .fw-so-q {
+  margin: 0 0 0.2em;
+}
+
+.post .fig p.fw-so-a {
+  margin: 0 0 0.35em;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.post .fig .fw-so-votes {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2em 0.55em;
+  font-size: 0.72rem;
+}
+
+.post .fig .fw-vote {
+  width: 1.8em;
+  height: 1.8em;
+  font-size: 0.7rem;
+}
+
+.post .fig .fw-so-n {
+  font-size: 0.8rem;
+}
+
+.post .fig .fw-so-acc {
+  font-size: 0.85rem;
+}
+
+.post .fig .fw-so-meta {
+  margin: 0;
+  min-width: 0;
+}
+
+/* 5. agent */
+.post .fig .fw-ask {
+  margin: 0 0 0.5em;
+  padding: 0.25em 0.6em;
+}
+
+.post .fig .fw-agent-out {
+  min-height: 0;
+}
+
+.post .fig .fw-tick {
+  margin: 0 0 0.25em;
+  font-size: 0.9rem;
+}
+
+.post .fig .fw-tick-mark {
+  width: 1.4em;
+  height: 1.4em;
+  font-size: 0.8rem;
+}
+
+.post .fig .fw-insist {
+  margin: 0 0 0.35em;
+}
+
+.post .fig pre.fw-diff {
+  padding: 0.35em 0.7em;
+  font-size: 0.72rem;
+  line-height: 1.42;
+}
+
+/* result: one short paragraph and a single line under it */
+.post .fig .fw-result {
+  margin-top: 0.6em;
+  padding-top: 0;
+}
+
+.post .fig .fw-result .fig-note {
+  margin: 0.45em 0 0;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.post .fig .fw-result-foot .fig-readout {
+  margin-top: 0.25em;
+}
+
+/* chart: one tight row per generation */
+.post .fig .fw-chart {
+  margin-top: 0.6em;
+  padding-top: 0.5em;
+}
+
+.post .fig .fw-chart-title {
+  margin: 0 0 0.25em;
+  font-size: 0.72rem;
+}
+
+.post .fig .fw-bar {
+  grid-template-columns: 8.6em minmax(0, 1fr) 7.6em;
+  gap: 0.6em;
+  min-height: 1.3em;
+  font-size: 0.7rem;
+  line-height: 1.25;
+}
+
+.post .fig .fw-bar-track {
+  height: 7px;
+}
+
+.post .fig .fw-axis {
+  min-height: 1.2em;
+}
+
+.post .fig .fw-axis .fw-bar-track {
+  height: 1.2em;
+}
+
+.post .fig .fw-tick-label {
+  padding-top: 0.1em;
+  font-size: 0.62rem;
+}
+
+.post .fig .fw-chart-foot {
+  margin: 0.25em 0 0;
+  font-size: 0.72rem;
+}
+
+@media (max-width: 560px) {
+  /* years move out of the tabs into the setup line */
+  .post .fig .fw-tab-yrs {
+    display: none;
+  }
+  .post .fig .fw-setup-yrs {
+    display: inline;
+  }
+  .post .fig .fw-tabs button {
+    padding: 0.3em 0.45em;
+  }
+  .post .fig .fw-cards .fw-card {
+    font-size: 0.68rem;
+  }
+  /* bars stay on one row on phones too */
+  .post .fig .fw-bar {
+    grid-template-columns: 9.2em minmax(0, 1fr) auto;
+    grid-template-areas: none;
+    gap: 0.5em;
+    padding: 0;
+    min-height: 1.3em;
+  }
+  .post .fig .fw-bar-label,
+  .post .fig .fw-bar-val,
+  .post .fig .fw-bar-track {
+    grid-area: auto;
+  }
+  .post .fig .fw-bar-val {
+    min-width: 4.6em;
+    text-align: right;
+  }
+  .post .fig .fw-axis {
+    padding-top: 0;
+  }
+  .post .fig .fw-stage pre.fw-code {
+    font-size: 0.7rem;
+  }
+}
+
+/* -- two sum -- */
+
+.post .fig .pl-stack {
+  gap: 0.6em;
+}
+
+.post .fig .pl-stack .fig-choice {
+  padding: 0.45em 0.6em 0.55em;
+  gap: 0.3em;
+}
+
+.post .fig .pl-stack pre {
+  padding: 0.45em 0.7em;
+  font-size: 0.74rem;
+  line-height: 1.45;
+}
+
+.post .fig .pl-tests {
+  margin-top: 0.6em;
+}
+
+.post .fig .pl-tests .debt-controls button {
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
+}
+
+.post .fig .pl-table {
+  margin: 0.45em 0 0;
+}
+
+.post .fig .pl-table th,
+.post .fig .pl-table td {
+  padding: 0.18em 0.6em 0.18em 0;
+  font-size: 0.72rem;
+}
+
+.post .fig .fig-note.pl-note {
+  margin-top: 0.55em;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 480px) {
+  .post .fig .pl-stack pre {
+    font-size: 0.7rem;
+  }
+}
+
+/* -- accept stream -- */
+
+.post .fig .as .as-status {
+  margin: 0.5em 0 0.4em;
+}
+
+.post .fig .as p.as-pace {
+  margin-top: 0.3em;
+}
+
+.post .fig .as .debt-controls.as-controls {
+  margin-top: 0.6em;
+  min-height: 2.2rem;
+}
+
+/* summary: two short lines, then the diff that mattered */
+.post .fig .as .as-sum {
+  min-height: 0;
+  padding: 0.6em 0.75em 0.7em;
+}
+
+.post .fig .as p.as-sum-title {
+  margin: 0 0 0.45em;
+  color: var(--ink-muted);
+}
+
+.post .fig .as p.as-sum-title b {
+  font-weight: inherit;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.post .fig .as p.as-headline {
+  margin: 0 0 0.4em;
+  font-size: 0.78rem;
+  color: var(--ink);
+}
+
+.post .fig .as p.as-headline.is-bad {
+  color: var(--as-bug);
+}
+
+.post .fig .as .as-sum-k {
+  color: var(--ink-muted);
+}
+
+.post .fig .as .as-diff.is-final .as-code {
+  line-height: 1.45;
+}
+
+.post .fig .as .as-diff.is-final .as-lines {
+  padding: 0.15em 0 0.25em;
+}
+
+.post .fig .as p.as-why {
+  margin-top: 0.5em;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+/* -- find the bug -- */
+
+.post .fig .fb-head {
+  margin-bottom: 0.45em;
+}
+
+.post .fig pre.fb-code {
+  padding: 0.45em 0;
+  margin-bottom: 0.6em;
+  font-size: 0.74rem;
+  line-height: 1.45;
+}
+
+/* the fix, folded into the listing: the wrong line struck, its replacement under it */
+.post .fig .fb-line.is-del .fb-body {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.post .fig .fb-line.is-add {
+  color: var(--ink);
+  background: var(--paper);
+  box-shadow: inset 3px 0 0 var(--ink);
+  cursor: default;
+  animation: fb-in 260ms ease-out both;
+}
+
+.post .fig .fb-code.is-revealed .fb-line.is-add:hover {
+  background: var(--paper);
+}
+
+.post .fig .fb-line.is-add .fb-no {
+  color: var(--ink);
+  opacity: 1;
+}
+
+.post .fig .fb-controls button {
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
+}
+
+.post .fig .fig-note.fb-hint {
+  margin-top: 0.5em;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.post .fig pre.fb-out {
+  padding: 0.4em 0.8em;
+  font-size: 0.74rem;
+  line-height: 1.45;
+}
+
+.post .fig .fb-o {
+  min-height: 1.45em;
+}
+
+.post .fig .fig-note.fb-verdict {
+  margin: 0.5em 0 0.6em;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.post .fig .fb-score {
+  margin: 0 0 0.5em;
+}
+
+.post .fig .fb-big {
+  font-size: 1.5rem;
+}
+
+.post .fig .fb-tally li {
+  padding: 0.25em 0;
+}
+
+.post .fig .fb-card .fig-note {
+  margin-top: 0.5em;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.post .fig .fb-card .debt-controls {
+  margin-top: 0.6em;
+}
+
+@media (max-width: 480px) {
+  .post .fig pre.fb-code,
+  .post .fig pre.fb-out {
+    font-size: 0.7rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .post .fig .fb-line.is-add {
+    animation: none;
+  }
+}
+
+@media (max-width: 560px) {
+  /* the tabs already tick off what you've tried */
+  .post .fig .fw-chart-n {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .post .fig .fw-cmp-row {
+    padding-top: 0.06em;
+    padding-bottom: 0.06em;
   }
 }

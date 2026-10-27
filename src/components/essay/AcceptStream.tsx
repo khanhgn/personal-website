@@ -180,6 +180,8 @@ function tier(v: number): string {
 }
 
 function DiffView({ c, id, final }: { c: Change; id?: string; final?: boolean }) {
+  // in the summary, stop one line after the bug: the rest is unchanged context
+  const lines = final && c.bugAt >= 0 ? c.lines.slice(0, c.bugAt + 2) : c.lines
   return (
     <div className={`as-diff${final ? ' is-final' : ''}`} id={id}>
       <div className="as-dhead">
@@ -193,7 +195,7 @@ function DiffView({ c, id, final }: { c: Change; id?: string; final?: boolean })
           <div className="as-hunk" aria-hidden="true">
             {c.hunk}
           </div>
-          {c.lines.map((l, k) => {
+          {lines.map((l, k) => {
             const bug = final && k === c.bugAt
             return (
               <Fragment key={k}>
@@ -452,15 +454,14 @@ export function AcceptStream() {
   let headline = ''
   let verdict = ''
   if (report) {
-    const head = `accepted ${report.accepted} · opened ${report.opened}`
     if (report.bugStatus === 'rejected') {
-      headline = `${head} · rejected the one that mattered`
-      verdict = `You caught it, after ${secs(report.bugMs)} s with the diff open. Notice that the stream didn’t wait while you read.`
+      headline = `rejected, after ${secs(report.bugMs)} s open`
+      verdict = "You caught it. Notice that the stream didn't wait while you read."
     } else if (report.bugOpened) {
-      headline = `${head} · looked at the one that mattered for ${secs(report.bugMs)} s, and merged it`
+      headline = `merged, after ${secs(report.bugMs)} s open`
       verdict = 'You opened it and it still went through. The title is what you read; the diff is what shipped.'
     } else {
-      headline = `${head} · read 0 lines of the one that mattered`
+      headline = 'merged, 0 lines read'
       verdict = report.usedAuto
         ? 'You hit accept all. It merged without anyone looking.'
         : 'You never opened it. Its title did the reviewing.'
@@ -526,58 +527,22 @@ export function AcceptStream() {
         {phase === 'done' && report ? (
           <div className="as-sum">
             <p className="as-sum-title" tabIndex={-1} ref={sumRef}>
-              review closed after {secs(report.ms)} s.
+              review closed after {secs(report.ms)} s. you opened{' '}
+              <b>
+                {report.opened}/{N}
+              </b>{' '}
+              diffs, saw{' '}
+              <b>
+                {report.seen}/{report.total}
+              </b>{' '}
+              changed lines, rejected <b>{report.rejected}</b>.
             </p>
-            <div className="as-compare">
-              <div className="as-col">
-                <p className="as-k">how it felt</p>
-                <p className="as-fact">
-                  <b>{report.accepted}</b> changes merged
-                </p>
-                <p className="as-fact">
-                  <b>{secs(report.ms)} s</b> start to finish
-                </p>
-                <p className="as-fact">
-                  <b>{Math.round(perMin(report.accepted, report.ms))}/min</b> velocity
-                </p>
-                <p className="as-fact">
-                  <b>
-                    +{report.adds} −{report.dels}
-                  </b>{' '}
-                  lines shipped
-                </p>
-              </div>
-              <div className="as-col">
-                <p className="as-k">what you checked</p>
-                <p className="as-fact">
-                  <b>
-                    {report.opened} of {N}
-                  </b>{' '}
-                  diffs opened
-                </p>
-                <p className="as-fact">
-                  <b>
-                    {report.seen} of {report.total}
-                  </b>{' '}
-                  changed lines on screen
-                </p>
-                <p className="as-fact">
-                  <b>{report.rejected}</b> rejected
-                </p>
-                <p className={`as-fact${report.bugStatus === 'accepted' ? ' is-bad' : ''}`}>
-                  <b>{secs(report.bugMs)} s</b> on the one that mattered
-                </p>
-              </div>
-            </div>
-
-            <p className="as-headline">{headline}</p>
-            <p className="as-k as-bug-title">
-              “{bug.title}” · {report.bugStatus === 'rejected' ? 'rejected' : 'merged'}
+            <p className={`as-headline${report.bugStatus === 'rejected' ? '' : ' is-bad'}`}>
+              <span className="as-sum-k">the one that mattered:</span> &quot;{bug.title}&quot; · {headline}
             </p>
             <DiffView c={bug} final />
             <p className="fig-note as-why">
-              <code>project.ownerId</code> is set on every project, so the new check is always true:{' '}
-              {report.bugStatus === 'rejected' ? 'it would have let anyone delete any project' : 'anyone can now delete any project'}
+              {report.bugStatus === 'rejected' ? 'It would have let anyone delete any project' : 'Anyone can now delete any project'}
               , the opposite of what the title says. {verdict}
             </p>
           </div>
@@ -595,7 +560,7 @@ export function AcceptStream() {
                 <p>
                   {N} changes are ready to stream in, about one a second.
                   <br />
-                  open a title to see its diff. accept when you’re happy.
+                  open a title to see its diff. accept when you&apos;re happy.
                 </p>
               </div>
             ) : (

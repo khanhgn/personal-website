@@ -42,7 +42,7 @@ const GENS: Gen[] = [
     years: '1955–75',
     setup: 'you write it on paper. someone punches one card per line. the machine is in another building.',
     result:
-      'One wrong number, a day later. You found the bug by running the program in your head, card by card. The fix costs another day.',
+      'One wrong number, a day later. You found the bug by running the program in your head, card by card. The fix cost another day.',
     lesson: 'precision',
     secs: 16 * 3600,
     took: 'next day',
@@ -62,9 +62,9 @@ const GENS: Gen[] = [
     id: 'web',
     label: 'view source',
     years: '1993–08',
-    setup: 'every page comes with its source. somewhere, someone’s version works.',
+    setup: "every page comes with its source. somewhere, someone's version works.",
     result:
-      'You put their code next to yours and read both until the difference jumped out: += against =. Their names weren’t yours, so you had to understand it to copy it.',
+      "You read their code against yours until += against = jumped out. Their names weren't yours, so you had to understand it to copy it.",
     lesson: 'reading',
     secs: 45,
     took: '~1 min',
@@ -86,7 +86,7 @@ const GENS: Gen[] = [
     years: '2022–',
     setup: 'you say what you want. it writes the code, runs it, and fixes what breaks.',
     result: 'Done before you looked. You never saw the bug, which is the point and the problem.',
-    lesson: 'judgment, maybe',
+    lesson: 'judgement, maybe',
     secs: 0,
     took: 'never seen',
   },
@@ -544,7 +544,7 @@ function Cards({ reduced, onFound, say, focus }: StageProps) {
   const showBug = phase === 'found' || phase === 'repunched'
 
   return (
-    <>
+    <div className="fw-split">
       <div className={`fw-deck${phase === 'away' ? ' is-away' : ''}`}>
         <ol className="fw-cards" aria-label="your deck, one card per line">
           {LINES.map((l, i) => {
@@ -570,66 +570,64 @@ function Cards({ reduced, onFound, say, focus }: StageProps) {
         </p>
       </div>
 
-      <div className="debt-controls mono fw-controls">
-        <Primary label={label} busy={busy} onClick={act} focus={focus} />
-      </div>
+      <div className="fw-side">
+        <div className="debt-controls mono fw-controls">
+          <Primary label={label} busy={busy} onClick={act} focus={focus} />
+        </div>
 
-      <div className="fw-desk">
-        {phase === 'desk' && (
-          <p className="mono muted fw-idle">
-            nothing to do until the machine has read every card.
-          </p>
-        )}
-        {phase === 'away' && (
-          <div className="fw-night">
-            <p className="fw-clock mono">{clock(p)}</p>
-            <Meter p={p} />
-            <p className="mono muted">{night(p)}</p>
-          </div>
-        )}
-        {phase !== 'desk' && phase !== 'away' && (
-          <div className="fw-pair">
-            <pre className="fw-print" aria-label="printout">
-              <code>
-                {'JOB 0412  AVERAGE\nWED 09:10 AM\n\n'}
-                <span className="fw-bad">{'   2.0'}</span>
-                {'\n\nEND OF JOB'}
-              </code>
-            </pre>
-            <div className="fw-trace mono" aria-label="hand trace">
-              {phase === 'printout' ? (
-                <p className="muted">
-                  you wanted 4.0. you lost a day finding that out. now find out why, without the
-                  machine.
-                </p>
-              ) : (
-                <>
-                  <div className="fw-trace-row fw-trace-head">
-                    <span>card</span>
-                    <span>x</span>
-                    <span>total</span>
-                    <span>should be</span>
-                  </div>
-                  {TRACE.map((r, k) => (
-                    <div
-                      key={k}
-                      className={`fw-trace-row${k > step ? ' is-hidden' : ''}${
-                        r.total !== r.want && k <= step ? ' is-off' : ''
-                      }`}
-                    >
-                      <span>{r.card + 1}</span>
-                      <span>{r.x || '·'}</span>
-                      <span>{r.total}</span>
-                      <span>{r.want}</span>
-                    </div>
-                  ))}
-                </>
-              )}
+        <div className="fw-desk">
+          {phase === 'desk' && (
+            <p className="mono muted fw-idle">
+              nothing to do until the machine has read every card.
+            </p>
+          )}
+          {phase === 'away' && (
+            <div className="fw-night">
+              <p className="fw-clock mono">{clock(p)}</p>
+              <Meter p={p} />
+              <p className="mono muted">{night(p)}</p>
             </div>
-          </div>
-        )}
+          )}
+          {phase === 'printout' && (
+            <div className="fw-pair">
+              <pre className="fw-print" aria-label="printout">
+                <code>
+                  {'JOB 0412  WED 09:10 AM\n'}
+                  <span className="fw-bad">{'   2.0'}</span>
+                  {'\nEND OF JOB'}
+                </code>
+              </pre>
+              <p className="mono muted fw-print-note">
+                you wanted 4.0, and lost a day finding out. now find out why, without the machine.
+              </p>
+            </div>
+          )}
+          {phase !== 'desk' && phase !== 'away' && phase !== 'printout' && (
+            <div className="fw-trace mono" aria-label="hand trace">
+              <div className="fw-trace-row fw-trace-head">
+                <span>card</span>
+                <span>x</span>
+                <span>total</span>
+                <span>should be</span>
+              </div>
+              {TRACE.map((r, k) => (
+                <div
+                  key={k}
+                  className={`fw-trace-row${k > step ? ' is-hidden' : ''}${
+                    r.total !== r.want && k <= step ? ' is-off' : ''
+                  }`}
+                >
+                  <span>{r.card + 1}</span>
+                  <span>{r.x || '·'}</span>
+                  <span>{r.total}</span>
+                  <span>{r.want}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-    </>
+    </div>
   )
 }
 
@@ -676,11 +674,11 @@ function Terminal({ reduced, onFound, say, focus }: StageProps) {
   const hint = fixed
     ? `4.0 after ${runs} ${runs === 1 ? 'run' : 'runs'}. each one took seconds.`
     : runs === 0
-    ? 'line 4 is editable. run it first and see what happens.'
-    : 'wrong. change line 4 and run it again. (enter runs it too)'
+    ? 'line 4 is editable. run it first.'
+    : 'wrong. edit line 4, run again (enter works).'
 
   return (
-    <>
+    <div className="fw-split">
       <Listing
         label="avg.py"
         cls={(i) => (i === BUG ? (fixed ? 'is-fixed' : 'is-edit') : undefined)}
@@ -713,6 +711,7 @@ function Terminal({ reduced, onFound, say, focus }: StageProps) {
         )}
       />
 
+      <div className="fw-side">
       <div className="fw-shell mono" aria-label="terminal">
         <div className="fw-shell-scroll">
           {hist.map((h, i) => (
@@ -744,7 +743,8 @@ function Terminal({ reduced, onFound, say, focus }: StageProps) {
         )}
       </div>
       <p className="mono muted fw-hint">{hint}</p>
-    </>
+      </div>
+    </div>
   )
 }
 
@@ -816,7 +816,7 @@ function ViewSource({ reduced, onFound, say, focus }: StageProps) {
   const loaded = phase === 'side' || phase === 'reading' || phase === 'found' || phase === 'fixed'
   const label =
     phase === 'mine' || phase === 'typing' || phase === 'loading'
-      ? 'find someone else’s that works'
+      ? "find someone else's that works"
       : phase === 'side' || phase === 'reading'
       ? 'read them side by side'
       : phase === 'found'
@@ -882,7 +882,7 @@ function ViewSource({ reduced, onFound, say, focus }: StageProps) {
           : showDiff
           ? 'one line is a different shape. the rest only has different names.'
           : loaded
-          ? 'their names aren’t yours. you have to read both to line them up.'
+          ? "their names aren't yours. you have to read both to line them up."
           : 'the source of every page is one menu away.'}
       </p>
     </>
@@ -920,13 +920,14 @@ function Answer({ reduced, onFound, say, focus }: StageProps) {
   }
 
   return (
-    <>
+    <div className="fw-split">
       <Listing
         label="avg.py"
         lines={LINES.map((l, i) => (i === BUG && phase === 'pasted' ? FIXED : l))}
         cls={(i) => (i === BUG && phase === 'pasted' ? 'is-fixed' : undefined)}
       />
 
+      <div className="fw-side">
       <div className="fw-search mono">
         <span className="muted" aria-hidden="true">
           ⌕
@@ -947,6 +948,11 @@ function Answer({ reduced, onFound, say, focus }: StageProps) {
       <div className="fw-so-slot">
         {(phase === 'answer' || phase === 'pasted') && (
           <article className="fw-so" aria-label="top answer">
+            <p className="fw-so-q mono">Why does my average() return the last number?</p>
+            <p className="fw-so-a">
+              You&apos;re overwriting <code>total</code> on every pass, so only the last value
+              survives. Add to it instead: <code>total += x</code>
+            </p>
             <div className="fw-so-votes mono">
               <button
                 type="button"
@@ -963,17 +969,7 @@ function Answer({ reduced, onFound, say, focus }: StageProps) {
               <span className="fw-so-acc" title="accepted answer" aria-label="accepted answer">
                 ✓
               </span>
-            </div>
-            <div className="fw-so-body">
-              <p className="fw-so-q mono">Why does my average() return the last number?</p>
-              <p className="fw-so-a">
-                You&apos;re overwriting <code>total</code> on every pass, so only the last value
-                survives. Add to it instead:
-              </p>
-              <pre>
-                <code>{'for x in nums:\n    total += x'}</code>
-              </pre>
-              <p className="mono muted fw-so-meta">answered 2013 · someone else, for someone else</p>
+              <span className="muted fw-so-meta">answered 2013 · someone else, for someone else</span>
             </div>
           </article>
         )}
@@ -982,7 +978,8 @@ function Answer({ reduced, onFound, say, focus }: StageProps) {
         <Primary label={label} busy={busy} onClick={act} focus={focus} />
         {phase === 'pasted' && <span className="muted">$ python avg.py → 4.0</span>}
       </div>
-    </>
+      </div>
+    </div>
   )
 }
 
@@ -1005,9 +1002,10 @@ function Agent({ reduced, onFound, say, focus }: StageProps) {
   }
 
   return (
-    <>
+    <div className="fw-split">
       <Listing label="avg.py" lines={LINES.map((l, i) => (i === BUG && phase === 'done' ? FIXED : l))} />
 
+      <div className="fw-side">
       <div className="fw-ask mono">
         <span className="muted" aria-hidden="true">
           ›
@@ -1069,7 +1067,8 @@ function Agent({ reduced, onFound, say, focus }: StageProps) {
           </>
         )}
       </div>
-    </>
+      </div>
+    </div>
   )
 }
 
@@ -1103,11 +1102,14 @@ function Chart({
   current: GenId
 }) {
   const n = GENS.filter((g) => found[g.id]).length
+  if (n === 0) return null
   return (
     <div className="fw-chart mono">
       <p className="fw-chart-title">
         <span>time from wrong to knowing why</span>
-        <span className="muted">log scale</span>
+        <span className="muted">
+          <span className="fw-chart-n">{n} of 5 tried · </span>log scale
+        </span>
       </p>
       <ol className="fw-bars">
         {GENS.map((g) => {
@@ -1136,13 +1138,11 @@ function Chart({
           <span className="fw-bar-val" />
         </li>
       </ol>
-      <p className={`fw-chart-foot${n === GENS.length ? ' is-done' : ''}`}>
-        {n === GENS.length
-          ? 'a day, minutes, seconds, zero. each drop came sooner than the last.'
-          : n === 0
-          ? 'each generation you try adds a bar.'
-          : `${n} of 5 tried.`}
-      </p>
+      {n === GENS.length && (
+        <p className="fw-chart-foot is-done">
+          a day, minutes, seconds, zero. each drop came sooner than the last.
+        </p>
+      )}
     </div>
   )
 }
@@ -1206,8 +1206,8 @@ export function FiveWays() {
       n={1}
       caption={
         <>
-          one bug, five generations. pick one and find out what&apos;s wrong the way they would
-          have. the waits are shortened, but the order is right.
+          one bug, five generations. find out what&apos;s wrong the way each would have. waits
+          shortened; the code is modern Python throughout.
         </>
       }
     >
@@ -1224,9 +1224,8 @@ export function FiveWays() {
             onClick={() => pick(i, false)}
             onKeyDown={(e) => onTabKey(e, i)}
           >
-            <span className="fw-tab-label">{x.label}</span>
-            <span className="fw-tab-yrs">
-              {x.years}
+            <span className="fw-tab-label">
+              {x.label}
               {found[x.id] && (
                 <span className="fw-tab-done">
                   {' '}
@@ -1234,11 +1233,15 @@ export function FiveWays() {
                 </span>
               )}
             </span>
+            <span className="fw-tab-yrs">{x.years}</span>
           </button>
         ))}
       </div>
 
-      <p className="mono fw-setup">{g.setup}</p>
+      <p className="mono fw-setup">
+        <span className="muted fw-setup-yrs">{g.years} · </span>
+        {g.setup}
+      </p>
 
       <div className="fw-stage" data-gen={g.id}>
         <Stage key={`${g.id}-${run}`} reduced={reduced} onFound={onFound} say={say} focus={focusStage} />
@@ -1264,9 +1267,7 @@ export function FiveWays() {
               )}
             </div>
           </>
-        ) : (
-          <p className="mono muted fw-result-wait">{g.years}. find out what&apos;s wrong.</p>
-        )}
+        ) : null}
       </div>
 
       <Chart found={found} insisted={insisted} current={g.id} />
