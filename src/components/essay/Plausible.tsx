@@ -181,9 +181,9 @@ export function Plausible({ n = 2 }: { n?: number }) {
       </div>
 
       {pick && ran >= 2 && (
-        <p className="fig-note">
+        <p className="fig-note pl-note">
           {pick === 'a'
-            ? "Version a stores each number before looking for its partner, so it can pair a number with itself. It passes the example because the example never tests that, then fails the first hidden test, which does. This is plausible code that's wrong. Until that test ran, it looked exactly like the version that's right, which is why someone has to read it."
+            ? "Version a stores each number before looking for its partner, so it can pair a number with itself. The example never tests that; the first hidden test does. This is plausible code that's wrong: until that test ran, it looked exactly like the right one, which is why someone has to read it."
             : "Version b looks for the partner first, then stores the number. That's the whole difference. If you saw it, you probably learned it by shipping a, once."}
         </p>
       )}
