@@ -98,9 +98,39 @@ export async function renderOgCard({
   const fonts = await loadFonts(`${kicker}${title}${footer}${tagline ?? ''} .,'-:/∇∴—`)
   const big = title.length > 30 ? 64 : title.length > 14 ? 84 : 112
   if (image) {
-    // the artwork carries the whole card; the words sit on a plain paper placard, like a museum label
-    const small = title.length > 30 ? 52 : title.length > 14 ? 64 : 84
+    // gallery wall: the artwork hangs as a matted plate on the right, the words sit quietly on the left
+    const small = title.length > 30 ? 54 : title.length > 14 ? 72 : 100
     return new ImageResponse(
+      (
+        <div style={{ width: '100%', height: '100%', display: 'flex', background: paper, color: ink, padding: '64px 72px', gap: 56 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flexGrow: 1, width: 560 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontFamily: mono, fontSize: 21, color: inkMuted }}>
+              <span>{kicker}</span>
+              <BrandMark />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <div style={{ display: 'flex', fontFamily: serif, fontSize: small, lineHeight: 1.1, letterSpacing: '-0.025em' }}>{title}</div>
+              {tagline ? (
+                <div style={{ display: 'flex', marginTop: 22, fontFamily: serif, fontStyle: 'italic', fontSize: 24, lineHeight: 1.45, color: inkMuted }}>
+                  {tagline}
+                </div>
+              ) : null}
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: mono, fontSize: 18, color: inkMuted }}>
+              <span>gia khanh nguyen</span>
+              <span>{footer}</span>
+            </div>
+          </div>
+          <div style={{ display: 'flex', width: 440, height: 502, padding: 14, border: `1px solid ${ink}` }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={image} width={410} height={472} style={{ width: 410, height: 472, objectFit: 'cover' }} alt="" />
+          </div>
+        </div>
+      ),
+      { ...ogSize, fonts: fonts.length ? fonts : undefined },
+    )
+  }
+  return new ImageResponse(
       (
         <div style={{ width: '100%', height: '100%', display: 'flex', position: 'relative', background: ink }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
