@@ -527,15 +527,15 @@ export function AcceptStream() {
         {phase === 'done' && report ? (
           <div className="as-sum">
             <p className="as-sum-title" tabIndex={-1} ref={sumRef}>
-              review closed after {secs(report.ms)} s. what you checked:{' '}
+              review closed after {secs(report.ms)} s. you opened{' '}
               <b>
-                {report.opened} of {N}
+                {report.opened}/{N}
               </b>{' '}
-              diffs ·{' '}
+              diffs, saw{' '}
               <b>
-                {report.seen} of {report.total}
+                {report.seen}/{report.total}
               </b>{' '}
-              changed lines · <b>{report.rejected}</b> rejected.
+              changed lines, rejected <b>{report.rejected}</b>.
             </p>
             <p className={`as-headline${report.bugStatus === 'rejected' ? '' : ' is-bad'}`}>
               <span className="as-sum-k">the one that mattered:</span> &quot;{bug.title}&quot; · {headline}

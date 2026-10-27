@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useId, useRef, useState } from 'react'
+import { Fragment, useEffect, useId, useRef, useState } from 'react'
 import type { KeyboardEvent } from 'react'
 import { Figure } from './Figure'
 
@@ -144,6 +144,27 @@ const transcript = (r: Round): Out[] => {
   })
   return out
 }
+
+// The fix, folded into the listing: which lines it removes, and what it adds after each line.
+const fold = (r: Round) => {
+  const removed = new Set<number>()
+  const after: Record<number, DiffLine[]> = {}
+  let anchor = -1
+  r.fix.forEach((d) => {
+    if (d.sign === '+') (after[anchor] = after[anchor] || []).push(d)
+    else {
+      anchor = d.no - 1
+      if (d.sign === '-') removed.add(anchor)
+    }
+  })
+  return { removed, after }
+}
+
+const fixText = (r: Round) =>
+  r.fix
+    .filter((d) => d.sign !== ' ')
+    .map((d) => (d.sign === '-' ? `remove line ${d.no}, ${d.text.trim()}` : `add ${d.text.trim()}`))
+    .join('; ')
 
 const tallyText = (res: Result, rd: Round) =>
   res.outcome === 'clean'
@@ -320,6 +341,8 @@ export function FindTheBug() {
   const optId = (i: number) => `${uid}-l${i}`
   const correct = result?.outcome === 'clean' || result?.outcome === 'hinted'
   const revealed = phase === 'done'
+  const folded = fold(r)
+  let fixTagged = false
 
   return (
     <Figure n={1} caption={caption}>
@@ -354,13 +377,15 @@ export function FindTheBug() {
               isPick && !revealed ? 'is-picked' : '',
               isPick && revealed && !isBug ? 'is-wrong' : '',
               isBug ? 'is-bug' : '',
+              revealed && folded.removed.has(i) ? 'is-del' : '',
               i === r.spec ? 'is-spec' : '',
             ]
               .filter(Boolean)
               .join(' ')
+            const adds = revealed ? folded.after[i] || [] : []
             return (
+              <Fragment key={i}>
               <span
-                key={i}
                 id={optId(i)}
                 role="option"
                 aria-selected={isPick}
@@ -373,7 +398,10 @@ export function FindTheBug() {
                 <span className="fb-no" aria-hidden="true">
                   {i + 1}
                 </span>
-                <span className="fb-text">{text}</span>
+                <span className="fb-text">
+                  {/^\s*/.exec(text)![0]}
+                  <span className="fb-body">{text.trimStart()}</span>
+                </span>
                 {isBug && (
                   <span className="fb-tag is-bug-tag">
                     {correct ? '  ← found it' : '  ← the bug'}
@@ -383,6 +411,23 @@ export function FindTheBug() {
                   <span className="fb-tag">{'  ← your mark'}</span>
                 )}
               </span>
+              {adds.map((d, k) => {
+                const tag = !fixTagged
+                fixTagged = true
+                return (
+                  <span
+                    key={`a${k}`}
+                    className="fb-line is-add"
+                    aria-hidden="true"
+                    style={{ animationDelay: `${k * 90}ms` }}
+                  >
+                    <span className="fb-no">+</span>
+                    <span className="fb-text">{d.text}</span>
+                    {tag && <span className="fb-tag">{'  ← the fix'}</span>}
+                  </span>
+                )
+              })}
+              </Fragment>
             )
           })}
         </span>
@@ -453,31 +498,8 @@ export function FindTheBug() {
                 {result.outcome === 'missed' &&
                   (r.decoys[result.pick] ? `${r.decoys[result.pick]} ` : '')}
                 {r.why}
+                <span className="fb-sr"> The fix: {fixText(r)}.</span>
               </p>
-
-              <p className="mono fb-label fb-fix-label">the fix</p>
-              <pre className="fb-diff" aria-label="The fix, as a diff">
-                <code>
-                  {r.fix.map((d, i) => (
-                    <span
-                      key={i}
-                      className={`fb-d${d.sign === '-' ? ' is-del' : d.sign === '+' ? ' is-add' : ''}`}
-                      style={{ animationDelay: `${i * 90}ms` }}
-                    >
-                      <span className="fb-sign" aria-hidden="true">
-                        {d.sign}
-                      </span>
-                      <span className="fb-no" aria-hidden="true">
-                        {d.no}
-                      </span>
-                      <span className="fb-sr">
-                        {d.sign === '-' ? 'removed: ' : d.sign === '+' ? 'added: ' : ''}
-                      </span>
-                      {d.text}
-                    </span>
-                  ))}
-                </code>
-              </pre>
 
               <div className="debt-controls mono fb-controls">
                 <button type="button" ref={nextRef} onClick={advance}>
