@@ -40,7 +40,7 @@ const GENS: Gen[] = [
     id: 'cards',
     label: 'punch cards',
     years: '1955–75',
-    setup: 'on paper, punched one card per line. the machine is in another building.',
+    setup: 'you write it on paper and punch one card per line. the machine is in another building.',
     result:
       'One wrong number, a day later. You found the bug by running the program in your head, card by card. The fix cost another day.',
     lesson: 'precision',
@@ -62,7 +62,7 @@ const GENS: Gen[] = [
     id: 'web',
     label: 'view source',
     years: '1993–08',
-    setup: "every page comes with its source. somewhere, someone's version works.",
+    setup: "every web page comes with its source. somewhere, someone's version works.",
     result:
       "You read their code against yours until += against = jumped out. Their names weren't yours, so you had to understand it to copy it.",
     lesson: 'reading',
@@ -73,7 +73,7 @@ const GENS: Gen[] = [
     id: 'so',
     label: 'stack overflow',
     years: '2008–22',
-    setup: 'an answer for almost everything, if you can describe the symptom.',
+    setup: 'someone has already asked about almost every bug. you just have to describe the symptom.',
     result:
       'Someone else found it first. You still had to fit their answer to your code, so you understood it a little.',
     lesson: 'adaptation',
@@ -1166,7 +1166,7 @@ function Chart({
           each generation you try adds a bar.
         </span>
         <span className={n === GENS.length ? undefined : 'fw-stack-off'} aria-hidden={n !== GENS.length}>
-          a day, minutes, seconds, zero. each drop came sooner.
+          a day, then minutes, then seconds, now zero. each drop came sooner than the last.
         </span>
       </p>
     </div>
