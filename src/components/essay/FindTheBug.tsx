@@ -184,6 +184,297 @@ function Pip({ state }: { state: Outcome | 'current' | 'todo' }) {
   return <i className={`fb-pip is-${state}`} aria-hidden="true" />
 }
 
+type View = {
+  round: number
+  pick: number | null
+  active: number
+  hinted: boolean
+  phase: Phase
+  shown: number
+  results: Result[]
+}
+
+type Live = {
+  uid: string
+  listRef: { current: HTMLSpanElement | null }
+  nextRef: { current: HTMLButtonElement | null }
+  againRef: { current: HTMLButtonElement | null }
+  onListKey: (e: KeyboardEvent<HTMLSpanElement>) => void
+  onLine: (i: number) => void
+  run: () => void
+  hint: () => void
+  advance: () => void
+  restart: () => void
+}
+
+// The scorecard. Without `live` it is a hidden copy that only holds the figure open.
+function ScoreCard({ results, live }: { results: Result[]; live?: Live }) {
+  const found = results.filter((x) => x.outcome !== 'missed').length
+  const withHint = results.filter((x) => x.outcome === 'hinted').length
+  return (
+    <div className="fb fb-card" aria-live={live ? 'polite' : undefined}>
+      <p className="fb-score">
+        <span className="fb-big">
+          {found}/{ROUNDS.length}
+        </span>{' '}
+        found before running
+        {withHint > 0 && (
+          <span className="fb-sub mono">
+            {' '}
+            · {withHint === 1 ? 'one' : withHint} with a hint
+          </span>
+        )}
+      </p>
+      <ol className="fb-tally mono">
+        {ROUNDS.map((rd, i) => {
+          const res = results[i]
+          return (
+            <li key={rd.name} className={res ? `is-${res.outcome}` : undefined}>
+              <Pip state={res ? res.outcome : 'todo'} />
+              <span className="fb-tally-name">{rd.name}()</span>
+              <span className="fb-tally-what">{res ? tallyText(res, rd) : ''}</span>
+              <span className="fb-tally-fix">
+                <span className="fb-sr">the fix: </span>
+                {fixPair(rd)}
+              </span>
+            </li>
+          )
+        })}
+      </ol>
+      <p className="fig-note">
+        {found === ROUNDS.length
+          ? 'Clean. '
+          : found === 0
+            ? 'That is normal on a first go. '
+            : ''}
+        None of these needed a computer. Reading code is a skill like any other: it
+        comes from reps, from being wrong on purpose while being wrong is cheap, and
+        from coming back tomorrow.
+      </p>
+      <div className="debt-controls mono fb-foot">
+        <button type="button" ref={live?.againRef} tabIndex={live ? undefined : -1} onClick={live?.restart}>
+          go again
+        </button>
+      </div>
+    </div>
+  )
+}
+
+// One round. Without `live` it is a hidden copy in a fixed state.
+function RoundView({ v, live }: { v: View; live?: Live }) {
+  const { round, pick, active, hinted, phase, shown, results } = v
+  const r = ROUNDS[round]
+  const lines = transcript(r)
+  const result: Result | undefined = results[round]
+  const locked = phase !== 'pick'
+  const optId = (i: number) => (live ? `${live.uid}-l${i}` : undefined)
+  const correct = result?.outcome === 'clean' || result?.outcome === 'hinted'
+  const revealed = phase === 'done'
+  const folded = fold(r)
+  let fixTagged = false
+  const pipState = (i: number): Outcome | 'current' | 'todo' => {
+    const res = results[i]
+    if (res && (i < round || phase === 'done')) return res.outcome
+    return i === round ? 'current' : 'todo'
+  }
+  const tab = live ? undefined : -1
+
+  return (
+    <div className="fb">
+      <div className="fb-head mono">
+        <span>
+          round {round + 1} of {ROUNDS.length} · <span className="fb-fn">{r.name}()</span>
+        </span>
+        <span className="fb-pips" aria-hidden="true">
+          {ROUNDS.map((_, i) => (
+            <Pip key={i} state={pipState(i)} />
+          ))}
+        </span>
+      </div>
+
+      <pre className={`fb-code${revealed ? ' is-revealed' : ''}`}>
+        <span
+          ref={live?.listRef}
+          className="fb-list"
+          role={live ? 'listbox' : undefined}
+          tabIndex={live ? 0 : undefined}
+          aria-label={live ? `${r.name}, ${r.lines.length} lines. Mark the line with the bug.` : undefined}
+          aria-readonly={live ? locked : undefined}
+          aria-activedescendant={optId(active)}
+          onKeyDown={live?.onListKey}
+        >
+          {r.lines.map((text, i) => {
+            const isPick = pick === i
+            const isBug = revealed && i === r.bug
+            const cls = [
+              'fb-line',
+              i === active ? 'is-active' : '',
+              isPick && !revealed ? 'is-picked' : '',
+              isPick && revealed && !isBug ? 'is-wrong' : '',
+              isBug ? 'is-bug' : '',
+              revealed && folded.removed.has(i) ? 'is-del' : '',
+              i === r.spec ? 'is-spec' : '',
+            ]
+              .filter(Boolean)
+              .join(' ')
+            const adds = revealed ? folded.after[i] || [] : []
+            return (
+              <Fragment key={i}>
+              <span
+                id={optId(i)}
+                role={live ? 'option' : undefined}
+                aria-selected={live ? isPick : undefined}
+                className={cls}
+                onClick={live ? () => live.onLine(i) : undefined}
+              >
+                <span className="fb-no" aria-hidden="true">
+                  {i + 1}
+                </span>
+                <span className="fb-text">
+                  {/^\s*/.exec(text)![0]}
+                  <span className="fb-body">{text.trimStart()}</span>
+                </span>
+                {isBug && (
+                  <span className="fb-tag is-bug-tag">
+                    {correct ? '  ← found it' : '  ← the bug'}
+                  </span>
+                )}
+                {isPick && revealed && !isBug && (
+                  <span className="fb-tag">{'  ← your mark'}</span>
+                )}
+              </span>
+              {adds.map((d, k) => {
+                const tag = !fixTagged
+                fixTagged = true
+                return (
+                  <span
+                    key={`a${k}`}
+                    className="fb-line is-add"
+                    aria-hidden="true"
+                    style={{ animationDelay: `${k * 90}ms` }}
+                  >
+                    <span className="fb-no">+</span>
+                    <span className="fb-text">{d.text}</span>
+                    {tag && <span className="fb-tag">{'  ← the fix'}</span>}
+                  </span>
+                )
+              })}
+              </Fragment>
+            )
+          })}
+        </span>
+      </pre>
+
+      {/* the one part that changes: the hint, then the test run and the verdict */}
+      <div className="fb-mid">
+        {phase === 'pick' && (
+          <div className="fb-wait">
+            <div aria-live={live ? 'polite' : undefined}>
+              {hinted && (
+                <p className="fig-note fb-hint">
+                  <span className="mono fb-label">hint</span> {r.hint}
+                </p>
+              )}
+            </div>
+            <p className="mono muted fb-wait-line">
+              <span className="fb-prompt" aria-hidden="true">
+                {'>>> '}
+              </span>
+              the test run prints here once you&apos;ve marked a line.
+            </p>
+          </div>
+        )}
+
+        {phase !== 'pick' && (
+          <div className="fb-result">
+            <pre className="fb-out" aria-live={live ? 'polite' : undefined} aria-label={live ? 'Test run' : undefined}>
+              <code>
+                {lines.slice(0, shown).map((l, i) =>
+                  l.k === 'in' ? (
+                    <span key={i} className="fb-o is-in">
+                      <span className="fb-prompt">{'>>> '}</span>
+                      {l.text}
+                    </span>
+                  ) : (
+                    <span
+                      key={i}
+                      className={`fb-o${l.want !== undefined && l.want !== l.text ? ' is-bad' : ''}`}
+                    >
+                      {l.text}
+                      {l.want !== undefined && l.want !== l.text && (
+                        <span className="fb-want">{`    # wanted ${l.want}`}</span>
+                      )}
+                    </span>
+                  ),
+                )}
+                {phase === 'running' && <span className="fb-o fb-cursor" aria-hidden="true" />}
+              </code>
+            </pre>
+
+            {revealed && result && (
+              <p className="fig-note fb-verdict">
+                <strong>
+                  {result.outcome === 'clean'
+                    ? 'Found it. '
+                    : result.outcome === 'hinted'
+                      ? 'Found it, with the hint. '
+                      : `Not line ${result.pick + 1}. `}
+                </strong>
+                {result.outcome === 'missed' &&
+                  (r.decoys[result.pick] ? `${r.decoys[result.pick]} ` : '')}
+                {r.why}
+                <span className="fb-sr"> The fix: {fixText(r)}.</span>
+              </p>
+            )}
+          </div>
+        )}
+      </div>
+
+      <div className="debt-controls mono fb-controls fb-foot">
+        {phase === 'pick' && (
+          <>
+            <button type="button" tabIndex={tab} disabled={pick === null} onClick={live?.run}>
+              {pick === null ? 'mark a line first' : `run it · you marked line ${pick + 1}`}
+            </button>
+            {!hinted && (
+              <button type="button" tabIndex={tab} className="link-button fb-hint-button" onClick={live?.hint}>
+                hint (costs you this round)
+              </button>
+            )}
+          </>
+        )}
+        {phase === 'running' && <span className="muted fb-running">running the tests…</span>}
+        {phase === 'done' && (
+          <button type="button" tabIndex={tab} ref={live?.nextRef} onClick={live?.advance}>
+            {round + 1 < ROUNDS.length ? 'next function →' : 'see your score →'}
+          </button>
+        )}
+      </div>
+    </div>
+  )
+}
+
+// Every state the figure can be in at its tallest: each round revealed after each
+// wrong mark (or the right one), each round waiting with the hint shown or offered,
+// and the scorecard at its wordiest. Hidden copies of these hold its size.
+const GHOST_VIEWS: View[] = []
+ROUNDS.forEach((rd, ri) => {
+  const prior: Result[] = ROUNDS.slice(0, ri).map(() => ({ outcome: 'missed', pick: 0 }))
+  const picks = Object.keys(rd.decoys).map(Number).concat([rd.bug])
+  picks.forEach((pk) =>
+    GHOST_VIEWS.push({
+      round: ri, pick: pk, active: pk, hinted: false, phase: 'done', shown: transcript(rd).length,
+      results: prior.concat([{ outcome: pk === rd.bug ? 'hinted' : 'missed', pick: pk }]),
+    }),
+  )
+  GHOST_VIEWS.push({ round: ri, pick: rd.lines.length - 1, active: 0, hinted: true, phase: 'pick', shown: 0, results: prior })
+  GHOST_VIEWS.push({ round: ri, pick: rd.lines.length - 1, active: 0, hinted: false, phase: 'pick', shown: 0, results: prior })
+})
+const GHOST_CARDS: Result[][] = [
+  ROUNDS.map((rd) => ({ outcome: 'missed', pick: rd.lines.length - 1 })),
+  ROUNDS.map((rd) => ({ outcome: 'hinted', pick: rd.bug })),
+]
+
 export function FindTheBug() {
   const uid = useId()
   const [round, setRound] = useState(0) // ROUNDS.length = the scorecard
@@ -198,13 +489,10 @@ export function FindTheBug() {
   const nextRef = useRef<HTMLButtonElement>(null)
   const againRef = useRef<HTMLButtonElement>(null)
   const moved = useRef(false) // only move focus after the reader has acted
-  const midRef = useRef<HTMLDivElement>(null)
-  const verdictRef = useRef<HTMLParagraphElement>(null)
 
   const finished = round >= ROUNDS.length
   const r = ROUNDS[Math.min(round, ROUNDS.length - 1)]
   const lines = transcript(r)
-  const result: Result | undefined = results[round]
 
   // Play the transcript back a line at a time.
   useEffect(() => {
@@ -216,25 +504,6 @@ export function FindTheBug() {
     const t = window.setTimeout(() => setShown((s) => s + 1), STEP_MS)
     return () => window.clearTimeout(t)
   }, [phase, shown, lines.length])
-
-  // The middle region has a fixed height. Keep the newest transcript line in view
-  // while it plays, then show as much of the verdict as fits, from its first line.
-  useEffect(() => {
-    const box = midRef.current
-    if (!box) return
-    if (phase === 'pick') {
-      box.scrollTop = 0
-      return
-    }
-    const v = verdictRef.current
-    if (phase === 'done' && v) {
-      const top = v.offsetTop // .fb-mid is the offset parent
-      const room = box.clientHeight
-      // the whole verdict if it fits, otherwise its start
-      const want = Math.max(0, Math.min(top - 4, top + v.offsetHeight - room))
-      if (want > box.scrollTop) box.scrollTop = want
-    } else box.scrollTop = box.scrollHeight
-  }, [phase, shown, round])
 
   // Keep keyboard focus somewhere sensible as the exercise moves on.
   useEffect(() => {
@@ -303,12 +572,6 @@ export function FindTheBug() {
     setPhase('pick')
   }
 
-  const pipState = (i: number): Outcome | 'current' | 'todo' => {
-    const res = results[i]
-    if (res && (i < round || phase === 'done')) return res.outcome
-    return i === round ? 'current' : 'todo'
-  }
-
   const caption = (
     <>
       three functions an agent wrote. each has one wrong line. mark it before you
@@ -316,245 +579,40 @@ export function FindTheBug() {
     </>
   )
 
-  if (finished) {
-    const found = results.filter((x) => x.outcome !== 'missed').length
-    const withHint = results.filter((x) => x.outcome === 'hinted').length
-    return (
-      <Figure n={1} caption={caption}>
-        <div className="fb fb-card" aria-live="polite">
-          <p className="fb-score">
-            <span className="fb-big">
-              {found}/{ROUNDS.length}
-            </span>{' '}
-            found before running
-            {withHint > 0 && (
-              <span className="fb-sub mono">
-                {' '}
-                · {withHint === 1 ? 'one' : withHint} with a hint
-              </span>
-            )}
-          </p>
-          <ol className="fb-tally mono">
-            {ROUNDS.map((rd, i) => {
-              const res = results[i]
-              return (
-                <li key={rd.name} className={res ? `is-${res.outcome}` : undefined}>
-                  <Pip state={res ? res.outcome : 'todo'} />
-                  <span className="fb-tally-name">{rd.name}()</span>
-                  <span className="fb-tally-what">{res ? tallyText(res, rd) : ''}</span>
-                  <span className="fb-tally-fix">
-                    <span className="fb-sr">the fix: </span>
-                    {fixPair(rd)}
-                  </span>
-                </li>
-              )
-            })}
-          </ol>
-          <p className="fig-note">
-            {found === ROUNDS.length
-              ? 'Clean. '
-              : found === 0
-                ? 'That is normal on a first go. '
-                : ''}
-            None of these needed a computer. Reading code is a skill like any other: it
-            comes from reps, from being wrong on purpose while being wrong is cheap, and
-            from coming back tomorrow.
-          </p>
-          <div className="debt-controls mono fb-foot">
-            <button type="button" ref={againRef} onClick={restart}>
-              go again
-            </button>
-          </div>
-        </div>
-      </Figure>
-    )
+  const live: Live = {
+    uid,
+    listRef,
+    nextRef,
+    againRef,
+    onListKey,
+    onLine: (i) => {
+      moved.current = true
+      choose(i)
+    },
+    run,
+    hint: () => setHinted(true),
+    advance,
+    restart,
   }
-
-  const optId = (i: number) => `${uid}-l${i}`
-  const correct = result?.outcome === 'clean' || result?.outcome === 'hinted'
-  const revealed = phase === 'done'
-  const folded = fold(r)
-  let fixTagged = false
 
   return (
     <Figure n={1} caption={caption}>
-      <div className="fb">
-      <div className="fb-head mono">
-        <span>
-          round {round + 1} of {ROUNDS.length} · <span className="fb-fn">{r.name}()</span>
-        </span>
-        <span className="fb-pips" aria-hidden="true">
-          {ROUNDS.map((_, i) => (
-            <Pip key={i} state={pipState(i)} />
-          ))}
-        </span>
-      </div>
-
-      <pre className={`fb-code${revealed ? ' is-revealed' : ''}`}>
-        <span
-          ref={listRef}
-          className="fb-list"
-          role="listbox"
-          tabIndex={0}
-          aria-label={`${r.name}, ${r.lines.length} lines. Mark the line with the bug.`}
-          aria-readonly={locked}
-          aria-activedescendant={optId(active)}
-          onKeyDown={onListKey}
-        >
-          {r.lines.map((text, i) => {
-            const isPick = pick === i
-            const isBug = revealed && i === r.bug
-            const cls = [
-              'fb-line',
-              i === active ? 'is-active' : '',
-              isPick && !revealed ? 'is-picked' : '',
-              isPick && revealed && !isBug ? 'is-wrong' : '',
-              isBug ? 'is-bug' : '',
-              revealed && folded.removed.has(i) ? 'is-del' : '',
-              i === r.spec ? 'is-spec' : '',
-            ]
-              .filter(Boolean)
-              .join(' ')
-            const adds = revealed ? folded.after[i] || [] : []
-            return (
-              <Fragment key={i}>
-              <span
-                id={optId(i)}
-                role="option"
-                aria-selected={isPick}
-                className={cls}
-                onClick={() => {
-                  moved.current = true
-                  choose(i)
-                }}
-              >
-                <span className="fb-no" aria-hidden="true">
-                  {i + 1}
-                </span>
-                <span className="fb-text">
-                  {/^\s*/.exec(text)![0]}
-                  <span className="fb-body">{text.trimStart()}</span>
-                </span>
-                {isBug && (
-                  <span className="fb-tag is-bug-tag">
-                    {correct ? '  ← found it' : '  ← the bug'}
-                  </span>
-                )}
-                {isPick && revealed && !isBug && (
-                  <span className="fb-tag">{'  ← your mark'}</span>
-                )}
-              </span>
-              {adds.map((d, k) => {
-                const tag = !fixTagged
-                fixTagged = true
-                return (
-                  <span
-                    key={`a${k}`}
-                    className="fb-line is-add"
-                    aria-hidden="true"
-                    style={{ animationDelay: `${k * 90}ms` }}
-                  >
-                    <span className="fb-no">+</span>
-                    <span className="fb-text">{d.text}</span>
-                    {tag && <span className="fb-tag">{'  ← the fix'}</span>}
-                  </span>
-                )
-              })}
-              </Fragment>
-            )
-          })}
-        </span>
-      </pre>
-
-      {/* the one part that changes: the hint, then the test run and the verdict */}
-      <div className="fb-mid" ref={midRef}>
-        {phase === 'pick' && (
-          <div className="fb-wait">
-            <div aria-live="polite">
-              {hinted && (
-                <p className="fig-note fb-hint">
-                  <span className="mono fb-label">hint</span> {r.hint}
-                </p>
-              )}
-            </div>
-            <p className="mono muted fb-wait-line">
-              <span className="fb-prompt" aria-hidden="true">
-                {'>>> '}
-              </span>
-              the test run prints here once you&apos;ve marked a line.
-            </p>
+      <div className="fb-stage fx-stack">
+        {finished ? (
+          <ScoreCard results={results} live={live} />
+        ) : (
+          <RoundView v={{ round, pick, active, hinted, phase, shown, results }} live={live} />
+        )}
+        {GHOST_VIEWS.map((v, k) => (
+          <div key={`v${k}`} className="fx-stack-off fx-ghost" aria-hidden="true">
+            <RoundView v={v} />
           </div>
-        )}
-
-        {phase !== 'pick' && (
-          <div className="fb-result">
-            <pre className="fb-out" aria-live="polite" aria-label="Test run">
-              <code>
-                {lines.slice(0, shown).map((l, i) =>
-                  l.k === 'in' ? (
-                    <span key={i} className="fb-o is-in">
-                      <span className="fb-prompt">{'>>> '}</span>
-                      {l.text}
-                    </span>
-                  ) : (
-                    <span
-                      key={i}
-                      className={`fb-o${l.want !== undefined && l.want !== l.text ? ' is-bad' : ''}`}
-                    >
-                      {l.text}
-                      {l.want !== undefined && l.want !== l.text && (
-                        <span className="fb-want">{`    # wanted ${l.want}`}</span>
-                      )}
-                    </span>
-                  ),
-                )}
-                {phase === 'running' && <span className="fb-o fb-cursor" aria-hidden="true" />}
-              </code>
-            </pre>
-
-            {revealed && result && (
-              <p className="fig-note fb-verdict" ref={verdictRef}>
-                <strong>
-                  {result.outcome === 'clean'
-                    ? 'Found it. '
-                    : result.outcome === 'hinted'
-                      ? 'Found it, with the hint. '
-                      : `Not line ${result.pick + 1}. `}
-                </strong>
-                {result.outcome === 'missed' &&
-                  (r.decoys[result.pick] ? `${r.decoys[result.pick]} ` : '')}
-                {r.why}
-                <span className="fb-sr"> The fix: {fixText(r)}.</span>
-              </p>
-            )}
+        ))}
+        {GHOST_CARDS.map((res, k) => (
+          <div key={`c${k}`} className="fx-stack-off fx-ghost" aria-hidden="true">
+            <ScoreCard results={res} />
           </div>
-        )}
-      </div>
-
-      <div className="debt-controls mono fb-controls fb-foot">
-        {phase === 'pick' && (
-          <>
-            <button type="button" disabled={pick === null} onClick={run}>
-              {pick === null ? 'mark a line first' : `run it · you marked line ${pick + 1}`}
-            </button>
-            {!hinted && (
-              <button
-                type="button"
-                className="link-button fb-hint-button"
-                onClick={() => setHinted(true)}
-              >
-                hint (costs you this round)
-              </button>
-            )}
-          </>
-        )}
-        {phase === 'running' && <span className="muted fb-running">running the tests…</span>}
-        {phase === 'done' && (
-          <button type="button" ref={nextRef} onClick={advance}>
-            {round + 1 < ROUNDS.length ? 'next function →' : 'see your score →'}
-          </button>
-        )}
-      </div>
+        ))}
       </div>
     </Figure>
   )

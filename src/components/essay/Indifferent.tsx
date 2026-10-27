@@ -257,6 +257,25 @@ function agent(src: string): { out: string; note: string } {
   return { out: meant || src.trim(), note: 'I tidied up the syntax for you.' }
 }
 
+// The box keeps one size: a line is capped, and so is what gets shown of the output
+// (the way a REPL would trail off), so nothing ever needs scrolling.
+const MAX_IN = 48
+const MAX_OUT = 84
+const MAX_NOTE = 100
+function clip(text: string, max: number, lines = 2) {
+  const all = text.replace(/\t/g, '    ').split('\n')
+  let out = all.slice(0, lines).join('\n')
+  let cut = all.length > lines
+  if (out.length > max) {
+    out = out.slice(0, max)
+    cut = true
+  }
+  return cut ? out + '…' : out
+}
+// hidden copies of the most each box can hold
+const GHOST_OUT = 'x'.repeat(MAX_OUT + 1) + '\nx'
+const GHOST_NOTE = 'x'.repeat(MAX_NOTE + 1) + '\nx'
+
 export function Indifferent({ n = 5 }: { n?: number }) {
   const [src, setSrc] = useState('pritn("hello, world")')
   const m = machine(src)
@@ -269,30 +288,45 @@ export function Indifferent({ n = 5 }: { n?: number }) {
     >
       <label className="fig-input mono">
         <span>&gt;&gt;&gt;</span>
-        <input
-          value={src}
-          onChange={(e) => setSrc(e.target.value)}
-          spellCheck={false}
-          autoCorrect="off"
-          autoCapitalize="off"
-          autoComplete="off"
-          aria-label="A line of Python"
-        />
+        <span className="ind-field fx-stack">
+          <textarea
+            rows={1}
+            value={src}
+            maxLength={MAX_IN}
+            onChange={(e) => setSrc(e.target.value.replace(/[\r\n]+/g, ' ').slice(0, MAX_IN))}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') e.preventDefault()
+            }}
+            spellCheck={false}
+            autoCorrect="off"
+            autoCapitalize="off"
+            autoComplete="off"
+            aria-label="A line of Python"
+          />
+          <span className="ind-field-ghost fx-stack-off" aria-hidden="true">
+            {'x'.repeat(MAX_IN)}
+          </span>
+        </span>
       </label>
       <div className="fig-pair ind-pair">
         <div className="fig-pane">
           <p className="mono muted">the machine</p>
-          <pre className={m.error ? 'is-error' : undefined}>
-            <code>{m.out || ' '}</code>
+          <pre className={`fx-stack${m.error ? ' is-error' : ''}`}>
+            <code>{clip(m.out, MAX_OUT) || ' '}</code>
+            <code className="fx-stack-off" aria-hidden="true">{GHOST_OUT}</code>
           </pre>
         </div>
         <div className="fig-pane">
           <p className="mono muted">the agent</p>
-          <pre>
-            <code>{a.out || ' '}</code>
+          <pre className="fx-stack">
+            <code>{clip(a.out, MAX_OUT) || ' '}</code>
+            <code className="fx-stack-off" aria-hidden="true">{GHOST_OUT}</code>
           </pre>
           {/* always there, so the figure doesn't shift when a note comes and goes */}
-          <p className="mono fig-aside ind-note">{a.note || ' '}</p>
+          <p className="mono fig-aside ind-note fx-stack">
+            <span>{clip(a.note, MAX_NOTE, 1) || ' '}</span>
+            <span className="fx-stack-off" aria-hidden="true">{GHOST_NOTE}</span>
+          </p>
         </div>
       </div>
     </Figure>

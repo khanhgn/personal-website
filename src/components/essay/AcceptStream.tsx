@@ -1,6 +1,7 @@
 'use client'
 
 import { Fragment, useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
+import type { ReactNode } from 'react'
 import { Figure } from './Figure'
 
 // fig. 1 — an agent streams eight changes at you. Each one has a title, a diff
@@ -158,6 +159,28 @@ const FAST = 1100
 const SLOW = 2800
 const FIRST = 350
 const GUARD = 450 // ms after a phase change during which the morphing button ignores clicks
+const WINDOW = 4 // changes on screen at once, newest last; older ones drop off the top
+const WINDOW_OPEN = 2 // with a diff open: that change, and the newest other one
+
+// What the summary says about the change that mattered.
+function judge(report: Report) {
+  if (report.bugStatus === 'rejected')
+    return {
+      headline: `rejected, after ${secs(report.bugMs)} s open`,
+      verdict: "You caught it. Notice that the stream didn't wait while you read.",
+    }
+  if (report.bugOpened)
+    return {
+      headline: `merged, after ${secs(report.bugMs)} s open`,
+      verdict: 'You opened it and it still went through. The title is what you read; the diff is what shipped.',
+    }
+  return {
+    headline: 'merged, 0 lines read',
+    verdict: report.usedAuto
+      ? 'You hit accept all. It merged without anyone looking.'
+      : 'You never opened it. Its title did the reviewing.',
+  }
+}
 
 function fill<T>(v: T): T[] {
   return CHANGES.map(() => v)
@@ -179,7 +202,7 @@ function tier(v: number): string {
   return 'slipping'
 }
 
-function DiffView({ c, id, final }: { c: Change; id?: string; final?: boolean }) {
+function DiffView({ c, id, final, ghost }: { c: Change; id?: string; final?: boolean; ghost?: boolean }) {
   // in the summary, stop one line after the bug: the rest is unchanged context
   const lines = final && c.bugAt >= 0 ? c.lines.slice(0, c.bugAt + 2) : c.lines
   return (
@@ -190,7 +213,7 @@ function DiffView({ c, id, final }: { c: Change; id?: string; final?: boolean })
           <span className="as-plus">+{c.adds}</span> <span className="as-minus">−{c.dels}</span>
         </span>
       </div>
-      <div className="as-code" tabIndex={0} role="group" aria-label={`diff of ${c.path}`}>
+      <div className="as-code" tabIndex={ghost ? undefined : 0} role="group" aria-label={`diff of ${c.path}`}>
         <div className="as-lines">
           <div className="as-hunk" aria-hidden="true">
             {c.hunk}
@@ -225,6 +248,121 @@ function DiffView({ c, id, final }: { c: Change; id?: string; final?: boolean })
   )
 }
 
+type CardHandlers = {
+  diffId: string
+  onToggle: () => void
+  onAccept: (e: { detail: number }) => void
+  onReject: (e: { detail: number }) => void
+  acceptRef: (el: HTMLButtonElement | null) => void
+} | null
+
+// One change in the stream. With no handlers it is a hidden copy that only takes up room.
+function card(c: Change, i: number, st: Status, isOpen: boolean, h: CardHandlers): ReactNode {
+  return (
+    <li key={i} className={`as-card${st === 'accepted' ? ' is-accepted' : st === 'rejected' ? ' is-rejected' : ''}`}>
+      <div className="as-head">
+        <button
+          type="button"
+          className="as-toggle"
+          tabIndex={h ? undefined : -1}
+          aria-expanded={h ? isOpen : undefined}
+          aria-controls={h && isOpen ? h.diffId : undefined}
+          onClick={h ? h.onToggle : undefined}
+        >
+          <span className="as-caret" aria-hidden="true">
+            ▸
+          </span>
+          <span className="as-title">{c.title}</span>
+          <span className="as-meta">
+            <span className="as-path">{c.path}</span>
+            <span className="as-count">
+              <span className="as-plus">+{c.adds}</span> <span className="as-minus">−{c.dels}</span>
+            </span>
+          </span>
+        </button>
+        <span className="as-act">
+          {st === null ? (
+            <button
+              type="button"
+              className="as-btn"
+              tabIndex={h ? undefined : -1}
+              ref={h ? h.acceptRef : undefined}
+              onClick={h ? h.onAccept : undefined}
+              aria-label={`accept: ${c.title}`}
+            >
+              accept
+            </button>
+          ) : (
+            <span className="as-done">
+              <span className="as-tick" aria-hidden="true">
+                {st === 'accepted' ? '✓' : '✕'}
+              </span>
+              {st === 'accepted' ? 'merged' : 'rejected'}
+            </span>
+          )}
+        </span>
+      </div>
+      {isOpen && (
+        <div className="as-open">
+          <DiffView c={c} id={h ? h.diffId : undefined} ghost={!h} />
+          {st === null && (
+            <div className="as-dfoot">
+              <button type="button" className="link-button" tabIndex={h ? undefined : -1} onClick={h ? h.onReject : undefined}>
+                reject this change
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+    </li>
+  )
+}
+
+// For the hidden copy with change k open: the other rows are the widest titles.
+const BY_WIDTH = CHANGES.map((c, i) => ({ i, w: c.title.length + c.path.length }))
+  .sort((a, b) => b.w - a.w)
+  .map((x) => x.i)
+const ghostRows = (k: number) => [k].concat(BY_WIDTH.filter((i) => i !== k).slice(0, WINDOW_OPEN - 1))
+
+const GHOST_BASE: Report = {
+  ms: 99900, accepted: N, rejected: N, opened: N, seen: TOTAL_LINES, total: TOTAL_LINES,
+  adds: 0, dels: 0, bugMs: 99900, bugOpened: true, bugStatus: 'rejected', usedAuto: false,
+}
+const GHOST_REPORTS: Report[] = [
+  GHOST_BASE,
+  { ...GHOST_BASE, bugStatus: 'accepted' },
+  { ...GHOST_BASE, bugStatus: 'accepted', bugOpened: false, usedAuto: true },
+  { ...GHOST_BASE, bugStatus: 'accepted', bugOpened: false },
+]
+
+function Summary({ report, titleRef }: { report: Report; titleRef?: { current: HTMLParagraphElement | null } }) {
+  const bug = CHANGES[BUG]
+  const { headline, verdict } = judge(report)
+  return (
+    <div className="as-sum">
+      <p className="as-sum-title" tabIndex={titleRef ? -1 : undefined} ref={titleRef}>
+        review closed after {secs(report.ms)} s. you opened{' '}
+        <b>
+          {report.opened}/{N}
+        </b>{' '}
+        diffs, saw{' '}
+        <b>
+          {report.seen}/{report.total}
+        </b>{' '}
+        changed lines, rejected <b>{report.rejected}</b>.
+      </p>
+      <p className={`as-headline${report.bugStatus === 'rejected' ? '' : ' is-bad'}`}>
+        <span className="as-sum-k">the one that mattered:</span> &quot;{bug.title}&quot; · {headline}
+      </p>
+      <DiffView c={bug} final ghost={!titleRef} />
+      <p className="fig-note as-why">
+        {report.bugStatus === 'rejected' ? 'It would have let anyone delete any project' : 'Anyone can now delete any project'}
+        , the opposite of what the title says. {verdict}
+      </p>
+    </div>
+  )
+}
+
 export function AcceptStream() {
   const uid = useId()
   const [phase, setPhase] = useState<Phase>('idle')
@@ -243,8 +381,6 @@ export function AcceptStream() {
   const autoRef = useRef(false)
   const openSince = useRef<Array<number | null>>(fill<number | null>(null))
   const openMs = useRef<number[]>(fill(0))
-  const boxRef = useRef<HTMLDivElement | null>(null)
-  const stick = useRef(true)
   const acceptBtns = useRef<Array<HTMLButtonElement | null>>(fill<HTMLButtonElement | null>(null))
   const mainBtn = useRef<HTMLButtonElement | null>(null)
   const sumRef = useRef<HTMLParagraphElement | null>(null)
@@ -317,12 +453,6 @@ export function AcceptStream() {
     if (phase === 'done') sumRef.current?.focus({ preventScroll: true })
   }, [phase])
 
-  // Keep the stream pinned to the newest change unless the reader scrolled up.
-  useLayoutEffect(() => {
-    const box = boxRef.current
-    if (box && stick.current) box.scrollTop = box.scrollHeight
-  }, [shown])
-
   // Move focus after the focused control unmounts (accept → tick).
   useLayoutEffect(() => {
     const f = focusNext.current
@@ -331,13 +461,6 @@ export function AcceptStream() {
     const el = f === 'main' ? mainBtn.current : acceptBtns.current[f]
     if (!el) return
     el.focus({ preventScroll: true })
-    const box = boxRef.current
-    if (box && box.contains(el)) {
-      const b = box.getBoundingClientRect()
-      const r = el.getBoundingClientRect()
-      if (r.top < b.top) box.scrollTop -= b.top - r.top + 8
-      else if (r.bottom > b.bottom) box.scrollTop += r.bottom - b.bottom + 8
-    }
   })
 
   // Clear any pending focus target on unmount (timers clean themselves above).
@@ -357,7 +480,6 @@ export function AcceptStream() {
     openSince.current = fill<number | null>(null)
     openMs.current = fill(0)
     acceptBtns.current = fill<HTMLButtonElement | null>(null)
-    stick.current = true
     setGap(g)
     setShown(0)
     setStatus(fill<Status>(null))
@@ -385,15 +507,19 @@ export function AcceptStream() {
       closeDiff(i)
       return
     }
+    // one diff open at a time, so the stream keeps its size
+    open.forEach((o, j) => {
+      if (o && j !== i) closeDiff(j)
+    })
     openSince.current[i] = Date.now()
-    setOpen((o) => put(o, i, true))
+    setOpen(fill(false).map((_, j) => j === i))
     setSeen((s) => put(s, i, true))
   }
 
   const nextPending = (i: number): number | 'main' => {
     for (let k = 1; k < shown; k++) {
       const j = (i + k) % shown
-      if (status[j] === null) return j
+      if (status[j] === null && visible.includes(j)) return j
     }
     return 'main'
   }
@@ -418,6 +544,17 @@ export function AcceptStream() {
     for (let i = 0; i < shown; i++) if (status[i] === null) closeDiff(i)
     setStatus((s) => s.map((v, i) => (i < shown && v === null ? 'accepted' : v)))
   }
+
+  // ---- what's on screen: the newest few, and the open one wherever it is ----
+  const openAt = open.findIndex((o, i) => o && i < shown)
+  let visible: number[] = []
+  if (openAt < 0) for (let i = Math.max(0, shown - WINDOW); i < shown; i++) visible.push(i)
+  else {
+    let other = shown - 1
+    if (other === openAt) other--
+    visible = other < 0 ? [openAt] : [openAt, other].sort((x, y) => x - y)
+  }
+  const earlier = shown - visible.length
 
   // ---- derived readouts ----
   const live = phase === 'running'
@@ -449,25 +586,6 @@ export function AcceptStream() {
   else statusLine = `agent done · ${pending} waiting`
 
   const latest = shown > 0 ? CHANGES[shown - 1] : null
-  const bug = CHANGES[BUG]
-
-  let headline = ''
-  let verdict = ''
-  if (report) {
-    if (report.bugStatus === 'rejected') {
-      headline = `rejected, after ${secs(report.bugMs)} s open`
-      verdict = "You caught it. Notice that the stream didn't wait while you read."
-    } else if (report.bugOpened) {
-      headline = `merged, after ${secs(report.bugMs)} s open`
-      verdict = 'You opened it and it still went through. The title is what you read; the diff is what shipped.'
-    } else {
-      headline = 'merged, 0 lines read'
-      verdict = report.usedAuto
-        ? 'You hit accept all. It merged without anyone looking.'
-        : 'You never opened it. Its title did the reviewing.'
-    }
-  }
-
   return (
     <Figure n={1} caption={<>an agent is sending you changes. accept them as fast as you like.</>}>
       <div className="as">
@@ -496,7 +614,15 @@ export function AcceptStream() {
             </dd>
           </div>
         </dl>
-        <p className="as-pace">{pace}</p>
+        <p className="as-pace fx-stack">
+          <span>{pace}</span>
+          <span className="fx-stack-off" aria-hidden="true">
+            nothing merged yet. the agent is ready when you are.
+          </span>
+          <span className="fx-stack-off" aria-hidden="true">
+            pace: 99,990 changes/week · best week ever
+          </span>
+        </p>
 
         <div className="as-status">
           <span className={`as-agent${live && shown < N ? ' is-busy' : ''}`}>
@@ -524,119 +650,63 @@ export function AcceptStream() {
           {live && latest ? `new change: ${latest.title}` : ''}
         </span>
 
-        {phase === 'done' && report ? (
-          // keyed apart from the stream box so it never inherits that box's scroll position
-          <div className="as-sum" key="sum">
-            <p className="as-sum-title" tabIndex={-1} ref={sumRef}>
-              review closed after {secs(report.ms)} s. you opened{' '}
-              <b>
-                {report.opened}/{N}
-              </b>{' '}
-              diffs, saw{' '}
-              <b>
-                {report.seen}/{report.total}
-              </b>{' '}
-              changed lines, rejected <b>{report.rejected}</b>.
-            </p>
-            <p className={`as-headline${report.bugStatus === 'rejected' ? '' : ' is-bad'}`}>
-              <span className="as-sum-k">the one that mattered:</span> &quot;{bug.title}&quot; · {headline}
-            </p>
-            <DiffView c={bug} final />
-            <p className="fig-note as-why">
-              {report.bugStatus === 'rejected' ? 'It would have let anyone delete any project' : 'Anyone can now delete any project'}
-              , the opposite of what the title says. {verdict}
-            </p>
-          </div>
-        ) : (
-          <div
-            key="box"
-            className="as-box"
-            ref={boxRef}
-            onScroll={(e) => {
-              const b = e.currentTarget
-              stick.current = b.scrollHeight - b.scrollTop - b.clientHeight < 48
-            }}
-          >
-            {phase === 'idle' ? (
-              <div className="as-empty">
-                <p>
-                  {N} changes are ready to stream in, about one a second.
-                  <br />
-                  open a title to see its diff. accept when you&apos;re happy.
-                </p>
-              </div>
-            ) : (
-              <ol className="as-list" aria-label="changes from the agent">
-                {CHANGES.slice(0, shown).map((c, i) => {
-                  const st = status[i]
-                  const isOpen = open[i]
-                  const diffId = `${uid}-d${i}`
-                  return (
-                    <li
-                      key={i}
-                      className={`as-card${st === 'accepted' ? ' is-accepted' : st === 'rejected' ? ' is-rejected' : ''}`}
-                    >
-                      <div className="as-head">
-                        <button
-                          type="button"
-                          className="as-toggle"
-                          aria-expanded={isOpen}
-                          aria-controls={isOpen ? diffId : undefined}
-                          onClick={() => toggle(i)}
-                        >
-                          <span className="as-caret" aria-hidden="true">
-                            ▸
-                          </span>
-                          <span className="as-title">{c.title}</span>
-                          <span className="as-meta">
-                            <span className="as-path">{c.path}</span>
-                            <span className="as-count">
-                              <span className="as-plus">+{c.adds}</span> <span className="as-minus">−{c.dels}</span>
-                            </span>
-                          </span>
-                        </button>
-                        <span className="as-act">
-                          {st === null ? (
-                            <button
-                              type="button"
-                              className="as-btn"
-                              ref={(el) => {
-                                acceptBtns.current[i] = el
-                              }}
-                              onClick={(e) => decide(i, 'accepted', e.detail === 0)}
-                              aria-label={`accept: ${c.title}`}
-                            >
-                              accept
-                            </button>
-                          ) : (
-                            <span className="as-done">
-                              <span className="as-tick" aria-hidden="true">
-                                {st === 'accepted' ? '✓' : '✕'}
-                              </span>
-                              {st === 'accepted' ? 'merged' : 'rejected'}
-                            </span>
-                          )}
-                        </span>
-                      </div>
-                      {isOpen && (
-                        <div className="as-open">
-                          <DiffView c={c} id={diffId} />
-                          {st === null && (
-                            <div className="as-dfoot">
-                              <button type="button" className="link-button" onClick={(e) => decide(i, 'rejected', e.detail === 0)}>
-                                reject this change
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </li>
-                  )
-                })}
+        <div className="as-stage fx-stack">
+          {phase === 'done' && report ? (
+            // keyed apart from the stream box so it never inherits its state
+            <Summary key="sum" report={report} titleRef={sumRef} />
+          ) : (
+            <div key="box" className="as-box">
+              {phase === 'idle' ? (
+                <div className="as-empty">
+                  <p>
+                    {N} changes are ready to stream in, about one a second.
+                    <br />
+                    open a title to see its diff. accept when you&apos;re happy.
+                  </p>
+                </div>
+              ) : (
+                <>
+                  {earlier > 0 && (
+                    <p className="as-earlier">
+                      +{earlier} earlier
+                    </p>
+                  )}
+                  <ol className="as-list" aria-label="changes from the agent">
+                    {visible.map((i) =>
+                      card(CHANGES[i], i, status[i], open[i], {
+                        diffId: `${uid}-d${i}`,
+                        onToggle: () => toggle(i),
+                        onAccept: (e) => decide(i, 'accepted', e.detail === 0),
+                        onReject: (e) => decide(i, 'rejected', e.detail === 0),
+                        acceptRef: (el) => {
+                          acceptBtns.current[i] = el
+                        },
+                      }),
+                    )}
+                  </ol>
+                </>
+              )}
+            </div>
+          )}
+          {/* hidden copies of the tallest things this cell can hold, so it never changes size */}
+          {CHANGES.map((_, k) => (
+            <div key={`g${k}`} className="as-box fx-stack-off fx-ghost" aria-hidden="true">
+              <p className="as-earlier">+{N} earlier</p>
+              <ol className="as-list">
+                {ghostRows(k).map((i) => card(CHANGES[i], i, null, i === k, null))}
               </ol>
-            )}
+            </div>
+          ))}
+          <div className="as-box fx-stack-off fx-ghost" aria-hidden="true">
+            <p className="as-earlier">+{N} earlier</p>
+            <ol className="as-list">{BY_WIDTH.slice(0, WINDOW).map((i) => card(CHANGES[i], i, null, false, null))}</ol>
           </div>
-        )}
+          {GHOST_REPORTS.map((r, k) => (
+            <div key={`s${k}`} className="fx-stack-off fx-ghost" aria-hidden="true">
+              <Summary report={r} />
+            </div>
+          ))}
+        </div>
 
         <div className="debt-controls as-controls">
           {phase === 'idle' && (

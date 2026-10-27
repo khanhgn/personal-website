@@ -4282,68 +4282,6 @@ header.post-header.wide .post-header-frame img {
   visibility: hidden;
 }
 
-/* a quiet scrollbar for the few regions that scroll */
-.post .fig .fx-scroll,
-.post .fig .fw-stage .fw-desk,
-.post .fig .fw-stage .fw-so-slot,
-.post .fig .fw-stage .fw-agent-out,
-.post .fig .fw-stage .fw-cmp,
-.post .fig .fw-readout,
-.post .fig .as .as-box,
-.post .fig .as .as-sum,
-.post .fig .fb-mid,
-.post .fig .pl-out,
-.post .fig .pl-note-box {
-  overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  scrollbar-width: thin;
-  scrollbar-color: var(--hairline) transparent;
-}
-
-.post .fig .fx-scroll::-webkit-scrollbar,
-.post .fig .fw-stage .fw-desk::-webkit-scrollbar,
-.post .fig .fw-stage .fw-so-slot::-webkit-scrollbar,
-.post .fig .fw-stage .fw-agent-out::-webkit-scrollbar,
-.post .fig .fw-stage .fw-cmp::-webkit-scrollbar,
-.post .fig .fw-readout::-webkit-scrollbar,
-.post .fig .as .as-box::-webkit-scrollbar,
-.post .fig .as .as-sum::-webkit-scrollbar,
-.post .fig .fb-mid::-webkit-scrollbar,
-.post .fig .pl-out::-webkit-scrollbar,
-.post .fig .pl-note-box::-webkit-scrollbar {
-  width: 6px;
-}
-
-.post .fig .fx-scroll::-webkit-scrollbar-thumb,
-.post .fig .fw-stage .fw-desk::-webkit-scrollbar-thumb,
-.post .fig .fw-stage .fw-so-slot::-webkit-scrollbar-thumb,
-.post .fig .fw-stage .fw-agent-out::-webkit-scrollbar-thumb,
-.post .fig .fw-stage .fw-cmp::-webkit-scrollbar-thumb,
-.post .fig .fw-readout::-webkit-scrollbar-thumb,
-.post .fig .as .as-box::-webkit-scrollbar-thumb,
-.post .fig .as .as-sum::-webkit-scrollbar-thumb,
-.post .fig .fb-mid::-webkit-scrollbar-thumb,
-.post .fig .pl-out::-webkit-scrollbar-thumb,
-.post .fig .pl-note-box::-webkit-scrollbar-thumb {
-  background: var(--hairline);
-  border-radius: 3px;
-}
-
-.post .fig .fx-scroll::-webkit-scrollbar-track,
-.post .fig .fw-stage .fw-desk::-webkit-scrollbar-track,
-.post .fig .fw-stage .fw-so-slot::-webkit-scrollbar-track,
-.post .fig .fw-stage .fw-agent-out::-webkit-scrollbar-track,
-.post .fig .fw-stage .fw-cmp::-webkit-scrollbar-track,
-.post .fig .fw-readout::-webkit-scrollbar-track,
-.post .fig .as .as-box::-webkit-scrollbar-track,
-.post .fig .as .as-sum::-webkit-scrollbar-track,
-.post .fig .fb-mid::-webkit-scrollbar-track,
-.post .fig .pl-out::-webkit-scrollbar-track,
-.post .fig .pl-note-box::-webkit-scrollbar-track {
-  background: transparent;
-}
-
 .post .fig .fw-placeholder {
   margin: 0;
   opacity: 0.85;
@@ -4354,7 +4292,6 @@ header.post-header.wide .post-header-frame img {
    band holding the result and the chart. */
 
 .post .fig .fw {
-  --fw-stage-h: 11.9rem;
   display: flex;
   flex-direction: column;
 }
@@ -4364,11 +4301,16 @@ header.post-header.wide .post-header-frame img {
 }
 
 .post .fig .fw .fw-stage {
-  height: var(--fw-stage-h);
   min-height: 0;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+}
+
+/* the live stage and hidden copies of every stage's tallest phase share one cell */
+.post .fig .fw .fx-ghost,
+.post .fig .fx-ghost {
+  pointer-events: none;
+  user-select: none;
 }
 
 .post .fig .fw .fw-stage > * {
@@ -4376,9 +4318,8 @@ header.post-header.wide .post-header-frame img {
 }
 
 .post .fig .fw .fw-stage > .fw-split {
-  flex: 1 1 auto;
-  min-height: 0;
-  grid-template-rows: auto minmax(0, 1fr);
+  flex: 1 0 auto;
+  grid-template-rows: auto 1fr;
 }
 
 .post .fig .fw .fw-side {
@@ -4391,24 +4332,24 @@ header.post-header.wide .post-header-frame img {
   flex: none;
 }
 
-/* the one part of each stage that changes size takes what is left, and scrolls */
+/* the one part of each stage that changes size takes what is left */
 .post .fig .fw .fw-stage .fw-desk,
 .post .fig .fw .fw-stage .fw-so-slot,
 .post .fig .fw .fw-stage .fw-agent-out {
-  flex: 1 1 0;
-  min-height: 0;
+  flex: 1 0 auto;
   margin-bottom: 0;
 }
 
 .post .fig .fw .fw-stage .fw-shell {
-  flex: 1 1 0;
+  flex: none;
   height: auto;
-  min-height: 0;
+  min-height: calc(5 * 1.4em + 0.7em);
 }
 
-.post .fig .fw .fw-stage > .fw-cmp {
-  flex: 0 1 auto;
-  min-height: 0;
+.post .fig .fw .fw-shell-lines > div {
+  white-space: pre-wrap;
+  word-break: break-all;
+  min-height: 1.4em;
 }
 
 .post .fig .fw .fw-stage .fw-so-slot {
@@ -4419,7 +4360,7 @@ header.post-header.wide .post-header-frame img {
 .post .fig .fw .fw-stage[data-gen='web'] {
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr);
-  grid-template-rows: auto auto minmax(0, auto) auto;
+  grid-template-rows: auto auto auto auto;
   column-gap: 0.8em;
   align-content: start;
 }
@@ -4469,10 +4410,8 @@ header.post-header.wide .post-header-frame img {
   display: grid;
 }
 
-.post .fig .fw .fw-result-sizer > p {
+.post .fig .fw .fw-result-sizer > * {
   grid-area: 1 / 1;
-  /* room for the learned / next line under the note */
-  padding-bottom: 1.7rem;
 }
 
 .post .fig .fw .fw-result .fig-note,
@@ -4500,14 +4439,17 @@ header.post-header.wide .post-header-frame img {
   margin: 0.2em 0 0;
 }
 
-@media (min-width: 640px) {
+@container (min-width: 37rem) {
   .post .fig .fw .fw-stage > .fw-split {
-    grid-template-rows: minmax(0, 1fr);
+    grid-template-rows: 1fr;
     align-items: stretch;
   }
   .post .fig .fw .fw-stage > .fw-split > :first-child {
     align-self: start;
   }
+}
+
+@media (min-width: 640px) {
   .post .fig .fw .fw-chart-n {
     display: none;
   }
@@ -4547,9 +4489,6 @@ header.post-header.wide .post-header-frame img {
 }
 
 @media (max-width: 639px) {
-  .post .fig .fw {
-    --fw-stage-h: 18.6rem;
-  }
   .post .fig .fw .fw-stage[data-gen='web'] {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -4565,17 +4504,10 @@ header.post-header.wide .post-header-frame img {
   .post .fig .fw .fw-readout .fw-chart {
     margin-top: 0.6em;
   }
-  /* the band keeps one size; the result sits on top, the chart under it */
+  /* on a phone the chart comes first, then the lesson, held at its tallest */
   .post .fig .fw .fw-readout {
-    height: 6rem;
-    padding-bottom: 0.8em;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
-  }
-  /* on a phone the chart comes first and shows all five rows; the lesson scrolls under it */
-  .post .fig .fw .fw-readout {
-    height: 9.9rem;
   }
   .post .fig .fw .fw-readout .fw-chart {
     order: -1;
@@ -4584,11 +4516,6 @@ header.post-header.wide .post-header-frame img {
   }
   .post .fig .fw .fw-readout .fw-result {
     flex: none;
-    -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 1.1em), transparent);
-    mask-image: linear-gradient(to bottom, #000 calc(100% - 1.1em), transparent);
-  }
-  .post .fig .fw .fw-result-sizer {
-    display: none;
   }
 }
 
@@ -4609,14 +4536,11 @@ header.post-header.wide .post-header-frame img {
 }
 
 .post .fig .fw .fw-so-votes {
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
 }
 
 .post .fig .fw .fw-so-meta {
   flex: 1 1 auto;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .post .fig .fw .fw-stage .fw-search + .fw-meter,
@@ -4665,19 +4589,9 @@ header.post-header.wide .post-header-frame img {
 /* ---------------------------------------------------------------------------
    fig: accept stream. the summary takes the stream's place at the stream's size. */
 
-.post .fig .as {
-  --as-box-h: 16.2rem;
-}
-
-.post .fig .as .as-sum {
-  height: var(--as-box-h);
+/* the stream, the summary and hidden copies of their tallest states share one cell */
+.post .fig .as .as-stage > * {
   min-height: 0;
-}
-
-@media (max-width: 560px) {
-  .post .fig .as {
-    --as-box-h: 18.5rem;
-  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -4685,8 +4599,7 @@ header.post-header.wide .post-header-frame img {
    (hint, test run, verdict), and one row of controls pinned to the bottom. */
 
 .post .fig .fb {
-  --fb-h: 24.6rem;
-  height: var(--fb-h);
+  height: 100%;
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -4698,8 +4611,11 @@ header.post-header.wide .post-header-frame img {
 
 .post .fig .fb > .fb-mid {
   position: relative;
-  flex: 1 1 0;
-  min-height: 0;
+  flex: 1 0 auto;
+}
+
+.post .fig .fb > .fb-foot {
+  margin-top: auto;
 }
 
 .post .fig .fb pre.fb-code {
@@ -4762,26 +4678,16 @@ header.post-header.wide .post-header-frame img {
   margin-top: auto;
 }
 
-@media (max-width: 560px) {
-  .post .fig .fb {
-    --fb-h: 28.6rem;
-  }
-}
 
 /* ---------------------------------------------------------------------------
    fig: indifferent. outputs keep two lines each; the agent's note keeps two. */
 
 .post .fig .ind-pair pre {
-  height: calc(2 * 1.55em + 1.4em);
-  overflow-x: hidden;
-  overflow-y: auto;
-  scrollbar-width: thin;
+  word-break: break-all;
 }
 
 .post .fig .ind-pair .ind-note {
-  height: 3em;
   margin-bottom: 0;
-  overflow: hidden;
 }
 
 @media (max-width: 560px) {
@@ -4798,13 +4704,236 @@ header.post-header.wide .post-header-frame img {
   .post .fig .pl-tests {
     margin-top: 0.5em;
   }
-  /* on a phone the longer note scrolls inside a box of four lines */
-  .post .fig .pl-note-box {
-    height: calc(4 * 1.5 * 0.86rem + 0.5em);
-    padding-bottom: 0.5em;
-    -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 1em), transparent);
-    mask-image: linear-gradient(to bottom, #000 calc(100% - 1em), transparent);
-  }
 }
 
 /* stable heights (end) */
+
+/* no scroll (begin)
+   Nothing inside a figure scrolls or clips. Each figure holds one height by stacking
+   hidden copies of its tallest states in the same grid cell (.fx-ghost), and long
+   code wraps instead of running sideways. */
+
+.post .fig .fig-body {
+  container-type: inline-size;
+}
+
+.post .fig pre,
+.fig pre,
+.post .fig pre.fb-code,
+.fig pre.fb-code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow: visible;
+}
+
+.post .fig .pl-tests,
+.post .fig .fw-cmp,
+.post .fig .as .as-box,
+.post .fig .as .as-code,
+.post .fig .fw-stage .fw-shell {
+  overflow: visible;
+}
+
+/* listings: a wrapped line continues under its text, not under the line number */
+.post .fig .fw-ln {
+  padding-left: 2.1em;
+  text-indent: -1.6em;
+}
+
+.post .fig .fb-list {
+  min-width: 0;
+}
+
+.post .fig .fb-line {
+  padding-left: 2.6em;
+  text-indent: -2.6em;
+}
+
+/* five ways: no setup line; the years stay in the tabs at every width */
+.post .fig .fw-tabs button {
+  justify-content: flex-start;
+}
+
+.post .fig .fw-tab-label {
+  white-space: normal;
+  overflow: visible;
+  overflow-wrap: anywhere;
+}
+
+.post .fig .fw-tab-yrs {
+  display: block;
+  overflow: visible;
+}
+
+@media (max-width: 560px) {
+  .post .fig .fw-tab-yrs {
+    display: block;
+    font-size: 0.6rem;
+    letter-spacing: -0.02em;
+  }
+  .post .fig .fw-tabs button {
+    padding: 0.3em 0.35em;
+  }
+}
+
+.post .fig .fw-tabs {
+  margin-bottom: 0.7em;
+}
+
+/* side by side only when the listing and its panel both fit at full width */
+.post .fig .fw-split {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.6em;
+}
+
+@container (min-width: 37rem) {
+  .post .fig .fw-split {
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: 0 0.9em;
+    align-items: start;
+  }
+}
+
+.post .fig .fw-stage .fw-shell {
+  height: auto;
+  max-height: none;
+}
+
+.post .fig .fw-edit {
+  max-width: calc(100% - 9ch);
+}
+
+.post .fig .fw-url-text {
+  overflow-wrap: anywhere;
+}
+
+/* two sum: the versions sit side by side only when both listings fit unwrapped */
+.post .fig .pl-stack {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@container (min-width: 41rem) {
+  .post .fig .pl-stack {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+/* accept stream: the newest few changes, older ones counted above them */
+.post .fig .as .as-box {
+  height: auto;
+}
+
+.post .fig .as .as-sum {
+  min-height: 0;
+}
+
+.post .fig .as p.as-earlier {
+  margin: 0;
+  padding: 0.3em 0.75em;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--ink-muted);
+  font-family: var(--font-mono), ui-monospace, Menlo, monospace;
+  font-size: 0.68rem;
+  line-height: 1.4;
+}
+
+.post .fig .as .as-lines {
+  width: auto;
+  min-width: 0;
+}
+
+.post .fig .as .as-line {
+  grid-template-columns: 2.4em 1.2em minmax(0, 1fr);
+  white-space: pre-wrap;
+}
+
+.post .fig .as .as-text,
+.post .fig .as .as-hunk {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* machine vs agent: panes side by side only when each has room */
+.post .fig .fig-pair {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@container (min-width: 34rem) {
+  .post .fig .fig-pair {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.post .fig .fig-input .ind-field {
+  flex: 1;
+  min-width: 0;
+}
+
+.post .fig .fig-input textarea,
+.post .fig .fig-input .ind-field-ghost {
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: max(16px, 0.9rem);
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.post .fig .fig-input textarea {
+  width: 100%;
+  height: 100%;
+  resize: none;
+  overflow: hidden;
+  background: transparent;
+  color: var(--ink);
+  outline: none;
+}
+
+.post .fig .ind-pair pre,
+.post .fig .ind-note > span {
+  white-space: pre-wrap;
+}
+
+/* the deck leaves upward, not off the side */
+.post .fig .fw-deck.is-away .fw-card {
+  transform: translateY(-6px) rotate(1.5deg);
+}
+
+.post .fig .fw-url-text,
+.post .fig .fw-search-q {
+  white-space: normal;
+  overflow: visible;
+  overflow-wrap: anywhere;
+}
+
+.post .fig .fw-bar-zero {
+  top: 0;
+  bottom: 0;
+}
+
+.post .fig .fig-pane pre {
+  overflow: visible;
+}
+
+.post .fig .as p.as-pace {
+  white-space: normal;
+  overflow: visible;
+}
+
+.post .fig .fw-no,
+.post .fig .fb-no {
+  text-indent: 0;
+}
+
+@media (max-width: 380px) {
+  .post .fig .pl-table th,
+  .post .fig .pl-table td {
+    padding-right: 0.35em;
+    font-size: 0.68rem;
+  }
+}
+
+/* no scroll (end) */

@@ -28,7 +28,6 @@ type Gen = {
   id: GenId
   label: string
   years: string
-  setup: string
   result: string
   lesson: string
   secs: number // time to find out what's wrong, for the chart
@@ -40,7 +39,6 @@ const GENS: Gen[] = [
     id: 'cards',
     label: 'punch cards',
     years: '1955–75',
-    setup: 'you write it on paper and punch one card per line. the machine is in another building.',
     result:
       'One wrong number, a day later. You found the bug by running the program in your head, card by card. The fix cost another day.',
     lesson: 'precision',
@@ -51,7 +49,6 @@ const GENS: Gen[] = [
     id: 'terminal',
     label: 'terminal',
     years: '1975–93',
-    setup: 'a terminal of your own. a run takes seconds, so you can afford to be wrong.',
     result:
       'Wrong in seconds, again and again, until the answer moved. Every bad edit showed you another way it breaks.',
     lesson: 'how machines fail',
@@ -62,7 +59,6 @@ const GENS: Gen[] = [
     id: 'web',
     label: 'view source',
     years: '1993–08',
-    setup: "every web page comes with its source. somewhere, someone's version works.",
     result:
       "You read their code against yours until += against = jumped out. Their names weren't yours, so you had to understand it to copy it.",
     lesson: 'reading',
@@ -73,7 +69,6 @@ const GENS: Gen[] = [
     id: 'so',
     label: 'stack overflow',
     years: '2008–22',
-    setup: 'someone has already asked about almost every bug. you just have to describe the symptom.',
     result:
       'Someone else found it first. You still had to fit their answer to your code, so you understood it a little.',
     lesson: 'adaptation',
@@ -84,7 +79,6 @@ const GENS: Gen[] = [
     id: 'agent',
     label: 'agent',
     years: '2022–',
-    setup: 'you say what you want. it writes the code, runs it, and fixes what breaks.',
     result: 'Done before you looked. You never saw the bug, which is the point and the problem.',
     lesson: 'judgement, maybe',
     secs: 0,
@@ -386,6 +380,8 @@ type StageProps = {
   onFound: (insisted?: boolean) => void
   say: (msg: string) => void
   focus: boolean
+  // a frozen copy in this phase, hidden, that only holds the stage open at its tallest
+  ghost?: string
 }
 
 function Primary({
@@ -487,13 +483,12 @@ function night(p: number) {
   return 'a printout goes in your pigeonhole.'
 }
 
-function Cards({ reduced, onFound, say, focus }: StageProps) {
-  const [phase, setPhase] = useState<'desk' | 'away' | 'printout' | 'trace' | 'found' | 'repunched'>(
-    'desk'
-  )
-  const [step, setStep] = useState(-1)
+function Cards({ reduced, onFound, say, focus, ghost }: StageProps) {
+  type P = 'desk' | 'away' | 'printout' | 'trace' | 'found' | 'repunched'
+  const [phase, setPhase] = useState<P>((ghost as P) || 'desk')
+  const [step, setStep] = useState(ghost ? TRACE.length - 1 : -1)
   const later = useLater()
-  const p = useProgress(phase === 'away', NIGHT_MS, () => {
+  const p = useProgress(phase === 'away' && !ghost, NIGHT_MS, () => {
     setPhase('printout')
     say('Wednesday, 9:10 am. The printout says 2.0. You wanted 4.0.')
   })
@@ -635,12 +630,21 @@ function Cards({ reduced, onFound, say, focus }: StageProps) {
 // 2. terminal: edit line 4, run it, read the output, repeat
 
 const CMD = 'python avg.py'
+const EDIT_MAX = 24 // line 4 is short; this keeps the listing and the terminal inside their boxes
+const SHELL_LINES = 4 // history lines shown above the prompt
+// the four widest lines the terminal can print, for the hidden copy that sizes it
+const GHOST_HIST: Out[] = [
+  { k: 'out', t: '    ' + 'x'.repeat(EDIT_MAX) },
+  { k: 'err', t: "IndentationError: expected an indented block after 'for' statement on line 3" },
+  { k: 'err', t: `NameError: name '${'x'.repeat(EDIT_MAX)}' is not defined` },
+  { k: 'err', t: "TypeError: unsupported operand type(s) for /: 'list' and 'int'" },
+]
 
-function Terminal({ reduced, onFound, say, focus }: StageProps) {
-  const [src, setSrc] = useState('total = x')
-  const [hist, setHist] = useState<Out[]>([])
+function Terminal({ reduced, onFound, say, focus, ghost }: StageProps) {
+  const [src, setSrc] = useState(ghost ? 'x'.repeat(EDIT_MAX) : 'total = x')
+  const [hist, setHist] = useState<Out[]>(ghost ? GHOST_HIST : [])
   const [phase, setPhase] = useState<'idle' | 'typing' | 'running'>('idle')
-  const [runs, setRuns] = useState(0)
+  const [runs, setRuns] = useState(ghost ? 3 : 0)
   const [fixed, setFixed] = useState(false)
   const pending = useRef('')
   const input = useRef<HTMLInputElement>(null)
@@ -670,7 +674,7 @@ function Terminal({ reduced, onFound, say, focus }: StageProps) {
     }, reduced ? 120 : 520)
   }, [phase, typed.done, later, onFound, say, reduced])
 
-  const width = Math.max(src.length + 1, 12)
+  const width = Math.min(Math.max(src.length + 1, 12), EDIT_MAX + 1)
   const hint = fixed
     ? `4.0 after ${runs} ${runs === 1 ? 'run' : 'runs'}. each one took seconds.`
     : runs === 0
@@ -689,14 +693,16 @@ function Terminal({ reduced, onFound, say, focus }: StageProps) {
               <input
                 ref={input}
                 className="fw-edit"
-                aria-label="line 4 of avg.py, editable"
+                aria-label={ghost ? undefined : "line 4 of avg.py, editable"}
                 value={src}
                 spellCheck={false}
                 autoComplete="off"
                 autoCapitalize="off"
-                readOnly={phase !== 'idle'}
+                readOnly={phase !== 'idle' || !!ghost}
+                tabIndex={ghost ? -1 : undefined}
+                maxLength={EDIT_MAX}
                 style={{ width: `${width}ch` }}
-                onChange={(e) => setSrc(e.target.value)}
+                onChange={(e) => setSrc(e.target.value.slice(0, EDIT_MAX))}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     e.preventDefault()
@@ -713,8 +719,9 @@ function Terminal({ reduced, onFound, say, focus }: StageProps) {
 
       <div className="fw-side">
       <div className="fw-shell mono" aria-label="terminal">
-        <div className="fw-shell-scroll">
-          {hist.map((h, i) => (
+        <div className="fw-shell-lines">
+          {/* like a real terminal: the newest lines, older ones gone off the top */}
+          {hist.slice(-SHELL_LINES).map((h, i) => (
             <div key={i} className={h.k === 'err' ? 'fw-bad' : h.k === 'ok' ? 'fw-ok-text' : undefined}>
               {h.t}
             </div>
@@ -777,14 +784,13 @@ function segs(s: Seg[], em: boolean) {
   )
 }
 
-function ViewSource({ reduced, onFound, say, focus }: StageProps) {
-  const [phase, setPhase] = useState<'mine' | 'typing' | 'loading' | 'side' | 'reading' | 'found' | 'fixed'>(
-    'mine'
-  )
-  const [row, setRow] = useState(-1)
+function ViewSource({ reduced, onFound, say, focus, ghost }: StageProps) {
+  type P = 'mine' | 'typing' | 'loading' | 'side' | 'reading' | 'found' | 'fixed'
+  const [phase, setPhase] = useState<P>((ghost as P) || 'mine')
+  const [row, setRow] = useState(ghost ? ROWS.length - 1 : -1)
   const later = useLater()
   const typed = useTyping(URL, phase === 'typing', 18, reduced)
-  const p = useProgress(phase === 'loading', 900, () => {
+  const p = useProgress(phase === 'loading' && !ghost, 900, () => {
     setPhase('side')
     say('Their page loads. Their version prints 4.0. Now compare it with yours.')
   })
@@ -812,18 +818,6 @@ function ViewSource({ reduced, onFound, say, focus }: StageProps) {
       }, 120 + k * 480)
     )
   }, [phase, reduced, later, onFound, say])
-
-  const cmpRef = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    const box = cmpRef.current
-    if (!box || box.scrollHeight <= box.clientHeight + 1) return
-    const el = box.querySelector<HTMLElement>('.is-hot, .is-diff')
-    if (!el) return
-    const b = box.getBoundingClientRect()
-    const r = el.getBoundingClientRect()
-    if (r.top < b.top) box.scrollTop -= b.top - r.top + 4
-    else if (r.bottom > b.bottom) box.scrollTop += r.bottom - b.bottom + 4
-  }, [row, phase])
 
   const loaded = phase === 'side' || phase === 'reading' || phase === 'found' || phase === 'fixed'
   const label =
@@ -857,7 +851,6 @@ function ViewSource({ reduced, onFound, say, focus }: StageProps) {
       {phase === 'loading' ? <Meter p={p} /> : <div className="fw-meter-gap" aria-hidden="true" />}
 
       <div
-        ref={cmpRef}
         className={`fw-cmp mono${loaded ? ' is-loaded' : ''}`}
         role="table" aria-label="your code next to theirs">
         <div className="fw-cmp-row fw-cmp-head" role="row">
@@ -909,11 +902,12 @@ function ViewSource({ reduced, onFound, say, focus }: StageProps) {
 
 const QUERY = 'python average function returns wrong number'
 
-function Answer({ reduced, onFound, say, focus }: StageProps) {
-  const [phase, setPhase] = useState<'mine' | 'typing' | 'loading' | 'answer' | 'pasted'>('mine')
+function Answer({ reduced, onFound, say, focus, ghost }: StageProps) {
+  type P = 'mine' | 'typing' | 'loading' | 'answer' | 'pasted'
+  const [phase, setPhase] = useState<P>((ghost as P) || 'mine')
   const [up, setUp] = useState(false)
   const typed = useTyping(QUERY, phase === 'typing', 26, reduced)
-  const p = useProgress(phase === 'loading', 700, () => {
+  const p = useProgress(phase === 'loading' && !ghost, 700, () => {
     setPhase('answer')
     onFound()
     say('Top answer, 214 votes: you are overwriting total on every pass. Use total += x.')
@@ -1004,9 +998,9 @@ function Answer({ reduced, onFound, say, focus }: StageProps) {
 // ---------------------------------------------------------------------------
 // 5. agent: one green tick. the bug is only there if you go looking.
 
-function Agent({ reduced, onFound, say, focus }: StageProps) {
-  const [phase, setPhase] = useState<'ask' | 'working' | 'done'>('ask')
-  const [depth, setDepth] = useState(0)
+function Agent({ reduced, onFound, say, focus, ghost }: StageProps) {
+  const [phase, setPhase] = useState<'ask' | 'working' | 'done'>(ghost ? 'done' : 'ask')
+  const [depth, setDepth] = useState(ghost ? 2 : 0)
   const later = useLater()
 
   const act = () => {
@@ -1094,6 +1088,24 @@ function Agent({ reduced, onFound, say, focus }: StageProps) {
     </div>
   )
 }
+
+// the tallest phases of each stage, kept as hidden copies so the stage never changes size
+const GHOSTS: { id: GenId; phase: string }[] = [
+  { id: 'cards', phase: 'away' },
+  { id: 'cards', phase: 'printout' },
+  { id: 'cards', phase: 'repunched' },
+  { id: 'terminal', phase: 'full' },
+  { id: 'web', phase: 'mine' },
+  { id: 'web', phase: 'found' },
+  { id: 'web', phase: 'fixed' },
+  { id: 'so', phase: 'answer' },
+  { id: 'so', phase: 'pasted' },
+  { id: 'agent', phase: 'done' },
+]
+const noop = () => {}
+
+const INSISTED =
+  'Done before you looked. You saw the bug only because you went digging, and nothing asked you to.'
 
 const STAGES: { [K in GenId]: (p: StageProps) => JSX.Element } = {
   cards: Cards,
@@ -1265,37 +1277,45 @@ export function FiveWays() {
         ))}
       </div>
 
-      <p className="mono fw-setup fw-stack">
-        {GENS.map((x, i) => (
-          <span key={x.id} className={i === gi ? undefined : 'fw-stack-off'} aria-hidden={i !== gi}>
-            <span className="muted fw-setup-yrs">{x.years} · </span>
-            {x.setup}
-          </span>
-        ))}
-      </p>
 
-      <div className="fw-stage" data-gen={g.id}>
-        <Stage key={`${g.id}-${run}`} reduced={reduced} onFound={onFound} say={say} focus={focusStage} />
+      <div className="fw-stagebox fx-stack">
+        <div className="fw-stage" data-gen={g.id}>
+          <Stage key={`${g.id}-${run}`} reduced={reduced} onFound={onFound} say={say} focus={focusStage} />
+        </div>
+        {GHOSTS.map((x) => {
+          const G = STAGES[x.id]
+          return (
+            <div key={x.id + x.phase} className="fw-stage fx-stack-off fx-ghost" data-gen={x.id} aria-hidden="true">
+              <G reduced={reduced} onFound={noop} say={noop} focus={false} ghost={x.phase} />
+            </div>
+          )
+        })}
       </div>
 
       <div className="fw-readout">
         <div className={`fw-result${solved ? ' is-on' : ''}`}>
           {/* invisible copies of every result hold the band at its tallest */}
           <div className="fw-result-sizer" aria-hidden="true">
-            {GENS.map((x) => (
-              <p key={x.id} className="fig-note">
-                {x.result}
-              </p>
-            ))}
-            <p className="fig-note">
-              Done before you looked. You saw the bug only because you went digging, and nothing asked you to.
-            </p>
+            {GENS.map((x) => x.result)
+              .concat([INSISTED])
+              .map((t) => (
+                <div key={t} className="fw-result-body">
+                  <p className="fig-note">{t}</p>
+                  <div className="fw-result-foot mono">
+                    <dl className="fig-readout">
+                      <dt>learned</dt>
+                      <dd>how machines fail</dd>
+                    </dl>
+                    <span className="link-button">next: stack overflow →</span>
+                  </div>
+                </div>
+              ))}
           </div>
           {solved ? (
             <div className="fw-result-body">
               <p className="fig-note">
                 {g.id === 'agent' && insisted
-                  ? 'Done before you looked. You saw the bug only because you went digging, and nothing asked you to.'
+                  ? INSISTED
                   : g.result}
               </p>
               <div className="fw-result-foot mono">
