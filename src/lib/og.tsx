@@ -42,7 +42,7 @@ export async function loadOgImage(src: string | undefined, origin: string): Prom
     if (buf.byteLength > 3_000_000) return null
     let bin = ''
     const bytes = new Uint8Array(buf)
-    for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000))
+    for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, Array.from(bytes.subarray(i, i + 0x8000)))
     return `data:${type};base64,${btoa(bin)}`
   } catch {
     return null
