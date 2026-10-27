@@ -674,11 +674,11 @@ function Terminal({ reduced, onFound, say, focus }: StageProps) {
   const hint = fixed
     ? `4.0 after ${runs} ${runs === 1 ? 'run' : 'runs'}. each one took seconds.`
     : runs === 0
-    ? 'line 4 is editable. run it first and see what happens.'
-    : 'wrong. change line 4 and run it again. (enter runs it too)'
+    ? 'line 4 is editable. run it first.'
+    : 'wrong. edit line 4, run again (enter works).'
 
   return (
-    <>
+    <div className="fw-split">
       <Listing
         label="avg.py"
         cls={(i) => (i === BUG ? (fixed ? 'is-fixed' : 'is-edit') : undefined)}
@@ -711,6 +711,7 @@ function Terminal({ reduced, onFound, say, focus }: StageProps) {
         )}
       />
 
+      <div className="fw-side">
       <div className="fw-shell mono" aria-label="terminal">
         <div className="fw-shell-scroll">
           {hist.map((h, i) => (
@@ -742,7 +743,8 @@ function Terminal({ reduced, onFound, say, focus }: StageProps) {
         )}
       </div>
       <p className="mono muted fw-hint">{hint}</p>
-    </>
+      </div>
+    </div>
   )
 }
 
@@ -918,13 +920,14 @@ function Answer({ reduced, onFound, say, focus }: StageProps) {
   }
 
   return (
-    <>
+    <div className="fw-split">
       <Listing
         label="avg.py"
         lines={LINES.map((l, i) => (i === BUG && phase === 'pasted' ? FIXED : l))}
         cls={(i) => (i === BUG && phase === 'pasted' ? 'is-fixed' : undefined)}
       />
 
+      <div className="fw-side">
       <div className="fw-search mono">
         <span className="muted" aria-hidden="true">
           ⌕
@@ -945,6 +948,11 @@ function Answer({ reduced, onFound, say, focus }: StageProps) {
       <div className="fw-so-slot">
         {(phase === 'answer' || phase === 'pasted') && (
           <article className="fw-so" aria-label="top answer">
+            <p className="fw-so-q mono">Why does my average() return the last number?</p>
+            <p className="fw-so-a">
+              You&apos;re overwriting <code>total</code> on every pass, so only the last value
+              survives. Add to it instead: <code>total += x</code>
+            </p>
             <div className="fw-so-votes mono">
               <button
                 type="button"
@@ -961,17 +969,7 @@ function Answer({ reduced, onFound, say, focus }: StageProps) {
               <span className="fw-so-acc" title="accepted answer" aria-label="accepted answer">
                 ✓
               </span>
-            </div>
-            <div className="fw-so-body">
-              <p className="fw-so-q mono">Why does my average() return the last number?</p>
-              <p className="fw-so-a">
-                You&apos;re overwriting <code>total</code> on every pass, so only the last value
-                survives. Add to it instead:
-              </p>
-              <pre>
-                <code>{'for x in nums:\n    total += x'}</code>
-              </pre>
-              <p className="mono muted fw-so-meta">answered 2013 · someone else, for someone else</p>
+              <span className="muted fw-so-meta">answered 2013 · someone else, for someone else</span>
             </div>
           </article>
         )}
@@ -980,7 +978,8 @@ function Answer({ reduced, onFound, say, focus }: StageProps) {
         <Primary label={label} busy={busy} onClick={act} focus={focus} />
         {phase === 'pasted' && <span className="muted">$ python avg.py → 4.0</span>}
       </div>
-    </>
+      </div>
+    </div>
   )
 }
 
@@ -1003,9 +1002,10 @@ function Agent({ reduced, onFound, say, focus }: StageProps) {
   }
 
   return (
-    <>
+    <div className="fw-split">
       <Listing label="avg.py" lines={LINES.map((l, i) => (i === BUG && phase === 'done' ? FIXED : l))} />
 
+      <div className="fw-side">
       <div className="fw-ask mono">
         <span className="muted" aria-hidden="true">
           ›
@@ -1067,7 +1067,8 @@ function Agent({ reduced, onFound, say, focus }: StageProps) {
           </>
         )}
       </div>
-    </>
+      </div>
+    </div>
   )
 }
 
@@ -1106,7 +1107,9 @@ function Chart({
     <div className="fw-chart mono">
       <p className="fw-chart-title">
         <span>time from wrong to knowing why</span>
-        <span className="muted">log scale</span>
+        <span className="muted">
+          {n} of 5 tried · log scale
+        </span>
       </p>
       <ol className="fw-bars">
         {GENS.map((g) => {
@@ -1135,13 +1138,11 @@ function Chart({
           <span className="fw-bar-val" />
         </li>
       </ol>
-      <p className={`fw-chart-foot${n === GENS.length ? ' is-done' : ''}`}>
-        {n === GENS.length
-          ? 'a day, minutes, seconds, zero. each drop came sooner than the last.'
-          : n === 0
-          ? 'each generation you try adds a bar.'
-          : `${n} of 5 tried.`}
-      </p>
+      {n === GENS.length && (
+        <p className="fw-chart-foot is-done">
+          a day, minutes, seconds, zero. each drop came sooner than the last.
+        </p>
+      )}
     </div>
   )
 }
@@ -1223,9 +1224,8 @@ export function FiveWays() {
             onClick={() => pick(i, false)}
             onKeyDown={(e) => onTabKey(e, i)}
           >
-            <span className="fw-tab-label">{x.label}</span>
-            <span className="fw-tab-yrs">
-              {x.years}
+            <span className="fw-tab-label">
+              {x.label}
               {found[x.id] && (
                 <span className="fw-tab-done">
                   {' '}
@@ -1233,11 +1233,15 @@ export function FiveWays() {
                 </span>
               )}
             </span>
+            <span className="fw-tab-yrs">{x.years}</span>
           </button>
         ))}
       </div>
 
-      <p className="mono fw-setup">{g.setup}</p>
+      <p className="mono fw-setup">
+        <span className="muted fw-setup-yrs">{g.years} · </span>
+        {g.setup}
+      </p>
 
       <div className="fw-stage" data-gen={g.id}>
         <Stage key={`${g.id}-${run}`} reduced={reduced} onFound={onFound} say={say} focus={focusStage} />
