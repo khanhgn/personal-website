@@ -45,7 +45,7 @@ const GENS: Gen[] = [
       'One wrong number, a day later. You found the bug by running the program in your head, card by card. The fix costs another day.',
     lesson: 'precision',
     secs: 16 * 3600,
-    took: 'next morning',
+    took: 'next day',
   },
   {
     id: 'terminal',
@@ -56,7 +56,7 @@ const GENS: Gen[] = [
       'Wrong in seconds, again and again, until the answer moved. Every bad edit showed you another way it breaks.',
     lesson: 'how machines fail',
     secs: 600,
-    took: 'minutes',
+    took: '~10 min',
   },
   {
     id: 'web',
@@ -67,7 +67,7 @@ const GENS: Gen[] = [
       'You put their code next to yours and read both until the difference jumped out: += against =. Their names weren’t yours, so you had to understand it to copy it.',
     lesson: 'reading',
     secs: 45,
-    took: 'a minute',
+    took: '~1 min',
   },
   {
     id: 'so',
@@ -1112,7 +1112,7 @@ function Chart({
       <ol className="fw-bars">
         {GENS.map((g) => {
           const on = !!found[g.id]
-          const took = g.id === 'agent' && insisted ? 'seen, because you asked' : g.took
+          const took = g.id === 'agent' && insisted ? 'you looked' : g.took
           return (
             <li key={g.id} className={`fw-bar${on ? ' is-on' : ''}${g.id === current ? ' is-current' : ''}`}>
               <span className="fw-bar-label">{g.label}</span>
@@ -1125,7 +1125,7 @@ function Chart({
           )
         })}
         <li className="fw-bar fw-axis" aria-hidden="true">
-          <span />
+          <span className="fw-bar-label" />
           <span className="fw-bar-track">
             {TICKS.map((t) => (
               <span key={t.label} className="fw-tick-label" style={{ left: `${pos(t.secs)}%` }}>
@@ -1133,7 +1133,7 @@ function Chart({
               </span>
             ))}
           </span>
-          <span />
+          <span className="fw-bar-val" />
         </li>
       </ol>
       <p className={`fw-chart-foot${n === GENS.length ? ' is-done' : ''}`}>
@@ -1247,7 +1247,11 @@ export function FiveWays() {
       <div className={`fw-result${solved ? ' is-on' : ''}`}>
         {solved ? (
           <>
-            <p className="fig-note">{g.result}</p>
+            <p className="fig-note">
+              {g.id === 'agent' && insisted
+                ? 'Done before you looked. You saw the bug only because you went digging, and nothing asked you to.'
+                : g.result}
+            </p>
             <div className="fw-result-foot mono">
               <dl className="fig-readout">
                 <dt>learned</dt>
