@@ -1207,7 +1207,7 @@ export function FiveWays() {
       caption={
         <>
           one bug, five generations. pick one and find out what&apos;s wrong the way they would
-          have. the waits are shortened, but the order is right.
+          have. the waits are shortened, but the order is right. (the code is modern Python throughout, so you&apos;re comparing the waits, not the languages.)
         </>
       }
     >

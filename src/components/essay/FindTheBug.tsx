@@ -114,7 +114,7 @@ const ROUNDS: Round[] = [
       { sign: '+', no: 4, text: '        tags = []' },
     ],
     hint: "Call it twice without passing tags. Where does the second call's list come from?",
-    why: 'The default [] on line 1 is built once, when def runs, not on every call. Every call that leaves out tags shares, and grows, the same list. It is the most famous bug in Python and it still reads as correct.',
+    why: 'The default [] on line 1 is built once, when def runs, not on every call. Every call that leaves out tags shares, and grows, the same list. It is the most famous gotcha in Python and it still reads as correct.',
     decoys: {
       2: 'Line 3 is fine: it keeps the tags unique.',
       3: 'Line 4 is fine: appending is right. The trouble is which list it appends to.',
