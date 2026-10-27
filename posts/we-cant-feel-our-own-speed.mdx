@@ -1,0 +1,116 @@
+---
+title: We Can't Feel Our Own Speed
+description: Part 2 of 3. Slot-machine coding, babysitting agents, and why every decision moved to the ends.
+date: 2026-10-27T00:01:00.000Z
+image: /images/we-cant-feel-our-own-speed-cover.png
+imageLayout: wide
+---
+
+<Series part={2} />
+
+<ol className="contents">
+  <li><a href="#i-the-best-week-of-my-life">I. The Best Week of My Life</a></li>
+  <li><a href="#ii-lines-spent">II. Lines Spent</a></li>
+  <li><a href="#iii-the-slot-machine">III. The Slot Machine</a></li>
+  <li><a href="#iv-the-wrong-bottleneck">IV. The Wrong Bottleneck</a></li>
+  <li><a href="#v-close-the-tab">V. Close the Tab</a></li>
+  <li><a href="#vi-the-forecast">VI. The Forecast</a></li>
+  <li><a href="#vii-the-honest-measure">VII. The Honest Measure</a></li>
+</ol>
+
+## I. The Best Week of My Life
+
+<p className="lede">Until a month ago, most of my working day looked productive. Several agents running at once, diffs landing, tests going green, tickets closing. By any number I could put on a dashboard, I was doing more than I had ever done.</p>
+
+It felt like the best work week of my life, every week. It wasn't. What I had was felt speed, the kind a gambler has on a good night: plenty of action, plenty of small wins, and no running total.
+
+<Break />
+
+## II. Lines Spent
+
+The trouble starts with what we count. For decades the easiest thing to count was lines of code, so managers counted them. In 1979 IBM's Allan Albrecht proposed function points, which tried to measure what software did for its users instead of how long it was. In 1988 Dijkstra argued that if you must count lines, you should count them as "lines spent", not lines produced. Every line is a cost. Agile teams later counted story points and velocity. More recently, teams have measured how often they deploy and how often deploys break.
+
+Each of these tried to count value, and most slid back to counting volume, because volume is easy to see. Agents make volume free. Lines, pull requests and closed tickets all went up. None of them tells you whether anyone understands what shipped.
+
+<Break />
+
+## III. The Slot Machine
+
+Here is what much of the job has turned into. You write a prompt and lean back. Text scrolls past faster than you could read it. A spinner turns. You check your phone, then another agent, then the first one again. It goes slightly wrong, so you nudge it. It finishes, the tests pass, and you approve.
+
+Andrej Karpathy named the extreme version on X in February 2025: vibe coding, where you "forget that the code even exists" and hit Accept All without reading the diffs. He meant weekend projects, but the phrase got into everyone's working week. But "vibe" describes the mood, not what's actually going on.
+
+<AcceptStream />
+
+What's actually going on is a loop. Rerun the prompt, glance at the result, rerun it, until one looks right. It has the shape of a slot machine: you pull, you wait, and you win often enough to keep pulling. That's what makes it addictive. You remember the wins. Every one comes with code you didn't really read, and nothing tells you how much debt you're running up until someone calls it in. Call it <Term id="slot-machine-coding">slot-machine coding</Term>.
+
+The loop feels like work because it has the visible parts of work: motion on the screen, and waiting, which feels like effort. It even feels like supervising. But it isn't the kind of supervision a manager does. A good manager could do the work they supervise, which is why their judgment is worth something. Pulling the lever doesn't take that. It's closer to babysitting: keep the child away from the stairs until the parents get home. Most of what I did with agents was babysitting.
+
+The tests are where this gets worse. I always let the agent write the tests, so it tests whatever it decides is worth testing, and then it tells me they pass. The thing checking the work is the thing that did the work, and it also got to decide what counts as working. When a test fails, the agent fixes the code, or sometimes it fixes the test. I don't always check which. These are self-graded tests.
+
+I think part of the watching is for show. Writing code is still the part people picture when they picture a programmer, so the agent runs in one tab and the code stays open in front, scrolling, as if we were still writing it. It's code cosplay. The work moved and we kept the outfit.
+
+<Break />
+
+## IV. The Wrong Bottleneck
+
+This is what makes the watching pointless. Writing code was never the slow part of making software. The slow parts were deciding what to build and finding out whether it worked. A team could always type faster than it could decide.
+
+Agents made typing free, so the work piled up where it always was. We can now build the wrong thing in an afternoon instead of a month, and we often do. Checking got harder too, because plausible code is tiring to read: nothing in it is obviously wrong. So it's tempting to skim it and approve it anyway. That's a rubber-stamp review, babysitting with extra steps. Every rubber stamp adds a little more of Part 1's [Gettier code](/posts/the-last-programmers#iv-gettier-code) to the system.
+
+The agents sped up the one part of the job that was never holding us back.
+
+<Break />
+
+## V. Close the Tab
+
+Nobody should be prompting and watching anymore. If an agent writes the code, every decision that matters moves to one of two ends: before it starts and after it finishes. The middle, the typing, is the one part a person adds nothing to. So stop sitting in it. Bookend the work and leave the middle alone.
+
+Before, that means the spec. Who is this for, what should it do, what must it never do, and how will we know it works. A good spec is most of the thinking, and it's the part the agent can't do for you. Writing one is slow, and that's the point.
+
+After, the review isn't what it used to be. Teams of agents can already check the work, and if we're the ones telling them what to check, reading every line ourselves doesn't add much. The human job at the end is two things: make sure no bugs ship, then understand what did ship well enough to decide what to change at the next retro. One test still works: could you fix it at two in the morning? If not, start the retro there.
+
+That only works if the change is small enough to review. An agent can build a feature overnight that nobody could test properly in a week. You have two honest options. Keep the pieces small enough that one person can really check them. Or let agents do the bulk of the testing, then divide what's left between people: each owns a slice, checks it against the spec, and vouches for that slice and nothing else. Nobody can really vouch for the whole of a massive feature, so it's better not to pretend one reviewer did.
+
+In between, close the tab. Watching the agent write is the one part you don't need to see.
+
+For the past month I've worked this way. The agents build overnight, while I'm asleep and can't watch. My days go to the parts that were always the bottleneck: reading what came back, understanding it, planning the next thing, testing it. The weeks feel slower. I can answer more questions about what shipped.
+
+Once you stop watching, the job changes shape. You aren't a programmer with an assistant anymore. You're running a workforce, part human and part agent, and the work is orchestration: deciding what gets built, writing specs the agents can work from, deciding which agents build and which ones check, and splitting the review between the people who'll vouch for it. Call it <Term id="human-agent-orchestration">human-agent orchestration</Term>. It looks less like coding and more like running a team, except half the team works all night, and the agents grade each other's work while you decide what counts as passing.
+
+Very few of us were trained for this. We learned to write code, and then we learned to watch it being written. I don't think either one is the job anymore.
+
+<Break />
+
+## VI. The Forecast
+
+**Bugs will start arriving in batches.** A handful of models now write a large share of the world's new code, and they make the same plausible mistakes. So the next big incident won't be one company's outage. It will be the same bug, in thousands of unrelated codebases, found in the same week. This already happened on a small scale with insecure snippets copied from Stack Overflow. The difference is that now the copying happens everywhere at once. A field of identical plants doesn't get sick one plant at a time.
+
+**Someone will be asked, under oath, whether they read line 412.** After the first serious failure traced to code nobody read, "who looked at this?" stops being a figure of speech. Companies will start keeping records of what a reviewer actually had on screen, and for how long, the way planes keep a flight recorder.
+
+**Teams will measure how much of their code a human has read.** It will sit next to test coverage on the dashboard, it will be embarrassingly low, and the first people to ask for it will be insurers and large customers, not engineers.
+
+**Reviewers will be picked for being different, not for being senior.** Some teams already have a model from a different lab check another model's code. That becomes the default, along with a person who didn't write the spec. The mistakes that get through are the ones the writer and the reader share, so the reader's main qualification will be not thinking like the writer. That assumes there are still people who learned to think differently, which is what Part 3 is about.
+
+**Slot-machine coding is the new email.** It fills the day, every pull feels like progress, and almost nobody will be able to say what it produced.
+
+<Break />
+
+## VII. The Honest Measure
+
+The honest measure of a week isn't how much shipped. It's how much of what shipped you could explain. Not the prompt you wrote, but the code: what it does, why it's right, and what would break it.
+
+I've done all of this: the slot-machine coding, the cosplay, the self-graded tests, the rubber stamps, the felt speed. I fail this test most weeks.
+
+Babysitting doesn't scale. Watching an agent type doesn't catch bugs. You probably ship about the same number of them; you just feel more involved. What catches them is a process that doesn't depend on anyone paying attention at the right moment.
+
+The answer isn't to stop using agents. The work is better with them. The answer is a clear framework around them:
+
+- **Spec first.** Write down what it should do, what it must never do, and how you'll know it works, before any code exists.
+- **Tests from the spec, not from the code.** Agents are good at testing, so let them. What matters is what they test against: the spec, not the code they just wrote. Have the tests written before the code, or have a different model write them from the spec alone, so the checker doesn't share the writer's blind spots.
+- **Agents grade, people decide.** Have teams of agents check the work against the spec. Your job at the end is making sure nothing broken ships, understanding what did, and choosing what to change in the retro. If it's too big for one person, split it into slices and give each slice an owner.
+- **Small, reversible releases.** Ship in pieces you can roll back, because some bugs will get through anyway.
+
+None of this is new. Good teams did it before agents. It used to be good practice. Now it's the only thing between you and a codebase full of Gettier code. But it only works for people who already know what a bug looks like. Part 3 is about the people who won't.
+
+<Series part={2} end />

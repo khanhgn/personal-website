@@ -15,6 +15,14 @@ export const metadata: Metadata = {
 
 const research: Project[] = [
   {
+    title: 'ReCount',
+    when: 'In submission to CVPR',
+    summary:
+      'Repetition counting in rounds: the model makes a first count, then refines it round by round instead of guessing once. With Minh Hoai Nguyen.',
+    image: '/images/recount-teaser.png',
+    links: [{ label: 'paper' }, { label: 'code' }],
+  },
+  {
     title: 'CountEx',
     when: 'ECCV 2026',
     summary:

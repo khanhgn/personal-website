@@ -46,7 +46,7 @@ const TESTS: { nums: number[]; target: number; expected: number[]; label: string
 const fmt = (r: number[] | null) => (r ? `[${r.join(', ')}]` : 'None')
 const same = (a: number[] | null, b: number[]) => !!a && a[0] === b[0] && a[1] === b[1]
 
-export function Plausible() {
+export function Plausible({ n = 2 }: { n?: number }) {
   const [pick, setPick] = useState<'a' | 'b' | null>(null)
   const [ran, setRan] = useState<number>(0) // how many tests have been run
   const runBtn = useRef<HTMLButtonElement>(null)
@@ -58,7 +58,7 @@ export function Plausible() {
 
   return (
     <Figure
-      n={2}
+      n={n}
       caption={
         <>
           two sum, twice. one is correct, one only looks it. the difference is

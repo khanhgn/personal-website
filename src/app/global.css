@@ -1219,3 +1219,183 @@ input[type='email'] {
 [data-rehype-pretty-code-title] + pre {
   @apply mt-0;
 }
+
+/* series nav */
+
+.post .series {
+  display: block;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--hairline);
+  padding: 0.8em 0;
+  margin: 0 0 2em;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.post .series ol {
+  margin: 0.3em 0 0;
+  padding-left: 1.4em;
+}
+
+.post .series li {
+  margin: 0;
+}
+
+.post .series li.is-current {
+  font-weight: 700;
+}
+
+.post .series-end {
+  margin: 3em 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+}
+
+/* fig: five ways */
+
+.fw-tabs {
+  flex-wrap: wrap;
+}
+
+.post .fig pre.fw-code {
+  margin: 0.9em 0;
+}
+
+.fw-controls {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  flex-wrap: wrap;
+}
+
+.fw-out {
+  min-height: 3.5em;
+  margin-top: 0.9em;
+}
+
+.fw-out pre {
+  margin-bottom: 0.4em !important;
+}
+
+.fw-meter {
+  margin-top: 0.4em;
+}
+
+.fw-meter i {
+  width: 0;
+  animation-name: fw-fill;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fw-fill {
+  to {
+    width: 100%;
+  }
+}
+
+.fw-diff {
+  display: block;
+  white-space: pre;
+  margin-top: 0.3em;
+}
+
+/* fig: accept stream */
+
+.as-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+}
+
+.post ol.as-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.8em 0 0;
+}
+
+.post .as-item {
+  border-bottom: 1px solid var(--hairline);
+  padding: 0.45em 0;
+  margin: 0;
+  animation: as-in 240ms ease-out;
+}
+
+.as-item.is-accepted .as-title {
+  color: var(--ink-muted);
+}
+
+.as-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+}
+
+.as-title {
+  text-align: left;
+  color: var(--ink);
+  font-size: 0.8rem;
+}
+
+.as-item pre {
+  margin-top: 0.45em !important;
+}
+
+.as-summary {
+  margin-top: 1em;
+}
+
+@keyframes as-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+/* fig: find the bug */
+
+.fb-line {
+  display: block;
+  cursor: pointer;
+  margin: 0 -0.8em;
+  padding: 0 0.8em;
+}
+
+.fb-line:hover,
+.fb-line:focus-visible {
+  background: var(--hairline);
+  outline: none;
+}
+
+.fb-line.is-picked {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.fb-line.is-bug {
+  box-shadow: inset 3px 0 0 #b3321f;
+}
+
+.fb-no {
+  display: inline-block;
+  width: 1.8em;
+  user-select: none;
+}
+
+.fb-line.is-picked .fb-no {
+  color: inherit;
+}
+
+.post .fig pre.fb-code {
+  margin-bottom: 0.9em;
+  white-space: pre;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .post .as-item {
+    animation: none;
+  }
+}

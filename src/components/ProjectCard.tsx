@@ -5,7 +5,7 @@ export type Project = {
   summary: string
   when: string
   image?: string
-  links: { label: string; href: string }[]
+  links: { label: string; href?: string }[]
 }
 
 export function ProjectCard(project: Project) {
@@ -27,8 +27,16 @@ export function ProjectCard(project: Project) {
         </div>
         <div className="mono">
           {project.links.map((link, i) => (
-            <span key={link.href}>
-              {i > 0 ? ' ' : ''}[<a href={link.href}>{link.label}</a>]
+            <span key={link.label}>
+              {i > 0 ? ' ' : ''}[
+              {link.href ? (
+                <a href={link.href}>{link.label}</a>
+              ) : (
+                <span className="muted" title="coming soon">
+                  {link.label}
+                </span>
+              )}
+              ]
             </span>
           ))}
         </div>

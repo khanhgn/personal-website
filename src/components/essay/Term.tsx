@@ -5,7 +5,10 @@ import { useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } f
 const useIsoLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect
 
 const DEFS: Record<string, string> = {
-  'gettier-code': 'Code that works, for reasons nobody who depends on it understands.',
+  'gettier-code': "Code that's right, but not for the reasons anyone believes it is.",
+  'slot-machine-coding': 'Rerunning the prompt until something looks right. You win often enough to keep pulling.',
+  'human-agent-orchestration':
+    'Running a team that is part people, part agents: deciding what gets built, who builds it, who checks it, and who vouches for it.',
   'gettier-debt':
     'The stock of Gettier code in a system. Invisible until something breaks, then due all at once.',
   'rented-taste': "Judgment you use but don't own. It works exactly as long as the subscription does.",
