@@ -64,7 +64,7 @@ const GENS: Gen[] = [
     years: '1993–08',
     setup: "every page comes with its source. somewhere, someone's version works.",
     result:
-      "You put their code next to yours and read both until the difference jumped out: += against =. Their names weren't yours, so you had to understand it to copy it.",
+      "You read their code against yours until += against = jumped out. Their names weren't yours, so you had to understand it to copy it.",
     lesson: 'reading',
     secs: 45,
     took: '~1 min',
@@ -432,7 +432,7 @@ function Listing({
     <pre className="fw-code" aria-label={label}>
       <code>
         {lines.map((l, i) => {
-          const c = cls && cls(i)
+          const c = [cls && cls(i), l === '' ? 'is-blank' : ''].filter(Boolean).join(' ')
           return (
             <span key={i} className={c ? `fw-ln ${c}` : 'fw-ln'}>
               <span className="fw-no" aria-hidden="true">
@@ -544,7 +544,7 @@ function Cards({ reduced, onFound, say, focus }: StageProps) {
   const showBug = phase === 'found' || phase === 'repunched'
 
   return (
-    <>
+    <div className="fw-split">
       <div className={`fw-deck${phase === 'away' ? ' is-away' : ''}`}>
         <ol className="fw-cards" aria-label="your deck, one card per line">
           {LINES.map((l, i) => {
@@ -570,66 +570,64 @@ function Cards({ reduced, onFound, say, focus }: StageProps) {
         </p>
       </div>
 
-      <div className="debt-controls mono fw-controls">
-        <Primary label={label} busy={busy} onClick={act} focus={focus} />
-      </div>
+      <div className="fw-side">
+        <div className="debt-controls mono fw-controls">
+          <Primary label={label} busy={busy} onClick={act} focus={focus} />
+        </div>
 
-      <div className="fw-desk">
-        {phase === 'desk' && (
-          <p className="mono muted fw-idle">
-            nothing to do until the machine has read every card.
-          </p>
-        )}
-        {phase === 'away' && (
-          <div className="fw-night">
-            <p className="fw-clock mono">{clock(p)}</p>
-            <Meter p={p} />
-            <p className="mono muted">{night(p)}</p>
-          </div>
-        )}
-        {phase !== 'desk' && phase !== 'away' && (
-          <div className="fw-pair">
-            <pre className="fw-print" aria-label="printout">
-              <code>
-                {'JOB 0412  AVERAGE\nWED 09:10 AM\n\n'}
-                <span className="fw-bad">{'   2.0'}</span>
-                {'\n\nEND OF JOB'}
-              </code>
-            </pre>
-            <div className="fw-trace mono" aria-label="hand trace">
-              {phase === 'printout' ? (
-                <p className="muted">
-                  you wanted 4.0. you lost a day finding that out. now find out why, without the
-                  machine.
-                </p>
-              ) : (
-                <>
-                  <div className="fw-trace-row fw-trace-head">
-                    <span>card</span>
-                    <span>x</span>
-                    <span>total</span>
-                    <span>should be</span>
-                  </div>
-                  {TRACE.map((r, k) => (
-                    <div
-                      key={k}
-                      className={`fw-trace-row${k > step ? ' is-hidden' : ''}${
-                        r.total !== r.want && k <= step ? ' is-off' : ''
-                      }`}
-                    >
-                      <span>{r.card + 1}</span>
-                      <span>{r.x || '·'}</span>
-                      <span>{r.total}</span>
-                      <span>{r.want}</span>
-                    </div>
-                  ))}
-                </>
-              )}
+        <div className="fw-desk">
+          {phase === 'desk' && (
+            <p className="mono muted fw-idle">
+              nothing to do until the machine has read every card.
+            </p>
+          )}
+          {phase === 'away' && (
+            <div className="fw-night">
+              <p className="fw-clock mono">{clock(p)}</p>
+              <Meter p={p} />
+              <p className="mono muted">{night(p)}</p>
             </div>
-          </div>
-        )}
+          )}
+          {phase === 'printout' && (
+            <div className="fw-pair">
+              <pre className="fw-print" aria-label="printout">
+                <code>
+                  {'JOB 0412  WED 09:10 AM\n'}
+                  <span className="fw-bad">{'   2.0'}</span>
+                  {'\nEND OF JOB'}
+                </code>
+              </pre>
+              <p className="mono muted fw-print-note">
+                you wanted 4.0, and lost a day finding out. now find out why, without the machine.
+              </p>
+            </div>
+          )}
+          {phase !== 'desk' && phase !== 'away' && phase !== 'printout' && (
+            <div className="fw-trace mono" aria-label="hand trace">
+              <div className="fw-trace-row fw-trace-head">
+                <span>card</span>
+                <span>x</span>
+                <span>total</span>
+                <span>should be</span>
+              </div>
+              {TRACE.map((r, k) => (
+                <div
+                  key={k}
+                  className={`fw-trace-row${k > step ? ' is-hidden' : ''}${
+                    r.total !== r.want && k <= step ? ' is-off' : ''
+                  }`}
+                >
+                  <span>{r.card + 1}</span>
+                  <span>{r.x || '·'}</span>
+                  <span>{r.total}</span>
+                  <span>{r.want}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-    </>
+    </div>
   )
 }
 
