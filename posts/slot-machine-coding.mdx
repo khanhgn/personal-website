@@ -46,6 +46,17 @@ Andrej Karpathy named the extreme version on X in February 2025: vibe coding, wh
 
 What's actually going on is a loop. Rerun the prompt, glance at the result, rerun it, until one looks right. It has the shape of a slot machine: you pull, you wait, and you win often enough to keep pulling. That's what makes it addictive. You remember the wins. Every one comes with code you didn't really read, and nothing tells you how much debt you're running up until someone calls it in. Call it <Term id="slot-machine-coding">slot-machine coding</Term>.
 
+<figure className="photo wide">
+  <Image
+    src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Georges_de_La_Tour_025.jpg"
+    alt="Four card players by candlelight; a young man in silk studies his hand while the other three exchange glances and one slips an ace from behind his back"
+    width={3176}
+    height={2305}
+    sizes="(max-width: 700px) 100vw, 640px"
+  />
+  <figcaption>Georges de La Tour, <em>The Cheat with the Ace of Diamonds</em>, around 1635. The young man is concentrating hard on his cards. Everyone else at the table is concentrating on him. Public domain, via <a href="https://commons.wikimedia.org/wiki/File:Georges_de_La_Tour_025.jpg">Wikimedia Commons</a>.</figcaption>
+</figure>
+
 The loop feels like work because it has the visible parts of work: motion on the screen, and waiting, which feels like effort. It even feels like supervising. But it isn't the kind of supervision a manager does. A good manager could do the work they supervise, which is why their judgment is worth something. Pulling the lever doesn't take that. It's closer to babysitting: keep the child away from the stairs until the parents get home. Most of what I did with agents was babysitting.
 
 The tests are where this gets worse. I always let the agent write the tests, so it tests whatever it decides is worth testing, and then it tells me they pass. The thing checking the work is the thing that did the work, and it also got to decide what counts as working. When a test fails, the agent fixes the code, or sometimes it fixes the test. I don't always check which. These are self-graded tests.
@@ -87,6 +98,17 @@ Very few of us were trained for this. We learned to write code, and then we lear
 ## VI. The Forecast
 
 **Bugs will start arriving in batches.** A handful of models now write a large share of the world's new code, and they make the same plausible mistakes. So the next big incident won't be one company's outage. It will be the same bug, in thousands of unrelated codebases, found in the same week. This already happened on a small scale with insecure snippets copied from Stack Overflow. The difference is that now the copying happens everywhere at once. A field of identical plants doesn't get sick one plant at a time.
+
+<figure className="photo wide">
+  <Image
+    src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Wheat-Field-with-Cypresses-(1889)-Vincent-van-Gogh-Met.jpg"
+    alt="A golden wheat field under a swirling sky, with a dark cypress rising on the right"
+    width={3752}
+    height={2940}
+    sizes="(max-width: 700px) 100vw, 640px"
+  />
+  <figcaption>Vincent van Gogh, <em>Wheat Field with Cypresses</em>, 1889. One crop, one field, one way to fail. Public domain, via <a href="https://commons.wikimedia.org/wiki/File:Wheat-Field-with-Cypresses-(1889)-Vincent-van-Gogh-Met.jpg">Wikimedia Commons</a>.</figcaption>
+</figure>
 
 **Someone will be asked, under oath, whether they read line 412.** After the first serious failure traced to code nobody read, "who looked at this?" stops being a figure of speech. Companies will start keeping records of what a reviewer actually had on screen, and for how long, the way planes keep a flight recorder.
 
