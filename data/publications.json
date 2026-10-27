@@ -1,5 +1,18 @@
 [
   {
+    "id": 3,
+    "title": "ReCount: Repetition Counting in Rounds of Refinement",
+    "authors": "Gia Khanh Nguyen, Minh Hoai",
+    "venue": "In submission to CVPR",
+    "year": "",
+    "link": "",
+    "abstract": "",
+    "tags": [
+      "counting",
+      "video"
+    ]
+  },
+  {
     "id": 2,
     "title": "CountEx: Fine-Grained Counting via Exemplars and Exclusion",
     "authors": "Yifeng Huang, Gia Khanh Nguyen, Minh Hoai",
@@ -8,7 +21,11 @@
     "link": "https://arxiv.org/abs/2602.19432",
     "code": "https://github.com/bbvisual/CountEx",
     "abstract": "A counting framework where users specify both what to count and what to exclude, using text and optional visual exemplars. Introduces the CoCount benchmark for fine-grained counting.",
-    "tags": ["Computer Vision", "Object Counting", "Vision-Language Models"],
+    "tags": [
+      "Computer Vision",
+      "Object Counting",
+      "Vision-Language Models"
+    ],
     "image": "/images/countex-teaser.jpg"
   },
   {
@@ -20,7 +37,11 @@
     "link": "https://arxiv.org/abs/2509.13939",
     "code": "https://github.com/bbvisual/PairTally_Benchmark",
     "abstract": "Introduces PairTally, a benchmark of 681 images for fine-grained, intent-driven visual counting.",
-    "tags": ["Computer Vision", "Object Counting", "AI Understanding"],
+    "tags": [
+      "Computer Vision",
+      "Object Counting",
+      "AI Understanding"
+    ],
     "image": "/images/teaser.png"
   }
 ]

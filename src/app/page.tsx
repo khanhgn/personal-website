@@ -1,8 +1,6 @@
 import { allPosts } from 'contentlayer/generated'
 import { compareDesc } from 'date-fns'
 import { PostCard } from '@/components/PostCard'
-import { ProjectCard } from '@/components/ProjectCard'
-import { research, work } from '@/lib/projects'
 import PublicationsSection from '@/components/PublicationsSection'
 import { RSS_ALTERNATE, WEBSITE_HOST_URL } from '@/lib/constants'
 import type { Metadata } from 'next'
@@ -89,20 +87,6 @@ export default function Home() {
         Also on <a href="https://khanhcore.substack.com">Substack</a> and{' '}
         <a href="/feed.xml">RSS</a>.
       </p>
-
-      <h2>Research</h2>
-      <ul className="post-list">
-        {research.map((project) => (
-          <ProjectCard key={project.title} {...project} />
-        ))}
-      </ul>
-
-      <h2>Work</h2>
-      <ul className="post-list">
-        {work.map((project) => (
-          <ProjectCard key={project.title} {...project} />
-        ))}
-      </ul>
 
       <h2>Publications</h2>
       <PublicationsSection />
