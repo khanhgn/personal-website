@@ -1,6 +1,6 @@
 import { Post } from 'contentlayer/generated'
 import { format, parseISO } from 'date-fns'
-import Image from 'next/image'
+import { FadeImage as Image } from '@/components/FadeImage'
 import Link from 'next/link'
 
 export function PostCard(post: Post) {

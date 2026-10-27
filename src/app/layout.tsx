@@ -6,6 +6,7 @@ import { WEBSITE_HOST_URL } from '@/lib/constants'
 import type { Metadata } from 'next'
 import { Libre_Baskerville, Roboto_Mono } from 'next/font/google'
 import './global.css'
+import './images.css'
 
 const serif = Libre_Baskerville({
   subsets: ['latin'],

@@ -4,7 +4,7 @@ import { format, parseISO } from 'date-fns'
 import type { MDXComponents } from 'mdx/types'
 import type { Metadata } from 'next'
 import { useMDXComponent } from 'next-contentlayer/hooks'
-import NextImage from 'next/image'
+import { FadeImage } from '@/components/FadeImage'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import {
@@ -71,7 +71,7 @@ export async function generateMetadata({
 // Define your custom MDX components.
 const mdxComponents: MDXComponents = {
   a: ({ href, children }) => <Link href={href as string}>{children}</Link>,
-  Image: (props) => <NextImage {...props} />,
+  Image: (props) => <FadeImage {...(props as any)} />,
   Break,
   Generations,
   Plausible,
@@ -136,7 +136,7 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
         {post.image ? (
           <figure className="post-header-image">
             <div className="post-header-frame">
-              <NextImage
+              <FadeImage
                 src={post.image}
                 alt=""
                 fill
