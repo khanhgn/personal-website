@@ -97,6 +97,47 @@ export async function renderOgCard({
 }) {
   const fonts = await loadFonts(`${kicker}${title}${footer}${tagline ?? ''} .,'-:/∇∴—`)
   const big = title.length > 30 ? 64 : title.length > 14 ? 84 : 112
+  if (image) {
+    // the artwork carries the whole card; the words sit on a plain paper placard, like a museum label
+    const small = title.length > 30 ? 52 : title.length > 14 ? 64 : 84
+    return new ImageResponse(
+      (
+        <div style={{ width: '100%', height: '100%', display: 'flex', position: 'relative', background: ink }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={image} width={1200} height={630} style={{ width: 1200, height: 630, objectFit: 'cover' }} alt="" />
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              position: 'absolute',
+              left: 56,
+              bottom: 52,
+              width: 700,
+              padding: '34px 44px 30px',
+              background: paper,
+              color: ink,
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontFamily: mono, fontSize: 20, color: inkMuted }}>
+              <span>{kicker}</span>
+              <BrandMark />
+            </div>
+            <div style={{ display: 'flex', marginTop: 22, fontFamily: serif, fontSize: small, lineHeight: 1.12, letterSpacing: '-0.015em' }}>{title}</div>
+            {tagline ? (
+              <div style={{ display: 'flex', marginTop: 16, fontFamily: serif, fontStyle: 'italic', fontSize: 23, lineHeight: 1.4, color: inkMuted }}>
+                {tagline}
+              </div>
+            ) : null}
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 26, paddingTop: 16, borderTop: `2px solid ${hairline}`, fontFamily: mono, fontSize: 18, color: inkMuted }}>
+              <span>gia khanh nguyen</span>
+              <span>{footer}</span>
+            </div>
+          </div>
+        </div>
+      ),
+      { ...ogSize, fonts: fonts.length ? fonts : undefined },
+    )
+  }
   return new ImageResponse(
     (
       <div
@@ -109,19 +150,13 @@ export async function renderOgCard({
           color: ink,
         }}
       >
-        {image ? (
-          <div style={{ display: 'flex', width: '100%', height: 232, background: hairline }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={image} width={1200} height={232} style={{ width: 1200, height: 232, objectFit: 'cover' }} alt="" />
-          </div>
-        ) : null}
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
             flexGrow: 1,
-            padding: image ? '36px 88px 44px' : '72px 88px 56px',
+            padding: '72px 88px 56px',
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontFamily: mono, fontSize: 22, color: inkMuted }}>
