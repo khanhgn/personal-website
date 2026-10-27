@@ -3403,3 +3403,18 @@ input[type='email'] {
     animation: none;
   }
 }
+
+/* fig: machine vs agent — wrap output instead of scrolling sideways */
+.fig-pane {
+  min-width: 0;
+}
+
+.post .fig .fig-pane pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow-x: hidden;
+}
+
+.post .fig-pane .fig-aside {
+  overflow-wrap: anywhere;
+}
