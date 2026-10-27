@@ -1108,7 +1108,7 @@ function Chart({
       <p className="fw-chart-title">
         <span>time from wrong to knowing why</span>
         <span className="muted">
-          {n} of 5 tried · log scale
+          <span className="fw-chart-n">{n} of 5 tried · </span>log scale
         </span>
       </p>
       <ol className="fw-bars">
