@@ -1,7 +1,8 @@
-import Link from 'next/link'
 import { allPosts } from 'contentlayer/generated'
 import { compareDesc } from 'date-fns'
 import { PostCard } from '@/components/PostCard'
+import { ProjectCard } from '@/components/ProjectCard'
+import { research, work } from '@/lib/projects'
 import PublicationsSection from '@/components/PublicationsSection'
 import { RSS_ALTERNATE, WEBSITE_HOST_URL } from '@/lib/constants'
 import type { Metadata } from 'next'
@@ -13,7 +14,6 @@ export const metadata: Metadata = {
 export default function Home() {
   const posts = allPosts
     .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
-    .slice(0, 5)
 
   const person = {
     '@context': 'https://schema.org',
@@ -79,9 +79,6 @@ export default function Home() {
         <a href="/feed.xml">rss</a>
       </p>
 
-      <h2>Publications</h2>
-      <PublicationsSection />
-
       <h2>Writing</h2>
       <ul className="post-list">
         {posts.map((post) => (
@@ -89,9 +86,26 @@ export default function Home() {
         ))}
       </ul>
       <p>
-        <Link href="/blogs">All writing</Link>, also on{' '}
-        <a href="https://khanhcore.substack.com">Substack</a>.
+        Also on <a href="https://khanhcore.substack.com">Substack</a> and{' '}
+        <a href="/feed.xml">RSS</a>.
       </p>
+
+      <h2>Research</h2>
+      <ul className="post-list">
+        {research.map((project) => (
+          <ProjectCard key={project.title} {...project} />
+        ))}
+      </ul>
+
+      <h2>Work</h2>
+      <ul className="post-list">
+        {work.map((project) => (
+          <ProjectCard key={project.title} {...project} />
+        ))}
+      </ul>
+
+      <h2>Publications</h2>
+      <PublicationsSection />
     </div>
   )
 }

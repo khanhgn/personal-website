@@ -4241,3 +4241,16 @@ header.post-header:has(+ .post > .series-top:first-child) {
     padding-bottom: 0.06em;
   }
 }
+
+/* site mark replaces the nav menu */
+.site-nav .site-mark {
+  font-family: 'Latin Modern Math', 'Latin Modern Roman', 'CMU Serif', Georgia, serif;
+  font-size: 1.15rem;
+  letter-spacing: 0.15em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.site-nav .site-mark:hover {
+  color: var(--ink-muted);
+}
