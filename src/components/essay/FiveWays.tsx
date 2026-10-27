@@ -1103,6 +1103,7 @@ function Chart({
   current: GenId
 }) {
   const n = GENS.filter((g) => found[g.id]).length
+  if (n === 0) return null
   return (
     <div className="fw-chart mono">
       <p className="fw-chart-title">
@@ -1206,8 +1207,8 @@ export function FiveWays() {
       n={1}
       caption={
         <>
-          one bug, five generations. pick one and find out what&apos;s wrong the way they would
-          have. the waits are shortened, but the order is right. (the code is modern Python throughout, so you&apos;re comparing the waits, not the languages.)
+          one bug, five generations. find out what&apos;s wrong the way each would have. waits
+          shortened; the code is modern Python throughout.
         </>
       }
     >
@@ -1264,9 +1265,7 @@ export function FiveWays() {
               )}
             </div>
           </>
-        ) : (
-          <p className="mono muted fw-result-wait">{g.years}. find out what&apos;s wrong.</p>
-        )}
+        ) : null}
       </div>
 
       <Chart found={found} insisted={insisted} current={g.id} />

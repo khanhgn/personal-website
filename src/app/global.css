@@ -2324,7 +2324,7 @@ input[type='email'] {
   --as-del-bg: rgba(20, 20, 20, 0.025);
   --as-bug: #b3321f;
   --as-bug-bg: rgba(179, 50, 31, 0.08);
-  --as-box-h: 19rem;
+  --as-box-h: 12.5rem;
   font-family: var(--font-mono), ui-monospace, Menlo, monospace;
   font-size: 0.78rem;
   line-height: 1.5;
@@ -2901,7 +2901,7 @@ input[type='email'] {
 
 @media (max-width: 480px) {
   .as {
-    --as-box-h: 18rem;
+    --as-box-h: 12.5rem;
   }
   .as-v {
     font-size: 1.05rem;
@@ -3435,5 +3435,48 @@ input[type='email'] {
   .post .fig .fb-line {
     padding-left: 2.6em;
     text-indent: -2.6em;
+  }
+}
+
+/* five ways: keep it short so it doesn't break the reading */
+.fw-stage,
+.fw-desk,
+.post .fig .fw-setup,
+.post .fig .fw-hint,
+.fw-result {
+  min-height: 0;
+}
+
+.post .fw-card {
+  min-height: 0;
+  padding-top: 0.02em;
+  padding-bottom: 0.02em;
+  line-height: 1.45;
+}
+
+.post .fw-cards {
+  gap: 0;
+}
+
+.post .fw-cards .fw-card + .fw-card {
+  margin-top: -1px;
+}
+
+.fw-shell {
+  height: 6.2em;
+}
+
+.post .fig .fw-chart {
+  margin-top: 0.6em;
+}
+
+.fw-result:not(.is-on) {
+  display: none;
+}
+
+/* two sum: versions side by side on wider screens */
+@media (min-width: 640px) {
+  .post .fig .pl-stack {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 }
