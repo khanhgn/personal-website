@@ -1,0 +1,36 @@
+/* images: a quiet placeholder holds the space, then the picture fades in once it has
+   fully loaded, so nothing pops in half-drawn */
+.fade-wrap {
+  display: block;
+  line-height: 0;
+  background-color: color-mix(in srgb, var(--hairline, #cfc8ba) 45%, transparent);
+  transition: background-color 0.35s ease;
+}
+.fade-wrap.is-fill {
+  position: absolute;
+  inset: 0;
+}
+.fade-wrap.is-loaded {
+  background-color: transparent;
+}
+img.fade-img {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  /* if scripts never run, show the picture anyway */
+  animation: fade-img-show 0s 3s forwards;
+}
+img.fade-img.is-loaded {
+  opacity: 1;
+  animation: none;
+}
+@keyframes fade-img-show {
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fade-wrap,
+  img.fade-img {
+    transition: none;
+  }
+}
