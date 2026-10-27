@@ -436,15 +436,15 @@ export function AcceptStream() {
 
   let pace: string
   if (phase === 'idle') pace = 'nothing merged yet. the agent is ready when you are.'
-  else if (phase === 'done') pace = `final pace: ${commas(week)} changes a week, if you kept it up.`
+  else if (phase === 'done') pace = `final pace: ${commas(week)} changes/week`
   else if (accepted === 0) pace = 'waiting on you.'
-  else pace = `at this pace: ${commas(week)} changes a week · ${tier(vel)}`
+  else pace = `pace: ${commas(week)} changes/week · ${tier(vel)}`
 
   let statusLine: string
-  if (phase === 'idle') statusLine = `agent idle · ${N} changes queued`
-  else if (phase === 'done') statusLine = 'agent finished · review closed'
-  else if (shown < N) statusLine = `agent writing change ${shown + 1} of ${N}`
-  else statusLine = `agent finished · ${pending} waiting on you`
+  if (phase === 'idle') statusLine = `agent idle · ${N} queued`
+  else if (phase === 'done') statusLine = 'agent done · review closed'
+  else if (shown < N) statusLine = `agent writing ${shown + 1}/${N}`
+  else statusLine = `agent done · ${pending} waiting`
 
   const latest = shown > 0 ? CHANGES[shown - 1] : null
   const bug = CHANGES[BUG]
@@ -576,8 +576,9 @@ export function AcceptStream() {
             </p>
             <DiffView c={bug} final />
             <p className="fig-note as-why">
-              <code>project.ownerId</code> is set on every project, so the new check is always true: anyone can now
-              delete any project, the opposite of what the title says. {verdict}
+              <code>project.ownerId</code> is set on every project, so the new check is always true:{' '}
+              {report.bugStatus === 'rejected' ? 'it would have let anyone delete any project' : 'anyone can now delete any project'}
+              , the opposite of what the title says. {verdict}
             </p>
           </div>
         ) : (
@@ -688,7 +689,7 @@ export function AcceptStream() {
                 {auto ? 'auto-accept on' : pending >= 2 ? `accept all (${pending})` : 'accept all'}
               </button>
               <span className="as-hint">
-                {auto ? 'new changes merge as they arrive. press again to stop.' : 'merges these and everything after'}
+                {auto ? 'merging as they arrive · press to stop' : 'merges these and everything after'}
               </span>
             </>
           )}

@@ -288,6 +288,10 @@ hr {
   max-width: 340px;
 }
 
+.post figure.photo.wide {
+  max-width: 100%;
+}
+
 .post figure.photo img {
   display: block;
   width: 100%;
