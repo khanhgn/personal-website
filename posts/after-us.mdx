@@ -24,15 +24,15 @@ thumbnail: https://upload.wikimedia.org/wikipedia/commons/e/e7/Pieter_Bruegel_th
 
 They will be fast. A student can now build in a weekend what took me a semester. They'll try more ideas in their first year than most engineers used to try in five, and most ideas fail, so they'll see more of the failures that matter for products: things nobody wanted. They'll be good at describing what they want, because that's the whole interface, though the agents are forgiving enough that they may never need to be exact. They won't be precious about code, since they never paid for it. Some will have better taste about what to build than anyone before them, because they started there instead of arriving late.
 
-That is a real generation of engineers, not a lesser one.
+I mean that. It's a real generation of engineers, not a lesser one, and I suspect some of them will run rings around me.
 
 <Break />
 
 ## II. The Missing Mistakes
 
-They will get plenty of practice being wrong about what to build. What they won't get is practice being wrong about code. The few good instincts I have are mistakes I made often enough to stop making. A wrong loop could cost an afternoon, and you made hundreds of mistakes like it before anyone let you near a product. If the agent makes the small mistakes and fixes them, nobody learns from them. The model learned from other people's mistakes once, in training, and it doesn't learn from yours. You get the output without the lesson.
+They will get plenty of practice being wrong about what to build. What they won't get is practice being wrong about code. The few good instincts I have are mistakes I made often enough to stop making. A wrong loop could cost an afternoon (I lost a few in uni labs to off-by-one errors), and you made hundreds of mistakes like it before anyone let you near a product. If the agent makes the small mistakes and fixes them, nobody learns from them. The model learned from other people's mistakes once, in training, and it doesn't learn from yours. You get the output without the lesson.
 
-Good taste in code comes from a lot of small mistakes, and the small mistakes are the ones going away.
+As far as I can tell, a feel for code comes from a lot of small mistakes, and those are exactly the ones going away.
 
 Many will also miss out on reading. Not reading in general, but looking at code and knowing whether it's right. That skill came from writing wrong code and finding out, and the agent does the finding out now. So a lot of them will meet their first hard bug later than we did, in bigger systems, in production, in code nobody wrote by hand.
 
@@ -42,7 +42,7 @@ Many will also miss out on reading. Not reading in general, but looking at code 
 
 The old lessons came free with the work. The new ones have to be built, and they'll look less like writing and more like reading.
 
-A course might hand you a working program an agent wrote, with one bug in it, and ask you to find it without running anything. An exam might ask you to predict the output before you press enter. Code review might become the main way juniors learn, the way apprentices learned by watching. Every old way of learning from [Part 1](/posts/the-last-programmers#ii-five-generations) is still available. Nobody is forced to use them anymore, and that's the problem.
+A course might hand you a working program an agent wrote, with one bug in it, and ask you to find it without running anything. An exam might ask you to predict the output before you press enter. Code review might become the main way juniors learn, the way apprentices learned by watching. Every old way of learning from [Part 1](/posts/the-last-programmers#ii-five-generations) is still available. It's just that nobody is forced to use them anymore, and I'm not sure how many people will pick them up voluntarily. I'm not sure I would have.
 
 <figure className="photo wide">
   <Image
@@ -69,7 +69,7 @@ When a skill stops being necessary, it doesn't disappear. It becomes something y
 
 **Explainable code becomes a selling point, then a requirement.** Some software will be sold on the fact that a person can explain every line of it. In regulated fields like medical devices, that will stop being a selling point and become the law.
 
-**The sixth generation won't prompt at all.** Agents that open pull requests without being prompted already exist. That becomes the main way code gets written: the agent notices what needs building, builds it, and asks a person to approve. The human job shrinks from describing to deciding. Whether anyone still knows how to decide well, after a career of approving, is the question this whole series has been circling.
+**The sixth generation won't prompt at all.** Agents that open pull requests without being prompted already exist. That becomes the main way code gets written: the agent notices what needs building, builds it, and asks a person to approve. The human job shrinks from describing to deciding. Whether anyone still knows how to decide well, after a career of approving, is the thing I keep coming back to, and I don't have a good answer yet.
 
 <Break />
 
@@ -81,7 +81,7 @@ We assumed the tedious part of programming stood between us and the meaningful p
 
 <Indifferent n={2} />
 
-The agents are the opposite. They try to give you what you meant. That's what makes them useful, and it may be what makes them bad teachers.
+The agents are the opposite. They try to give you what you meant. That's why they're useful. I suspect it's also why they make bad teachers, though I haven't fully worked out what to do about it.
 
 <Break />
 
@@ -101,7 +101,7 @@ The agents are the opposite. They try to give you what you meant. That's what ma
 
 The title of Part 1 is too strong. There will be programmers after us. But "the last" can mean the last people to learn it a particular way: slowly, by being wrong, with a machine that didn't care. I got a year of that. The generation after me will do what I do, earlier and faster, and won't know there was anything to skip.
 
-What worries me isn't that they'll be worse. It's that there will be fewer and fewer people who remember what it was like when the code was really yours, every line, because you had been wrong about each of them first.
+I don't think they'll be worse. What worries me is that there will be fewer and fewer people who remember what it was like when the code was really yours, every line, because you had been wrong about each of them first.
 
 I keep thinking about all the Gettier code we're about to ship. It will run, it will be fine, and someone will depend on it. Whether what we lost was load-bearing, we'll find out the way people usually find out about load-bearing walls.
 
