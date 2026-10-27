@@ -542,8 +542,7 @@ export function AcceptStream() {
             </p>
             <DiffView c={bug} final />
             <p className="fig-note as-why">
-              <code>project.ownerId</code> is set on every project, so the new check is always true:{' '}
-              {report.bugStatus === 'rejected' ? 'it would have let anyone delete any project' : 'anyone can now delete any project'}
+              {report.bugStatus === 'rejected' ? 'It would have let anyone delete any project' : 'Anyone can now delete any project'}
               , the opposite of what the title says. {verdict}
             </p>
           </div>
