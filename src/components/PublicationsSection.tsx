@@ -22,9 +22,18 @@ const PublicationsSection = () => {
       {publications.map((pub) => (
         <li key={pub.id}>
           {pub.title}. <Authors authors={pub.authors} />.{' '}
-          <em>{pub.venue}</em>, {pub.year}.{' '}
+          <em>{pub.venue}</em>
+          {pub.year ? `, ${pub.year}` : ''}.{' '}
           <span className="mono">
-            [<a href={pub.link}>paper</a>]
+            {pub.link ? (
+              <>
+                [<a href={pub.link}>paper</a>]
+              </>
+            ) : (
+              <span className="muted" title="coming soon">
+                [paper] [code]
+              </span>
+            )}
             {pub.code ? (
               <>
                 {' '}

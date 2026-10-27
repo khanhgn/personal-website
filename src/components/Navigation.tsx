@@ -1,25 +1,12 @@
 import Link from 'next/link'
-import { Fragment } from 'react'
 
-const links = [
-  { href: '/', label: 'Home' },
-  { href: '/blogs', label: 'Writing' },
-  { href: '/projects', label: 'Projects' },
-]
-
+// The whole site lives on the home page; the mark is the only navigation.
 export function Navigation() {
   return (
     <nav className="site-nav">
-      {links.map((link, i) => (
-        <Fragment key={link.href}>
-          {i > 0 ? (
-            <span className="nav-sep" aria-hidden="true">
-              ❖
-            </span>
-          ) : null}
-          <Link href={link.href}>{link.label}</Link>
-        </Fragment>
-      ))}
+      <Link href="/" className="site-mark" aria-label="Gia Khanh Nguyen, home">
+        ∇ ∴
+      </Link>
     </nav>
   )
 }

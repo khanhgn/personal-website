@@ -173,6 +173,13 @@ const tallyText = (res: Result, rd: Round) =>
       ? `found line ${rd.bug + 1}, with the hint`
       : `missed: you marked ${res.pick + 1}, bug on ${rd.bug + 1}`
 
+// The fix in one line for the scorecard: the first line removed, then the first added.
+const fixPair = (r: Round) => {
+  const del = r.fix.find((d) => d.sign === '-')
+  const add = r.fix.find((d) => d.sign === '+')
+  return `${del ? del.text.trim() : ''}  →  ${add ? add.text.trim() : ''}`
+}
+
 function Pip({ state }: { state: Outcome | 'current' | 'todo' }) {
   return <i className={`fb-pip is-${state}`} aria-hidden="true" />
 }
@@ -191,6 +198,8 @@ export function FindTheBug() {
   const nextRef = useRef<HTMLButtonElement>(null)
   const againRef = useRef<HTMLButtonElement>(null)
   const moved = useRef(false) // only move focus after the reader has acted
+  const midRef = useRef<HTMLDivElement>(null)
+  const verdictRef = useRef<HTMLParagraphElement>(null)
 
   const finished = round >= ROUNDS.length
   const r = ROUNDS[Math.min(round, ROUNDS.length - 1)]
@@ -207,6 +216,25 @@ export function FindTheBug() {
     const t = window.setTimeout(() => setShown((s) => s + 1), STEP_MS)
     return () => window.clearTimeout(t)
   }, [phase, shown, lines.length])
+
+  // The middle region has a fixed height. Keep the newest transcript line in view
+  // while it plays, then show as much of the verdict as fits, from its first line.
+  useEffect(() => {
+    const box = midRef.current
+    if (!box) return
+    if (phase === 'pick') {
+      box.scrollTop = 0
+      return
+    }
+    const v = verdictRef.current
+    if (phase === 'done' && v) {
+      const top = v.offsetTop // .fb-mid is the offset parent
+      const room = box.clientHeight
+      // the whole verdict if it fits, otherwise its start
+      const want = Math.max(0, Math.min(top - 4, top + v.offsetHeight - room))
+      if (want > box.scrollTop) box.scrollTop = want
+    } else box.scrollTop = box.scrollHeight
+  }, [phase, shown, round])
 
   // Keep keyboard focus somewhere sensible as the exercise moves on.
   useEffect(() => {
@@ -293,7 +321,7 @@ export function FindTheBug() {
     const withHint = results.filter((x) => x.outcome === 'hinted').length
     return (
       <Figure n={1} caption={caption}>
-        <div className="fb-card" aria-live="polite">
+        <div className="fb fb-card" aria-live="polite">
           <p className="fb-score">
             <span className="fb-big">
               {found}/{ROUNDS.length}
@@ -314,6 +342,10 @@ export function FindTheBug() {
                   <Pip state={res ? res.outcome : 'todo'} />
                   <span className="fb-tally-name">{rd.name}()</span>
                   <span className="fb-tally-what">{res ? tallyText(res, rd) : ''}</span>
+                  <span className="fb-tally-fix">
+                    <span className="fb-sr">the fix: </span>
+                    {fixPair(rd)}
+                  </span>
                 </li>
               )
             })}
@@ -328,7 +360,7 @@ export function FindTheBug() {
             comes from reps, from being wrong on purpose while being wrong is cheap, and
             from coming back tomorrow.
           </p>
-          <div className="debt-controls mono">
+          <div className="debt-controls mono fb-foot">
             <button type="button" ref={againRef} onClick={restart}>
               go again
             </button>
@@ -346,6 +378,7 @@ export function FindTheBug() {
 
   return (
     <Figure n={1} caption={caption}>
+      <div className="fb">
       <div className="fb-head mono">
         <span>
           round {round + 1} of {ROUNDS.length} · <span className="fb-fn">{r.name}()</span>
@@ -433,61 +466,54 @@ export function FindTheBug() {
         </span>
       </pre>
 
-      {phase === 'pick' && (
-        <>
-          <div className="debt-controls mono fb-controls">
-            <button type="button" disabled={pick === null} onClick={run}>
-              {pick === null ? 'mark a line first' : `run it · you marked line ${pick + 1}`}
-            </button>
-            {!hinted && (
-              <button
-                type="button"
-                className="link-button fb-hint-button"
-                onClick={() => setHinted(true)}
-              >
-                hint (costs you this round)
-              </button>
-            )}
-          </div>
-          <div aria-live="polite">
-            {hinted && (
-              <p className="fig-note fb-hint">
-                <span className="mono fb-label">hint</span> {r.hint}
-              </p>
-            )}
-          </div>
-        </>
-      )}
-
-      {phase !== 'pick' && (
-        <div className="fb-result">
-          <pre className="fb-out" aria-live="polite" aria-label="Test run">
-            <code>
-              {lines.slice(0, shown).map((l, i) =>
-                l.k === 'in' ? (
-                  <span key={i} className="fb-o is-in">
-                    <span className="fb-prompt">{'>>> '}</span>
-                    {l.text}
-                  </span>
-                ) : (
-                  <span
-                    key={i}
-                    className={`fb-o${l.want !== undefined && l.want !== l.text ? ' is-bad' : ''}`}
-                  >
-                    {l.text}
-                    {l.want !== undefined && l.want !== l.text && (
-                      <span className="fb-want">{`    # wanted ${l.want}`}</span>
-                    )}
-                  </span>
-                ),
+      {/* the one part that changes: the hint, then the test run and the verdict */}
+      <div className="fb-mid" ref={midRef}>
+        {phase === 'pick' && (
+          <div className="fb-wait">
+            <div aria-live="polite">
+              {hinted && (
+                <p className="fig-note fb-hint">
+                  <span className="mono fb-label">hint</span> {r.hint}
+                </p>
               )}
-              {phase === 'running' && <span className="fb-o fb-cursor" aria-hidden="true" />}
-            </code>
-          </pre>
+            </div>
+            <p className="mono muted fb-wait-line">
+              <span className="fb-prompt" aria-hidden="true">
+                {'>>> '}
+              </span>
+              the test run prints here once you&apos;ve marked a line.
+            </p>
+          </div>
+        )}
 
-          {revealed && result && (
-            <>
-              <p className="fig-note fb-verdict">
+        {phase !== 'pick' && (
+          <div className="fb-result">
+            <pre className="fb-out" aria-live="polite" aria-label="Test run">
+              <code>
+                {lines.slice(0, shown).map((l, i) =>
+                  l.k === 'in' ? (
+                    <span key={i} className="fb-o is-in">
+                      <span className="fb-prompt">{'>>> '}</span>
+                      {l.text}
+                    </span>
+                  ) : (
+                    <span
+                      key={i}
+                      className={`fb-o${l.want !== undefined && l.want !== l.text ? ' is-bad' : ''}`}
+                    >
+                      {l.text}
+                      {l.want !== undefined && l.want !== l.text && (
+                        <span className="fb-want">{`    # wanted ${l.want}`}</span>
+                      )}
+                    </span>
+                  ),
+                )}
+                {phase === 'running' && <span className="fb-o fb-cursor" aria-hidden="true" />}
+              </code>
+            </pre>
+
+            {revealed && result && (
+              <p className="fig-note fb-verdict" ref={verdictRef}>
                 <strong>
                   {result.outcome === 'clean'
                     ? 'Found it. '
@@ -500,16 +526,36 @@ export function FindTheBug() {
                 {r.why}
                 <span className="fb-sr"> The fix: {fixText(r)}.</span>
               </p>
+            )}
+          </div>
+        )}
+      </div>
 
-              <div className="debt-controls mono fb-controls">
-                <button type="button" ref={nextRef} onClick={advance}>
-                  {round + 1 < ROUNDS.length ? 'next function →' : 'see your score →'}
-                </button>
-              </div>
-            </>
-          )}
-        </div>
-      )}
+      <div className="debt-controls mono fb-controls fb-foot">
+        {phase === 'pick' && (
+          <>
+            <button type="button" disabled={pick === null} onClick={run}>
+              {pick === null ? 'mark a line first' : `run it · you marked line ${pick + 1}`}
+            </button>
+            {!hinted && (
+              <button
+                type="button"
+                className="link-button fb-hint-button"
+                onClick={() => setHinted(true)}
+              >
+                hint (costs you this round)
+              </button>
+            )}
+          </>
+        )}
+        {phase === 'running' && <span className="muted fb-running">running the tests…</span>}
+        {phase === 'done' && (
+          <button type="button" ref={nextRef} onClick={advance}>
+            {round + 1 < ROUNDS.length ? 'next function →' : 'see your score →'}
+          </button>
+        )}
+      </div>
+      </div>
     </Figure>
   )
 }

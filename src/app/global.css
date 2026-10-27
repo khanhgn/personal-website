@@ -4241,3 +4241,570 @@ header.post-header:has(+ .post > .series-top:first-child) {
     padding-bottom: 0.06em;
   }
 }
+
+/* site mark replaces the nav menu */
+.site-nav .site-mark {
+  font-family: 'Latin Modern Math', 'Latin Modern Roman', 'CMU Serif', Georgia, serif;
+  font-size: 1.15rem;
+  letter-spacing: 0.15em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.site-nav .site-mark:hover {
+  color: var(--ink-muted);
+}
+
+/* lead image: centred in the column */
+header.post-header.wide .post-header-frame img {
+  object-position: center center;
+}
+
+/* stable heights (begin) */
+
+/* stable figures: one height per figure, whatever you do inside it */
+
+/* shared: several texts in one grid cell, only one visible, so the cell is as tall
+   as the tallest of them at any width */
+.post .fig .fw-stack,
+.post .fig .fx-stack {
+  display: grid;
+}
+
+.post .fig .fw-stack > *,
+.post .fig .fx-stack > * {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+
+.post .fig .fw-stack > .fw-stack-off,
+.post .fig .fx-stack .fx-stack-off {
+  visibility: hidden;
+}
+
+/* a quiet scrollbar for the few regions that scroll */
+.post .fig .fx-scroll,
+.post .fig .fw-stage .fw-desk,
+.post .fig .fw-stage .fw-so-slot,
+.post .fig .fw-stage .fw-agent-out,
+.post .fig .fw-stage .fw-cmp,
+.post .fig .fw-readout,
+.post .fig .as .as-box,
+.post .fig .as .as-sum,
+.post .fig .fb-mid,
+.post .fig .pl-out,
+.post .fig .pl-note-box {
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--hairline) transparent;
+}
+
+.post .fig .fx-scroll::-webkit-scrollbar,
+.post .fig .fw-stage .fw-desk::-webkit-scrollbar,
+.post .fig .fw-stage .fw-so-slot::-webkit-scrollbar,
+.post .fig .fw-stage .fw-agent-out::-webkit-scrollbar,
+.post .fig .fw-stage .fw-cmp::-webkit-scrollbar,
+.post .fig .fw-readout::-webkit-scrollbar,
+.post .fig .as .as-box::-webkit-scrollbar,
+.post .fig .as .as-sum::-webkit-scrollbar,
+.post .fig .fb-mid::-webkit-scrollbar,
+.post .fig .pl-out::-webkit-scrollbar,
+.post .fig .pl-note-box::-webkit-scrollbar {
+  width: 6px;
+}
+
+.post .fig .fx-scroll::-webkit-scrollbar-thumb,
+.post .fig .fw-stage .fw-desk::-webkit-scrollbar-thumb,
+.post .fig .fw-stage .fw-so-slot::-webkit-scrollbar-thumb,
+.post .fig .fw-stage .fw-agent-out::-webkit-scrollbar-thumb,
+.post .fig .fw-stage .fw-cmp::-webkit-scrollbar-thumb,
+.post .fig .fw-readout::-webkit-scrollbar-thumb,
+.post .fig .as .as-box::-webkit-scrollbar-thumb,
+.post .fig .as .as-sum::-webkit-scrollbar-thumb,
+.post .fig .fb-mid::-webkit-scrollbar-thumb,
+.post .fig .pl-out::-webkit-scrollbar-thumb,
+.post .fig .pl-note-box::-webkit-scrollbar-thumb {
+  background: var(--hairline);
+  border-radius: 3px;
+}
+
+.post .fig .fx-scroll::-webkit-scrollbar-track,
+.post .fig .fw-stage .fw-desk::-webkit-scrollbar-track,
+.post .fig .fw-stage .fw-so-slot::-webkit-scrollbar-track,
+.post .fig .fw-stage .fw-agent-out::-webkit-scrollbar-track,
+.post .fig .fw-stage .fw-cmp::-webkit-scrollbar-track,
+.post .fig .fw-readout::-webkit-scrollbar-track,
+.post .fig .as .as-box::-webkit-scrollbar-track,
+.post .fig .as .as-sum::-webkit-scrollbar-track,
+.post .fig .fb-mid::-webkit-scrollbar-track,
+.post .fig .pl-out::-webkit-scrollbar-track,
+.post .fig .pl-note-box::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.post .fig .fw-placeholder {
+  margin: 0;
+  opacity: 0.85;
+}
+
+/* ---------------------------------------------------------------------------
+   fig: five ways. tabs, a setup line, a stage of fixed height, then one readout
+   band holding the result and the chart. */
+
+.post .fig .fw {
+  --fw-stage-h: 11.9rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.post .fig .fw .fw-setup {
+  margin: 0 0 0.55em;
+}
+
+.post .fig .fw .fw-stage {
+  height: var(--fw-stage-h);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.post .fig .fw .fw-stage > * {
+  flex: none;
+}
+
+.post .fig .fw .fw-stage > .fw-split {
+  flex: 1 1 auto;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.post .fig .fw .fw-side {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.post .fig .fw .fw-side > * {
+  flex: none;
+}
+
+/* the one part of each stage that changes size takes what is left, and scrolls */
+.post .fig .fw .fw-stage .fw-desk,
+.post .fig .fw .fw-stage .fw-so-slot,
+.post .fig .fw .fw-stage .fw-agent-out {
+  flex: 1 1 0;
+  min-height: 0;
+  margin-bottom: 0;
+}
+
+.post .fig .fw .fw-stage .fw-shell {
+  flex: 1 1 0;
+  height: auto;
+  min-height: 0;
+}
+
+.post .fig .fw .fw-stage > .fw-cmp {
+  flex: 0 1 auto;
+  min-height: 0;
+}
+
+.post .fig .fw .fw-stage .fw-so-slot {
+  margin-bottom: 0.5em;
+}
+
+/* view source: the button and its hint share a row */
+.post .fig .fw .fw-stage[data-gen='web'] {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, auto) auto;
+  column-gap: 0.8em;
+  align-content: start;
+}
+
+.post .fig .fw .fw-stage[data-gen='web'] > .fw-url,
+.post .fig .fw .fw-stage[data-gen='web'] > .fw-meter,
+.post .fig .fw .fw-stage[data-gen='web'] > .fw-meter-gap,
+.post .fig .fw .fw-stage[data-gen='web'] > .fw-cmp {
+  grid-column: 1 / -1;
+}
+
+.post .fig .fw .fw-stage[data-gen='web'] > .fw-controls {
+  margin: 0;
+}
+
+.post .fig .fw .fw-stage[data-gen='web'] > .fw-hint {
+  margin: 0;
+  align-self: center;
+}
+
+/* readout: what you learned on the left, the chart on the right */
+.post .fig .fw .fw-readout {
+  margin-top: 0.5em;
+  padding-top: 0.45em;
+  border-top: 1px solid var(--hairline);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.6em 1.4em;
+}
+
+.post .fig .fw .fw-readout .fw-result {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-height: 0;
+  display: grid;
+}
+
+.post .fig .fw .fw-result-sizer,
+.post .fig .fw .fw-result-body {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+
+.post .fig .fw .fw-result-sizer {
+  visibility: hidden;
+  display: grid;
+}
+
+.post .fig .fw .fw-result-sizer > p {
+  grid-area: 1 / 1;
+  /* room for the learned / next line under the note */
+  padding-bottom: 1.7rem;
+}
+
+.post .fig .fw .fw-result .fig-note,
+.post .fig .fw .fw-result-sizer .fig-note {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.42;
+}
+
+.post .fig .fw .fw-result-foot .fig-readout {
+  margin-top: 0.2em;
+}
+
+.post .fig .fw p.fw-result-wait {
+  margin: 0;
+}
+
+.post .fig .fw .fw-readout .fw-chart {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.post .fig .fw .fw-chart-foot {
+  margin: 0.2em 0 0;
+}
+
+@media (min-width: 640px) {
+  .post .fig .fw .fw-stage > .fw-split {
+    grid-template-rows: minmax(0, 1fr);
+    align-items: stretch;
+  }
+  .post .fig .fw .fw-stage > .fw-split > :first-child {
+    align-self: start;
+  }
+  .post .fig .fw .fw-chart-n {
+    display: none;
+  }
+  .post .fig .fw .fw-readout {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    overflow: visible;
+  }
+  .post .fig .fw .fw-readout .fw-bar {
+    grid-template-columns: 8.6em minmax(0, 1fr) 7.2em;
+    gap: 0.5em;
+    min-height: 1.2em;
+    line-height: 1.2;
+  }
+  /* the chart's last line runs under both columns, so it stays on one line */
+  .post .fig .fw .fw-readout {
+    grid-template-areas: 'res title' 'res bars' 'foot foot';
+    grid-template-rows: auto auto auto;
+    row-gap: 0;
+    align-content: start;
+  }
+  .post .fig .fw .fw-readout .fw-result {
+    grid-area: res;
+  }
+  .post .fig .fw .fw-readout .fw-chart {
+    display: contents;
+  }
+  .post .fig .fw .fw-readout .fw-chart-title {
+    grid-area: title;
+  }
+  .post .fig .fw .fw-readout .fw-bars {
+    grid-area: bars;
+  }
+  .post .fig .fw .fw-readout .fw-chart-foot {
+    grid-area: foot;
+    margin-top: 0.3em;
+  }
+}
+
+@media (max-width: 639px) {
+  .post .fig .fw {
+    --fw-stage-h: 18.6rem;
+  }
+  .post .fig .fw .fw-stage[data-gen='web'] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .post .fig .fw .fw-stage[data-gen='web'] > .fw-controls {
+    margin-top: 0.5em;
+  }
+  .post .fig .fw .fw-stage[data-gen='web'] > .fw-hint {
+    margin-top: 0.35em;
+  }
+  .post .fig .fw .fw-readout {
+    display: block;
+  }
+  .post .fig .fw .fw-readout .fw-chart {
+    margin-top: 0.6em;
+  }
+  /* the band keeps one size; the result sits on top, the chart under it */
+  .post .fig .fw .fw-readout {
+    height: 6rem;
+    padding-bottom: 0.8em;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  /* on a phone the chart comes first and shows all five rows; the lesson scrolls under it */
+  .post .fig .fw .fw-readout {
+    height: 9.9rem;
+  }
+  .post .fig .fw .fw-readout .fw-chart {
+    order: -1;
+    margin: 0 0 0.7em;
+    flex: none;
+  }
+  .post .fig .fw .fw-readout .fw-result {
+    flex: none;
+    -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 1.1em), transparent);
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 1.1em), transparent);
+  }
+  .post .fig .fw .fw-result-sizer {
+    display: none;
+  }
+}
+
+/* view source: the whole comparison fits on a desktop */
+.post .fig .fw .fw-stage[data-gen='web'] > .fw-meter,
+.post .fig .fw .fw-stage[data-gen='web'] > .fw-meter-gap {
+  margin: 0.2em 0 0.3em;
+}
+
+.post .fig .fw .fw-stage[data-gen='web'] > .fw-cmp {
+  margin-bottom: 0.4em;
+  padding: 0.25em 0;
+}
+
+/* stack overflow: the votes and the byline share one line */
+.post .fig .fw .fw-so {
+  padding: 0.35em 0.7em 0.4em;
+}
+
+.post .fig .fw .fw-so-votes {
+  flex-wrap: nowrap;
+}
+
+.post .fig .fw .fw-so-meta {
+  flex: 1 1 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.post .fig .fw .fw-stage .fw-search + .fw-meter,
+.post .fig .fw .fw-stage .fw-search + .fw-meter-gap {
+  margin: 0.2em 0 0.35em;
+}
+
+/* ---------------------------------------------------------------------------
+   fig: two sum. the results table is always laid out at full size, and the two
+   notes share one cell. */
+
+.post .fig .pl-tests {
+  overflow: visible;
+}
+
+.post .fig .pl-out {
+  margin-top: 0.45em;
+  align-items: start;
+}
+
+.post .fig .pl-out .pl-table {
+  margin: 0;
+}
+
+.post .fig p.pl-wait {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0.4em 0.8em;
+  align-self: stretch;
+  border: 1px dashed var(--hairline);
+}
+
+.post .fig .pl-note-box {
+  margin-top: 0.55em;
+  align-items: start;
+}
+
+.post .fig .pl-note-box .fig-note.pl-note {
+  margin: 0;
+}
+
+.post .fig p.pl-note-wait {
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   fig: accept stream. the summary takes the stream's place at the stream's size. */
+
+.post .fig .as {
+  --as-box-h: 16.2rem;
+}
+
+.post .fig .as .as-sum {
+  height: var(--as-box-h);
+  min-height: 0;
+}
+
+@media (max-width: 560px) {
+  .post .fig .as {
+    --as-box-h: 18.5rem;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   fig: find the bug. head, listing, a middle region that takes what is left
+   (hint, test run, verdict), and one row of controls pinned to the bottom. */
+
+.post .fig .fb {
+  --fb-h: 24.6rem;
+  height: var(--fb-h);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.post .fig .fb > * {
+  flex: none;
+}
+
+.post .fig .fb > .fb-mid {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+}
+
+.post .fig .fb pre.fb-code {
+  margin-bottom: 0.5em;
+}
+
+.post .fig .fb .fb-hint {
+  margin-top: 0;
+}
+
+.post .fig .fb .fb-wait {
+  box-sizing: border-box;
+  min-height: 100%;
+  padding: 0.4em 0.8em;
+  border: 1px dashed var(--hairline);
+}
+
+.post .fig .fb .fb-wait .fig-note.fb-hint {
+  margin: 0 0 0.45em;
+}
+
+.post .fig .fb p.fb-wait-line {
+  margin: 0;
+}
+
+.post .fig .fb p.fb-wait-line .fb-prompt {
+  opacity: 0.7;
+}
+
+.post .fig .fb .fb-result {
+  margin: 0;
+}
+
+.post .fig .fb .fig-note.fb-verdict {
+  margin: 0.45em 0 0.2em;
+}
+
+.post .fig .fb > .fb-foot {
+  margin: 0.5em 0 0;
+  min-height: 2rem;
+  align-items: center;
+}
+
+.post .fig .fb-running {
+  font-size: 0.78rem;
+}
+
+/* the scorecard fills the same frame; its button sits where the others do */
+.post .fig .fb-card .fb-tally-fix {
+  flex: 1 0 100%;
+  padding-left: calc(9px + 0.7em);
+  color: var(--ink-muted);
+  font-size: 0.7rem;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.post .fig .fb.fb-card > .fb-foot {
+  margin-top: auto;
+}
+
+@media (max-width: 560px) {
+  .post .fig .fb {
+    --fb-h: 28.6rem;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   fig: indifferent. outputs keep two lines each; the agent's note keeps two. */
+
+.post .fig .ind-pair pre {
+  height: calc(2 * 1.55em + 1.4em);
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.post .fig .ind-pair .ind-note {
+  height: 3em;
+  margin-bottom: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 560px) {
+  .post .fig .pl-stack {
+    gap: 0.45em;
+  }
+  .post .fig .pl-stack .fig-choice {
+    padding: 0.35em 0.55em 0.45em;
+    gap: 0.25em;
+  }
+  .post .fig .pl-stack pre {
+    padding: 0.35em 0.6em;
+  }
+  .post .fig .pl-tests {
+    margin-top: 0.5em;
+  }
+  /* on a phone the longer note scrolls inside a box of four lines */
+  .post .fig .pl-note-box {
+    height: calc(4 * 1.5 * 0.86rem + 0.5em);
+    padding-bottom: 0.5em;
+    -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 1em), transparent);
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 1em), transparent);
+  }
+}
+
+/* stable heights (end) */

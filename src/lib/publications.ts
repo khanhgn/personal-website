@@ -7,7 +7,7 @@ export type Publication = {
   authors: string;
   venue: string;
   year: string;
-  link: string;
+  link?: string;
   code?: string;
   abstract: string;
   tags: string[];

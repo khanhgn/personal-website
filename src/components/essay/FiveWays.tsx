@@ -40,7 +40,7 @@ const GENS: Gen[] = [
     id: 'cards',
     label: 'punch cards',
     years: '1955–75',
-    setup: 'you write it on paper. someone punches one card per line. the machine is in another building.',
+    setup: 'you write it on paper and punch one card per line. the machine is in another building.',
     result:
       'One wrong number, a day later. You found the bug by running the program in your head, card by card. The fix cost another day.',
     lesson: 'precision',
@@ -51,7 +51,7 @@ const GENS: Gen[] = [
     id: 'terminal',
     label: 'terminal',
     years: '1975–93',
-    setup: 'a terminal, then a computer of your own. a run takes seconds, so you can afford to be wrong.',
+    setup: 'a terminal of your own. a run takes seconds, so you can afford to be wrong.',
     result:
       'Wrong in seconds, again and again, until the answer moved. Every bad edit showed you another way it breaks.',
     lesson: 'how machines fail',
@@ -62,7 +62,7 @@ const GENS: Gen[] = [
     id: 'web',
     label: 'view source',
     years: '1993–08',
-    setup: "every page comes with its source. somewhere, someone's version works.",
+    setup: "every web page comes with its source. somewhere, someone's version works.",
     result:
       "You read their code against yours until += against = jumped out. Their names weren't yours, so you had to understand it to copy it.",
     lesson: 'reading',
@@ -73,7 +73,7 @@ const GENS: Gen[] = [
     id: 'so',
     label: 'stack overflow',
     years: '2008–22',
-    setup: 'an answer for almost everything, if you can describe the symptom.',
+    setup: 'someone has already asked about almost every bug. you just have to describe the symptom.',
     result:
       'Someone else found it first. You still had to fit their answer to your code, so you understood it a little.',
     lesson: 'adaptation',
@@ -813,6 +813,18 @@ function ViewSource({ reduced, onFound, say, focus }: StageProps) {
     )
   }, [phase, reduced, later, onFound, say])
 
+  const cmpRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const box = cmpRef.current
+    if (!box || box.scrollHeight <= box.clientHeight + 1) return
+    const el = box.querySelector<HTMLElement>('.is-hot, .is-diff')
+    if (!el) return
+    const b = box.getBoundingClientRect()
+    const r = el.getBoundingClientRect()
+    if (r.top < b.top) box.scrollTop -= b.top - r.top + 4
+    else if (r.bottom > b.bottom) box.scrollTop += r.bottom - b.bottom + 4
+  }, [row, phase])
+
   const loaded = phase === 'side' || phase === 'reading' || phase === 'found' || phase === 'fixed'
   const label =
     phase === 'mine' || phase === 'typing' || phase === 'loading'
@@ -844,7 +856,10 @@ function ViewSource({ reduced, onFound, say, focus }: StageProps) {
       </div>
       {phase === 'loading' ? <Meter p={p} /> : <div className="fw-meter-gap" aria-hidden="true" />}
 
-      <div className={`fw-cmp mono${loaded ? ' is-loaded' : ''}`} role="table" aria-label="your code next to theirs">
+      <div
+        ref={cmpRef}
+        className={`fw-cmp mono${loaded ? ' is-loaded' : ''}`}
+        role="table" aria-label="your code next to theirs">
         <div className="fw-cmp-row fw-cmp-head" role="row">
           <span role="columnheader" aria-label="same?" />
           <span role="columnheader">yours · prints 2.0</span>
@@ -946,6 +961,9 @@ function Answer({ reduced, onFound, say, focus }: StageProps) {
       {phase === 'loading' ? <Meter p={p} /> : <div className="fw-meter-gap" aria-hidden="true" />}
 
       <div className="fw-so-slot">
+        {phase !== 'answer' && phase !== 'pasted' && (
+          <p className="mono muted fw-idle fw-placeholder">the top answer will show up here.</p>
+        )}
         {(phase === 'answer' || phase === 'pasted') && (
           <article className="fw-so" aria-label="top answer">
             <p className="fw-so-q mono">Why does my average() return the last number?</p>
@@ -1023,6 +1041,11 @@ function Agent({ reduced, onFound, say, focus }: StageProps) {
       </div>
 
       <div className="fw-agent-out">
+        {phase !== 'done' && (
+          <p className="mono muted fw-idle fw-placeholder">
+            {phase === 'working' ? 'reading avg.py, running it, editing line 4…' : 'its reply will show up here.'}
+          </p>
+        )}
         {phase === 'done' && (
           <>
             <p className="fw-tick">
@@ -1102,7 +1125,6 @@ function Chart({
   current: GenId
 }) {
   const n = GENS.filter((g) => found[g.id]).length
-  if (n === 0) return null
   return (
     <div className="fw-chart mono">
       <p className="fw-chart-title">
@@ -1138,11 +1160,15 @@ function Chart({
           <span className="fw-bar-val" />
         </li>
       </ol>
-      {n === GENS.length && (
-        <p className="fw-chart-foot is-done">
-          a day, minutes, seconds, zero. each drop came sooner than the last.
-        </p>
-      )}
+      {/* both lines share one cell, so the chart is as tall before as after */}
+      <p className={`fw-chart-foot fw-stack${n === GENS.length ? ' is-done' : ''}`}>
+        <span className={n === GENS.length ? 'fw-stack-off' : 'muted'} aria-hidden={n === GENS.length}>
+          each generation you try adds a bar.
+        </span>
+        <span className={n === GENS.length ? undefined : 'fw-stack-off'} aria-hidden={n !== GENS.length}>
+          a day, then minutes, then seconds, now zero. each drop came sooner than the last.
+        </span>
+      </p>
     </div>
   )
 }
@@ -1211,6 +1237,7 @@ export function FiveWays() {
         </>
       }
     >
+      <div className="fw">
       <div className="fw-tabs mono" role="group" aria-label="Generation">
         {GENS.map((x, i) => (
           <button
@@ -1238,43 +1265,67 @@ export function FiveWays() {
         ))}
       </div>
 
-      <p className="mono fw-setup">
-        <span className="muted fw-setup-yrs">{g.years} · </span>
-        {g.setup}
+      <p className="mono fw-setup fw-stack">
+        {GENS.map((x, i) => (
+          <span key={x.id} className={i === gi ? undefined : 'fw-stack-off'} aria-hidden={i !== gi}>
+            <span className="muted fw-setup-yrs">{x.years} · </span>
+            {x.setup}
+          </span>
+        ))}
       </p>
 
       <div className="fw-stage" data-gen={g.id}>
         <Stage key={`${g.id}-${run}`} reduced={reduced} onFound={onFound} say={say} focus={focusStage} />
       </div>
 
-      <div className={`fw-result${solved ? ' is-on' : ''}`}>
-        {solved ? (
-          <>
+      <div className="fw-readout">
+        <div className={`fw-result${solved ? ' is-on' : ''}`}>
+          {/* invisible copies of every result hold the band at its tallest */}
+          <div className="fw-result-sizer" aria-hidden="true">
+            {GENS.map((x) => (
+              <p key={x.id} className="fig-note">
+                {x.result}
+              </p>
+            ))}
             <p className="fig-note">
-              {g.id === 'agent' && insisted
-                ? 'Done before you looked. You saw the bug only because you went digging, and nothing asked you to.'
-                : g.result}
+              Done before you looked. You saw the bug only because you went digging, and nothing asked you to.
             </p>
-            <div className="fw-result-foot mono">
-              <dl className="fig-readout">
-                <dt>learned</dt>
-                <dd>{g.lesson}</dd>
-              </dl>
-              {next !== -1 && (
-                <button type="button" className="link-button" onClick={() => pick(next, true)}>
-                  next: {GENS[next].label} →
-                </button>
-              )}
+          </div>
+          {solved ? (
+            <div className="fw-result-body">
+              <p className="fig-note">
+                {g.id === 'agent' && insisted
+                  ? 'Done before you looked. You saw the bug only because you went digging, and nothing asked you to.'
+                  : g.result}
+              </p>
+              <div className="fw-result-foot mono">
+                <dl className="fig-readout">
+                  <dt>learned</dt>
+                  <dd>{g.lesson}</dd>
+                </dl>
+                {next !== -1 && (
+                  <button type="button" className="link-button" onClick={() => pick(next, true)}>
+                    next: {GENS[next].label} →
+                  </button>
+                )}
+              </div>
             </div>
-          </>
-        ) : null}
-      </div>
+          ) : (
+            <div className="fw-result-body">
+              <p className="mono muted fw-result-wait">
+                find out what&apos;s wrong, and what it taught that generation shows up here.
+              </p>
+            </div>
+          )}
+        </div>
 
-      <Chart found={found} insisted={insisted} current={g.id} />
+        <Chart found={found} insisted={insisted} current={g.id} />
+      </div>
 
       <p className="fw-sr" aria-live="polite">
         {msg}
       </p>
+      </div>
     </Figure>
   )
 }
