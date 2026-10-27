@@ -183,7 +183,7 @@ export function Plausible({ n = 2 }: { n?: number }) {
       {pick && ran >= 2 && (
         <p className="fig-note">
           {pick === 'a'
-            ? "a stores each number before looking for its partner, so it can pair a number with itself. It passes the example because the example never tests that. Plausible code is wrong code that hasn't met its edge case yet. From the outside it looks exactly like Gettier code, which is why someone has to read it."
+            ? "a stores each number before looking for its partner, so it can pair a number with itself. It passes the example because the example never tests that. This is plausible code that's wrong: it just hasn't met its edge case yet. From the outside it looks exactly like Gettier code, which is why someone has to read it."
             : "b looks for the partner first, then stores the number. That's the whole difference. If you saw it, you probably learned it by shipping a, once."}
         </p>
       )}

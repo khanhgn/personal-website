@@ -62,13 +62,13 @@ Start with how people have learned to program so far. Each generation learned fr
 
 **The fourth generation (2008–2022)** had Stack Overflow, with an answer for almost everything. Copied code still rarely worked the first time, and making it work meant understanding it a little. What they learned was adaptation.
 
-**The fifth generation (2022 onward)** started with the prompt and moved on to agents. Agents write, run and fix whole features, and fix most mistakes before you see them. What this generation learns is judgment: knowing whether what came back is right. The question is whether you can learn that without making the mistakes yourself. Part 3 is about the people that question is really for.
+**The fifth generation (2022 onward)** started with the prompt and moved on to agents. Agents write, run and fix whole features, and catch most mistakes before you see them. What this generation learns is judgment: knowing whether what came back is right. The question is whether you can learn that without making the mistakes yourself. Part 3 is about the people that question is really for.
 
 <FiveWays />
 
 The time between being wrong and finding out went from a day, to minutes, to seconds. Now it's zero: the agent is wrong and finds out for you, and you never see it. Each step was shorter than the one before. That's what an exponential curve feels like when you're on it: it always seems to be speeding up right now.
 
-Generations no longer line up with careers. The first generation learned and retired in roughly the same world. I started in the fifth generation's first year but learned the fourth's way, because I didn't trust ChatGPT yet. Now I work in the fifth. There will be a sixth before I'm 25.
+Generations no longer line up with careers. The first generation learned and retired in roughly the same world. I started in the fifth generation's first year but learned the fourth's way, because using ChatGPT still felt like cheating. Now I work in the fifth. There will be a sixth before I'm 25.
 
 <Break />
 
@@ -76,9 +76,9 @@ Generations no longer line up with careers. The first generation learned and ret
 
 Each generation passed something on to the next. A senior engineer looks at a diff and knows it's wrong before they can say why, because they wrote that exact wrong thing years ago and lost an afternoon to it. That's scar tissue. You can't write it down. You can only earn it.
 
-I got about a year of it. I resisted ChatGPT for a while, the way you resist anything that feels like cheating. Then I used it, because everyone did and it worked. Now I describe problems to agents and judge what comes back. When the agent writes something I wouldn't have, I sometimes read it until I could have written it myself. That habit is the one thing from that year I want to keep, and I'm losing it anyway.
+I got about a year of it. I held out for a while. Then I used it, because everyone did and it worked. Now I describe problems to agents and judge what comes back. When the agent writes something I wouldn't have, I sometimes read it until I could have written it myself. That habit is the one thing from that year I want to keep, and for a long time I was losing it.
 
-The reason is the euphoria. Working with agents feels amazing. A feature lands in minutes, a bug that would have cost me a day just disappears, and I feel smarter than I've ever felt. Stopping to read the code feels like slowing down on purpose.
+The reason was the euphoria. Working with agents felt amazing. A feature landed in minutes, a bug that would have cost me a day just disappeared, and I felt smarter than I'd ever felt. Stopping to read the code felt like slowing down on purpose.
 
 But a lot of that feeling is borrowed. The model knew how to do it; I was just there when it happened. I used to know what I understood and what I was taking on trust. Now there's a big grey area: code I've read, nodded at and shipped. Some of it I understand. Some of it I've just seen so often that it feels like I do. I can't tell which is which, because borrowed knowledge feels exactly like the real thing until the day you need it and the agent isn't there. I'll come back to this feeling in Part 2.
 
@@ -92,8 +92,8 @@ It isn't the same. A compiler does the same thing every time and is almost alway
 
 <Plausible n={2} />
 
-Sometimes plausible code is wrong, like an answer to a coding puzzle that passes the example and fails the first hidden test. That's the easy case, because eventually you find out. The hard case is when it's right. Philosophers have a name for being right by luck: a Gettier case, where you believe something true for a reason that isn't what makes it true. James Somers [wrote about](https://jsomers.net/blog/gettiers) how this shows up in debugging in 2019. Code can do the same thing. You think it's right because the tests pass and it looks like code you've seen before. It is right, but not for those reasons, and nobody knows the real ones. Call it <Term id="gettier-code">Gettier code</Term>. Nothing is wrong, so there's nothing to notice, until something around it changes and nobody can explain why it used to work.
+Sometimes plausible code is wrong, like an answer to a coding puzzle that passes the example and fails the first hidden test. That's the easy case, because eventually you find out. The hard case is when it's right. Philosophers have a name for being right by luck: a Gettier case, where you believe something true for a reason that isn't what makes it true. In 2019, James Somers [wrote about](https://jsomers.net/blog/gettiers) how this shows up in debugging. Code can do the same thing. You think it's right because the tests pass and it looks like code you've seen before. It is right, but not for those reasons, and nobody knows the real ones. Call it <Term id="gettier-code">Gettier code</Term>. Nothing is wrong, so there's nothing to notice, until something around it changes and nobody can explain why it used to work.
 
-So someone still has to read the code. Most days that someone is supposed to be me, and most days I'm not doing it. Part 2 is about what I do instead, and why it feels so much like work.
+So someone still has to read the code. That someone is supposed to be me, and until a month ago, most days I wasn't doing it. Part 2 is about what I did instead, and why it felt so much like work.
 
 <Series part={1} end />

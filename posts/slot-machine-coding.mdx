@@ -40,7 +40,7 @@ Each of these tried to count value, and most slid back to counting volume, becau
 
 Here is what much of the job has turned into. You write a prompt and lean back. Text scrolls past faster than you could read it. A spinner turns. You check your phone, then another agent, then the first one again. It goes slightly wrong, so you nudge it. It finishes, the tests pass, and you approve.
 
-Andrej Karpathy named the extreme version on X in February 2025: vibe coding, where you "forget that the code even exists" and hit Accept All without reading the diffs. He meant weekend projects, but the phrase got into everyone's working week. But "vibe" describes the mood, not what's actually going on.
+Andrej Karpathy named the extreme version on X in February 2025: vibe coding, where you "forget that the code even exists" and hit Accept All without reading the diffs. He meant weekend projects, but the phrase got into everyone's working week. Still, "vibe" describes the mood, not what's actually going on.
 
 <AcceptStream />
 
@@ -49,17 +49,17 @@ What's actually going on is a loop. Rerun the prompt, glance at the result, reru
 <figure className="photo wide">
   <Image
     src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Georges_de_La_Tour_025.jpg"
-    alt="Four card players by candlelight; a young man in silk studies his hand while the other three exchange glances and one slips an ace from behind his back"
+    alt="Four card players at a table; a young man in silk studies his hand while the other three exchange glances and one slips an ace from behind his back"
     width={3176}
     height={2305}
     sizes="(max-width: 700px) 100vw, 640px"
   />
-  <figcaption>Georges de La Tour, <em>The Cheat with the Ace of Diamonds</em>, around 1635. The young man is concentrating hard on his cards. Everyone else at the table is concentrating on him. Public domain, via <a href="https://commons.wikimedia.org/wiki/File:Georges_de_La_Tour_025.jpg">Wikimedia Commons</a>.</figcaption>
+  <figcaption>Georges de La Tour, <em>The Cheat with the Ace of Diamonds</em>, around 1635. The young man is concentrating hard on his cards. Everyone else at the table is in on it. Public domain, via <a href="https://commons.wikimedia.org/wiki/File:Georges_de_La_Tour_025.jpg">Wikimedia Commons</a>.</figcaption>
 </figure>
 
 The loop feels like work because it has the visible parts of work: motion on the screen, and waiting, which feels like effort. It even feels like supervising. But it isn't the kind of supervision a manager does. A good manager could do the work they supervise, which is why their judgment is worth something. Pulling the lever doesn't take that. It's closer to babysitting: keep the child away from the stairs until the parents get home. Most of what I did with agents was babysitting.
 
-The tests are where this gets worse. I always let the agent write the tests, so it tests whatever it decides is worth testing, and then it tells me they pass. The thing checking the work is the thing that did the work, and it also got to decide what counts as working. When a test fails, the agent fixes the code, or sometimes it fixes the test. I don't always check which. These are self-graded tests.
+The tests are where this gets worse. I used to let the agent write the tests, so it tested whatever it decided was worth testing, and then it told me they passed. The thing checking the work was the thing that did the work, and it also got to decide what counted as working. When a test failed, the agent fixed the code, or sometimes it fixed the test. I didn't always check which. These are self-graded tests.
 
 I think part of the watching is for show. Writing code is still the part people picture when they picture a programmer, so the agent runs in one tab and the code stays open in front, scrolling, as if we were still writing it. It's code cosplay. The work moved and we kept the outfit.
 
@@ -81,13 +81,13 @@ Nobody should be prompting and watching anymore. If an agent writes the code, ev
 
 Before, that means the spec. Who is this for, what should it do, what must it never do, and how will we know it works. A good spec is most of the thinking, and it's the part the agent can't do for you. Writing one is slow, and that's the point.
 
-After, the review isn't what it used to be. Teams of agents can already check the work, and if we're the ones telling them what to check, reading every line ourselves doesn't add much. The human job at the end is two things: make sure no bugs ship, then understand what did ship well enough to decide what to change at the next retro. One test still works: could you fix it at two in the morning? If not, start the retro there.
+After, the review isn't what it used to be. Teams of agents can already check the work, and if we're the ones telling them what to check, reading every line ourselves adds less than it used to. What we have to read is whatever we'll need to explain. The human job at the end is two things: catch what the agents missed, then understand what did ship well enough to decide what to change at the next retro. One test still works: could you fix it at two in the morning? If not, start the retro there.
 
 That only works if the change is small enough to review. An agent can build a feature overnight that nobody could test properly in a week. You have two honest options. Keep the pieces small enough that one person can really check them. Or let agents do the bulk of the testing, then divide what's left between people: each owns a slice, checks it against the spec, and vouches for that slice and nothing else. Nobody can really vouch for the whole of a massive feature, so it's better not to pretend one reviewer did.
 
 In between, close the tab. Watching the agent write is the one part you don't need to see.
 
-For the past month I've worked this way. The agents build overnight, while I'm asleep and can't watch. My days go to the parts that were always the bottleneck: reading what came back, understanding it, planning the next thing, testing it. The weeks feel slower. I can answer more questions about what shipped.
+For the past month I've worked this way. The agents build small pieces overnight, while I'm asleep and can't watch. My days go to the parts that were always the bottleneck: reading what came back, understanding it, planning the next thing, testing it. The weeks feel slower. I can answer more questions about what shipped.
 
 Once you stop watching, the job changes shape. You aren't a programmer with an assistant anymore. You're running a workforce, part human and part agent, and the work is orchestration: deciding what gets built, writing specs the agents can work from, deciding which agents build and which ones check, and splitting the review between the people who'll vouch for it. Call it <Term id="human-agent-orchestration">human-agent orchestration</Term>. It looks less like coding and more like running a team, except half the team works all night, and the agents grade each other's work while you decide what counts as passing.
 
@@ -121,7 +121,7 @@ The answer isn't to stop using agents. The work is better with them. The answer 
 
 - **Spec first.** Write down what it should do, what it must never do, and how you'll know it works, before any code exists.
 - **Tests from the spec, not from the code.** Agents are good at testing, so let them. What matters is what they test against: the spec, not the code they just wrote. Have the tests written before the code, or have a different model write them from the spec alone, so the checker doesn't share the writer's blind spots.
-- **Agents grade, people decide.** Have teams of agents check the work against the spec. Your job at the end is making sure nothing broken ships, understanding what did, and choosing what to change in the retro. If it's too big for one person, split it into slices and give each slice an owner.
+- **Agents grade, people decide.** Have teams of agents check the work against the spec. Your job at the end is catching what the agents missed, understanding what did, and choosing what to change in the retro. If it's too big for one person, split it into slices and give each slice an owner.
 - **Small, reversible releases.** Ship in pieces you can roll back, because some bugs will get through anyway.
 
 None of this is new. Good teams did it before agents. It used to be good practice. Now it's the only thing between you and a codebase full of Gettier code. But it only works for people who already know what a bug looks like. Part 3 is about the people who won't.
