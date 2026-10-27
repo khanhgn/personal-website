@@ -144,7 +144,17 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
                 priority
               />
             </div>
-            {post.imageSource ? (
+            {post.imageCaption ? (
+              <figcaption>
+                {post.imageCaption}
+                {post.imageCredit ? (
+                  <>
+                    {' '}
+                    Public domain, via <a href={post.imageCredit}>Wikimedia Commons</a>.
+                  </>
+                ) : null}
+              </figcaption>
+            ) : post.imageSource ? (
               <figcaption>
                 via <a href={post.imageSource}>Pinterest</a>
               </figcaption>
