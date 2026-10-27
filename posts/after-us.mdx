@@ -1,0 +1,108 @@
+---
+title: After Us
+description: Part 3 of 3. What the next generation will be good at, what they'll miss, and what happens next.
+date: 2026-10-26T00:02:00.000Z
+image: /images/after-us-cover.png
+imageLayout: wide
+thumbnail: https://upload.wikimedia.org/wikipedia/commons/e/e7/Pieter_Bruegel_the_Elder_-_Landscape_with_the_Fall_of_Icarus_-_WGA03321.jpg
+---
+
+<Series part={3} />
+
+<ol className="contents">
+  <li><a href="#i-they-will-be-good">I. They Will Be Good</a></li>
+  <li><a href="#ii-the-missing-mistakes">II. The Missing Mistakes</a></li>
+  <li><a href="#iii-gyms-for-programmers">III. Gyms for Programmers</a></li>
+  <li><a href="#iv-the-sixth-generation">IV. The Sixth Generation</a></li>
+  <li><a href="#v-what-was-in-the-work">V. What Was in the Work</a></li>
+  <li><a href="#vi-the-last">VI. The Last</a></li>
+</ol>
+
+## I. They Will Be Good
+
+<p className="lede">It's easy to talk about the next generation the way the king talked about writing. So I'll start with what they'll be better at.</p>
+
+They will be fast. A student can now build in a weekend what took me a semester. They'll try more ideas in their first year than most engineers used to try in five, and most ideas fail, so they'll see more of the failures that matter for products: things nobody wanted. They'll be good at describing what they want, because that's the whole interface, though the agents are forgiving enough that they may never need to be exact. They won't be precious about code, since they never paid for it. Some will have better taste about what to build than anyone before them, because they started there instead of arriving late.
+
+That is a real generation of engineers, not a lesser one.
+
+<Break />
+
+## II. The Missing Mistakes
+
+They will get plenty of practice being wrong about what to build. What they won't get is practice being wrong about code. The few good instincts I have are mistakes I made often enough to stop making. A wrong loop used to cost an afternoon, and you made thousands of them before anyone let you near a product. If the agent makes the small mistakes and fixes them, nobody learns from them. The model learned from other people's mistakes once, in training, and it doesn't learn from yours. You get the output without the lesson.
+
+Good taste comes from a lot of small mistakes, and the small mistakes are the ones going away.
+
+Many will also miss out on reading. Not reading in general, but looking at code and knowing whether it's right. That skill came from writing wrong code and finding out, and the agent does the finding out now. So a lot of them will meet their first hard bug later than we did, in bigger systems, in production, in code nobody wrote by hand.
+
+<Break />
+
+## III. Gyms for Programmers
+
+The old lessons came free with the work. The new ones have to be built on purpose, and they'll look less like writing and more like reading.
+
+A course might hand you a working program an agent wrote, with one bug in it, and ask you to find it without running anything. An exam might ask you to predict the output before you press enter. Code review might become the main way juniors learn, the way apprentices learned by watching. Every old way of learning from [Part 1](/posts/the-last-programmers#ii-five-generations) is still available. Nobody is forced to use them anymore, and that's the problem.
+
+<figure className="photo wide">
+  <Image
+    src="https://upload.wikimedia.org/wikipedia/commons/5/53/Rembrandt_Harmensz._van_Rijn_007.jpg"
+    alt="Dr Tulp lifting the tendons of a corpse's forearm with forceps while seven men lean in to watch"
+    width={2536}
+    height={1902}
+    sizes="(max-width: 700px) 100vw, 640px"
+  />
+  <figcaption>Rembrandt, <em>The Anatomy Lesson of Dr Nicolaes Tulp</em>, 1632. For most of history, the way you learned a craft was by watching someone who could already read the body in front of them. Public domain, via <a href="https://commons.wikimedia.org/wiki/File:Rembrandt_Harmensz._van_Rijn_007.jpg">Wikimedia Commons</a>.</figcaption>
+</figure>
+
+<FindTheBug />
+
+When a skill stops being necessary, it doesn't disappear. It becomes something you do on purpose. Nobody needed a gym when work was physical. Programming may get its gyms too: an afternoon with the agent switched off, being wrong on purpose. It will look silly, the way a treadmill would have looked to a farmer. Do it anyway.
+
+<Break />
+
+## IV. The Sixth Generation
+
+**The junior developer, as a job, goes away.** Not because nobody young gets hired, but because the work juniors used to learn on, the small, safe, boring tickets, is exactly what agents do best. The first job becomes checking, not writing: owning one slice of the review from [Part 2](/posts/we-cant-feel-our-own-speed#v-close-the-tab). Many people will start their careers reading code they never wrote.
+
+**Computer science splits in two.** One half teaches you to build with agents: specifying, testing, shipping. The other half looks more like forensics: reading systems, tracing failures, explaining why something works. The second half will be smaller, harder, and better paid, and some of the people in it will be the ones who learned to program by hand for fun, the way people still learn to develop film.
+
+**Explainable code becomes a selling point, then a requirement.** Some software will be sold on the fact that a person can explain every line of it. In regulated fields like medical devices, that will stop being a selling point and become the law.
+
+**The sixth generation won't prompt at all.** Agents that open pull requests nobody asked for already exist. That becomes the main way code gets written: the agent notices what needs building, builds it, and asks a person to approve. The human job shrinks from describing to deciding. Whether anyone still knows how to decide well, after a career of approving, is the question this whole series has been circling.
+
+<Break />
+
+## V. What Was in the Work
+
+There is a second loss, and it isn't about competence.
+
+We assumed the tedious part of programming stood between us and the meaningful part. The agents took the tedious part, and it turns out a lot of the meaning was in it. An afternoon spent on a bug was one of the few times you met something completely indifferent to what you wanted. The machine didn't care what you meant. It did exactly what you said, and you had to change until what you said was right.
+
+<Indifferent n={2} />
+
+The agents are the opposite. They try to give you what you meant. That's what makes them useful, and it may be what makes them bad teachers.
+
+<Break />
+
+## VI. The Last
+
+<figure className="photo wide">
+  <Image
+    src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Pieter_Bruegel_the_Elder_-_Landscape_with_the_Fall_of_Icarus_-_WGA03321.jpg"
+    alt="A ploughman, a shepherd and a fisherman go about their work on a bright coast; in the bottom corner, two small legs disappear into the sea"
+    width={1246}
+    height={800}
+    sizes="(max-width: 700px) 100vw, 640px"
+  />
+  <figcaption><em>Landscape with the Fall of Icarus</em>, attributed to Pieter Bruegel the Elder, around 1560. Icarus is the pair of legs in the water, bottom right. The ploughman doesn&apos;t look up. The biggest changes rarely look like events to the people working through them. Public domain, via <a href="https://commons.wikimedia.org/wiki/File:Pieter_Bruegel_the_Elder_-_Landscape_with_the_Fall_of_Icarus_-_WGA03321.jpg">Wikimedia Commons</a>.</figcaption>
+</figure>
+
+
+The title of Part 1 is too strong. There will be programmers after us. But "the last" can mean the last people to learn it a particular way: slowly, by being wrong, with a machine that didn't care. I got a year of that. The generation after me will do what I do, earlier and faster, and won't know there was anything to skip.
+
+What worries me isn't that they'll be worse. It's that there will be fewer and fewer people who remember what it was like when the code was really yours, every line, because you had been wrong about each of them first.
+
+I keep thinking about all the Gettier code we're about to ship. It will run, it will be fine, and someone will depend on it. Whether what we lost was load-bearing, we'll find out the way people usually find out about load-bearing walls.
+
+<Series part={3} end />

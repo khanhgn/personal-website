@@ -8,9 +8,12 @@ import NextImage from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import {
+  AcceptStream,
   Autopilot,
   Break,
   Debt,
+  FindTheBug,
+  FiveWays,
   Generations,
   Indifferent,
   Literacy,
@@ -18,6 +21,7 @@ import {
   Plausible,
   Progress,
   Samples,
+  Series,
   Term,
 } from '@/components/essay'
 
@@ -78,6 +82,10 @@ const mdxComponents: MDXComponents = {
   Debt,
   Term,
   Note,
+  FiveWays,
+  AcceptStream,
+  FindTheBug,
+  Series,
 }
 
 const PostLayout = ({ params }: { params: { slug: string } }) => {

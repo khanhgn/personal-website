@@ -257,14 +257,14 @@ function agent(src: string): { out: string; note: string } {
   return { out: meant || src.trim(), note: 'I tidied up the syntax for you.' }
 }
 
-export function Indifferent() {
+export function Indifferent({ n = 5 }: { n?: number }) {
   const [src, setSrc] = useState('pritn("hello, world")')
   const m = machine(src)
   const a = agent(src)
 
   return (
     <Figure
-      n={5}
+      n={n}
       caption={<>type anything. one of these will make you change.</>}
     >
       <label className="fig-input mono">
