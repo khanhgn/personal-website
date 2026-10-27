@@ -1112,7 +1112,7 @@ function Chart({
       <ol className="fw-bars">
         {GENS.map((g) => {
           const on = !!found[g.id]
-          const took = g.id === 'agent' && insisted ? 'you looked' : g.took
+          const took = g.id === 'agent' && insisted ? 'you dug' : g.took
           return (
             <li key={g.id} className={`fw-bar${on ? ' is-on' : ''}${g.id === current ? ' is-current' : ''}`}>
               <span className="fw-bar-label">{g.label}</span>
