@@ -1,10 +1,11 @@
 import Link from 'next/link'
 
 // The three-part series, shown at the top and bottom of each part.
+// `short` is the label used in the compact one-line nav at the top of a post.
 const PARTS = [
-  { href: '/posts/the-last-programmers', title: 'Gettier Code and the Last Programmers' },
-  { href: '/posts/slot-machine-coding', title: 'Slot-Machine Coding' },
-  { href: '/posts/after-us', title: 'After Us' },
+  { href: '/posts/the-last-programmers', title: 'Gettier Code and the Last Programmers', short: 'Gettier Code' },
+  { href: '/posts/slot-machine-coding', title: 'Slot-Machine Coding', short: 'Slot-Machine Coding' },
+  { href: '/posts/after-us', title: 'After Us', short: 'After Us' },
 ]
 
 export function Series({ part, end = false }: { part: 1 | 2 | 3; end?: boolean }) {
@@ -27,15 +28,19 @@ export function Series({ part, end = false }: { part: 1 | 2 | 3; end?: boolean }
     )
   }
   return (
-    <aside className="series mono" aria-label="Series">
-      <span className="muted">a series in three parts</span>
+    <aside className="series series-top mono" aria-label="Series">
+      <span className="series-label">Part {part} of 3</span>
       <ol>
         {PARTS.map((p, i) => (
           <li key={p.href} className={i + 1 === part ? 'is-current' : undefined}>
+            <span className="series-num">{i + 1}</span>
+            {' '}
             {i + 1 === part ? (
-              <span aria-current="page">{p.title}</span>
+              <span aria-current="page">{p.short}</span>
             ) : (
-              <Link href={p.href}>{p.title}</Link>
+              <Link href={p.href} title={p.title}>
+                {p.short}
+              </Link>
             )}
           </li>
         ))}
