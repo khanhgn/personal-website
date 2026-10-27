@@ -49,7 +49,7 @@ const RAW: Raw[] = [
   {
     title: 'Add loading state to settings page',
     path: 'src/app/settings/page.tsx',
-    hunk: '@@ -14,3 +14,6 @@ export default function Settings() {',
+    hunk: '@@ -14,2 +14,5 @@ export default function Settings() {',
     body: [
       '   const prefs = usePrefs()',
       '+  const [loading, setLoading] = useState(true)',
@@ -67,7 +67,7 @@ const RAW: Raw[] = [
   {
     title: 'Only admins can delete projects',
     path: 'src/api/projects/delete.ts',
-    hunk: '@@ -21,7 +21,7 @@',
+    hunk: '@@ -21,8 +21,8 @@',
     body: [
       ' export async function deleteProject(user: User, id: string) {',
       '   const project = await db.projects.get(id)',
@@ -89,7 +89,7 @@ const RAW: Raw[] = [
   {
     title: 'Add retry to webhook sender',
     path: 'src/jobs/webhooks.ts',
-    hunk: '@@ -30,4 +30,7 @@ export async function deliver(evt: Event) {',
+    hunk: '@@ -30,3 +30,6 @@ export async function deliver(evt: Event) {',
     body: [
       '   const body = JSON.stringify(evt)',
       '-  await send(evt.url, body)',
