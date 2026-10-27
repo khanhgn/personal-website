@@ -40,7 +40,7 @@ const GENS: Gen[] = [
     id: 'cards',
     label: 'punch cards',
     years: '1955–75',
-    setup: 'you write it on paper. someone punches one card per line. the machine is in another building.',
+    setup: 'on paper, punched one card per line. the machine is in another building.',
     result:
       'One wrong number, a day later. You found the bug by running the program in your head, card by card. The fix cost another day.',
     lesson: 'precision',
@@ -51,7 +51,7 @@ const GENS: Gen[] = [
     id: 'terminal',
     label: 'terminal',
     years: '1975–93',
-    setup: 'a terminal, then a computer of your own. a run takes seconds, so you can afford to be wrong.',
+    setup: 'a terminal of your own. a run takes seconds, so you can afford to be wrong.',
     result:
       'Wrong in seconds, again and again, until the answer moved. Every bad edit showed you another way it breaks.',
     lesson: 'how machines fail',
@@ -1166,7 +1166,7 @@ function Chart({
           each generation you try adds a bar.
         </span>
         <span className={n === GENS.length ? undefined : 'fw-stack-off'} aria-hidden={n !== GENS.length}>
-          a day, minutes, seconds, zero. each drop came sooner than the last.
+          a day, minutes, seconds, zero. each drop came sooner.
         </span>
       </p>
     </div>
