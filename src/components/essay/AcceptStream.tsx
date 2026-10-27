@@ -455,7 +455,7 @@ export function AcceptStream() {
     const head = `accepted ${report.accepted} · opened ${report.opened}`
     if (report.bugStatus === 'rejected') {
       headline = `${head} · rejected the one that mattered`
-      verdict = `You caught it, after ${secs(report.bugMs)} s with the diff open. Notice that the stream didn’t wait while you read.`
+      verdict = `You caught it, after ${secs(report.bugMs)} s with the diff open. Notice that the stream didn't wait while you read.`
     } else if (report.bugOpened) {
       headline = `${head} · looked at the one that mattered for ${secs(report.bugMs)} s, and merged it`
       verdict = 'You opened it and it still went through. The title is what you read; the diff is what shipped.'
@@ -572,7 +572,7 @@ export function AcceptStream() {
 
             <p className="as-headline">{headline}</p>
             <p className="as-k as-bug-title">
-              “{bug.title}” · {report.bugStatus === 'rejected' ? 'rejected' : 'merged'}
+              &quot;{bug.title}&quot; · {report.bugStatus === 'rejected' ? 'rejected' : 'merged'}
             </p>
             <DiffView c={bug} final />
             <p className="fig-note as-why">
@@ -595,7 +595,7 @@ export function AcceptStream() {
                 <p>
                   {N} changes are ready to stream in, about one a second.
                   <br />
-                  open a title to see its diff. accept when you’re happy.
+                  open a title to see its diff. accept when you&apos;re happy.
                 </p>
               </div>
             ) : (

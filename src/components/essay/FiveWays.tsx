@@ -42,7 +42,7 @@ const GENS: Gen[] = [
     years: '1955–75',
     setup: 'you write it on paper. someone punches one card per line. the machine is in another building.',
     result:
-      'One wrong number, a day later. You found the bug by running the program in your head, card by card. The fix costs another day.',
+      'One wrong number, a day later. You found the bug by running the program in your head, card by card. The fix cost another day.',
     lesson: 'precision',
     secs: 16 * 3600,
     took: 'next day',
@@ -62,9 +62,9 @@ const GENS: Gen[] = [
     id: 'web',
     label: 'view source',
     years: '1993–08',
-    setup: 'every page comes with its source. somewhere, someone’s version works.',
+    setup: "every page comes with its source. somewhere, someone's version works.",
     result:
-      'You put their code next to yours and read both until the difference jumped out: += against =. Their names weren’t yours, so you had to understand it to copy it.',
+      "You put their code next to yours and read both until the difference jumped out: += against =. Their names weren't yours, so you had to understand it to copy it.",
     lesson: 'reading',
     secs: 45,
     took: '~1 min',
@@ -86,7 +86,7 @@ const GENS: Gen[] = [
     years: '2022–',
     setup: 'you say what you want. it writes the code, runs it, and fixes what breaks.',
     result: 'Done before you looked. You never saw the bug, which is the point and the problem.',
-    lesson: 'judgment, maybe',
+    lesson: 'judgement, maybe',
     secs: 0,
     took: 'never seen',
   },
@@ -816,7 +816,7 @@ function ViewSource({ reduced, onFound, say, focus }: StageProps) {
   const loaded = phase === 'side' || phase === 'reading' || phase === 'found' || phase === 'fixed'
   const label =
     phase === 'mine' || phase === 'typing' || phase === 'loading'
-      ? 'find someone else’s that works'
+      ? "find someone else's that works"
       : phase === 'side' || phase === 'reading'
       ? 'read them side by side'
       : phase === 'found'
@@ -882,7 +882,7 @@ function ViewSource({ reduced, onFound, say, focus }: StageProps) {
           : showDiff
           ? 'one line is a different shape. the rest only has different names.'
           : loaded
-          ? 'their names aren’t yours. you have to read both to line them up.'
+          ? "their names aren't yours. you have to read both to line them up."
           : 'the source of every page is one menu away.'}
       </p>
     </>

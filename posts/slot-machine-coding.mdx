@@ -32,7 +32,7 @@ It felt like the best work week of my life, every week. It wasn't. What I had wa
 
 The trouble starts with what we count. For decades the easiest thing to count was lines of code, so managers counted them. In 1979 IBM's Allan Albrecht proposed function points, which tried to measure what software did for its users instead of how long it was. In 1988 Dijkstra argued that if you must count lines, you should count them as "lines spent", not lines produced. Every line is a cost. Agile teams later counted story points and velocity. More recently, teams have measured how often they deploy and how often deploys break.
 
-Each of these tried to count value, and most slid back to counting volume, because volume is easy to see. Agents make volume free. Lines, pull requests and closed tickets all went up. None of them tells you whether anyone understands what shipped.
+Each new measure tried to count value, and most slid back to counting volume, because volume is easy to see. Agents make volume free. Lines, pull requests and closed tickets all went up. None of them tells you whether anyone understands what shipped.
 
 <Break />
 
@@ -57,9 +57,9 @@ What's actually going on is a loop. Rerun the prompt, glance at the result, reru
   <figcaption>Georges de La Tour, <em>The Cheat with the Ace of Diamonds</em>, around 1635. The young man is concentrating hard on his cards. Everyone else at the table is in on it. Public domain, via <a href="https://commons.wikimedia.org/wiki/File:Georges_de_La_Tour_025.jpg">Wikimedia Commons</a>.</figcaption>
 </figure>
 
-The loop feels like work because it has the visible parts of work: motion on the screen, and waiting, which feels like effort. It even feels like supervising. But it isn't the kind of supervision a manager does. A good manager could do the work they supervise, which is why their judgment is worth something. Pulling the lever doesn't take that. It's closer to babysitting: keep the child away from the stairs until the parents get home. Most of what I did with agents was babysitting.
+The loop feels like work because it has the visible parts of work: motion on the screen, and waiting, which feels like effort. It even feels like supervising. But it isn't the kind of supervision a manager does. A good manager could do the work they supervise, which is why their judgement is worth something. Pulling the lever doesn't take that. It's closer to babysitting: keep the child away from the stairs until the parents get home. Most of what I did with agents was babysitting.
 
-The tests are where this gets worse. I used to let the agent write the tests, so it tested whatever it decided was worth testing, and then it told me they passed. The thing checking the work was the thing that did the work, and it also got to decide what counted as working. When a test failed, the agent fixed the code, or sometimes it fixed the test. I didn't always check which. These are self-graded tests.
+The tests are where this gets worse. I used to let the agent write the tests, so it tested whatever it decided was worth testing, and then it told me they passed. The thing checking the work was the thing that did the work, and it also got to decide what counted as working. When a test failed, the agent fixed the code, or sometimes it fixed the test. I didn't always check which. Those were self-graded tests.
 
 I think part of the watching is for show. Writing code is still the part people picture when they picture a programmer, so the agent runs in one tab and the code stays open in front, scrolling, as if we were still writing it. It's code cosplay. The work moved and we kept the outfit.
 
@@ -77,17 +77,17 @@ The agents sped up the one part of the job that was never holding us back.
 
 ## V. Close the Tab
 
-Nobody should be prompting and watching anymore. If an agent writes the code, every decision that matters moves to one of two ends: before it starts and after it finishes. The middle, the typing, is the one part a person adds nothing to. So stop sitting in it. Bookend the work and leave the middle alone.
+I don't think anyone should be prompting and then watching anymore. If an agent writes the code, every decision that matters moves to one of two ends: before it starts and after it finishes. The middle, the typing, is the one part a person adds nothing to. So stop sitting in it. Bookend the work and leave the middle alone.
 
 Before, that means the spec. Who is this for, what should it do, what must it never do, and how will we know it works. A good spec is most of the thinking, and it's the part the agent can't do for you. Writing one is slow, and that's the point.
 
-After, the review isn't what it used to be. Teams of agents can already check the work, and if we're the ones telling them what to check, reading every line ourselves adds less than it used to. What we have to read is whatever we'll need to explain. The human job at the end is two things: catch what the agents missed, then understand what did ship well enough to decide what to change at the next retro. One test still works: could you fix it at two in the morning? If not, start the retro there.
+After, the review isn't what it used to be. Teams of agents can already check the work, and if we're the ones telling them what to check, reading every line ourselves adds less than it used to. What we have to read is whatever we'll need to explain. The human job at the end is two things: catch what the agents missed, then understand what shipped well enough to decide what to change at the next retrospective. One test still works: could you fix it at two in the morning? If not, start the retrospective there.
 
 That only works if the change is small enough to review. An agent can build a feature overnight that nobody could test properly in a week. You have two honest options. Keep the pieces small enough that one person can really check them. Or let agents do the bulk of the testing, then divide what's left between people: each owns a slice, checks it against the spec, and vouches for that slice and nothing else. Nobody can really vouch for the whole of a massive feature, so it's better not to pretend one reviewer did.
 
-In between, close the tab. Watching the agent write is the one part you don't need to see.
+In between, close the tab.
 
-For the past month I've worked this way. The agents build small pieces overnight, while I'm asleep and can't watch. My days go to the parts that were always the bottleneck: reading what came back, understanding it, planning the next thing, testing it. The weeks feel slower. I can answer more questions about what shipped.
+For the past month I've worked this way. The agents build small pieces overnight, while I'm asleep and can't watch. My days go to the parts that were always the bottleneck: reading what came back, understanding it, testing it, planning the next thing. The weeks feel slower. I can answer more questions about what shipped.
 
 Once you stop watching, the job changes shape. You aren't a programmer with an assistant anymore. You're running a workforce, part human and part agent, and the work is orchestration: deciding what gets built, writing specs the agents can work from, deciding which agents build and which ones check, and splitting the review between the people who'll vouch for it. Call it <Term id="human-agent-orchestration">human-agent orchestration</Term>. It looks less like coding and more like running a team, except half the team works all night, and the agents grade each other's work while you decide what counts as passing.
 
@@ -103,9 +103,9 @@ Very few of us were trained for this. We learned to write code, and then we lear
 
 **Teams will measure how much of their code a human has read.** It will sit next to test coverage on the dashboard, it will be embarrassingly low, and the first people to ask for it will be insurers and large customers, not engineers.
 
-**Reviewers will be picked for being different, not for being senior.** Some teams already have a model from a different lab check another model's code. That becomes the default, along with a person who didn't write the spec. The mistakes that get through are the ones the writer and the reader share, so the reader's main qualification will be not thinking like the writer. That assumes there are still people who learned to think differently, which is what Part 3 is about.
+**Reviewers will be picked for being different, not for being senior.** Some teams already have a model from a different lab check another model's code. That will become the default, along with a person who didn't write the spec. The mistakes that get through are the ones the writer and the reader share, so the reader's main qualification will be not thinking like the writer. That assumes there are still people who learned to read code without an agent, which is what Part 3 is about.
 
-**Slot-machine coding is the new email.** It fills the day, every pull feels like progress, and almost nobody will be able to say what it produced.
+**Slot-machine coding will be the new email.** It fills the day, every pull feels like progress, and almost nobody will be able to say what it produced.
 
 <Break />
 
@@ -113,7 +113,7 @@ Very few of us were trained for this. We learned to write code, and then we lear
 
 The honest measure of a week isn't how much shipped. It's how much of what shipped you could explain. Not the prompt you wrote, but the code: what it does, why it's right, and what would break it.
 
-I've done all of this: the slot-machine coding, the cosplay, the self-graded tests, the rubber stamps, the felt speed. I fail this test most weeks.
+I've done all of this: the slot-machine coding, the cosplay, the self-graded tests, the rubber stamps, the felt speed. Until a month ago, I failed this test most weeks. I still fail it some.
 
 Babysitting doesn't scale. Watching an agent type doesn't catch bugs. You probably ship about the same number of them; you just feel more involved. What catches them is a process that doesn't depend on anyone paying attention at the right moment.
 
@@ -121,9 +121,9 @@ The answer isn't to stop using agents. The work is better with them. The answer 
 
 - **Spec first.** Write down what it should do, what it must never do, and how you'll know it works, before any code exists.
 - **Tests from the spec, not from the code.** Agents are good at testing, so let them. What matters is what they test against: the spec, not the code they just wrote. Have the tests written before the code, or have a different model write them from the spec alone, so the checker doesn't share the writer's blind spots.
-- **Agents grade, people decide.** Have teams of agents check the work against the spec. Your job at the end is catching what the agents missed, understanding what did, and choosing what to change in the retro. If it's too big for one person, split it into slices and give each slice an owner.
+- **Agents grade, people decide.** Have teams of agents check the work against the spec. Your job at the end is catching what the agents missed, understanding what shipped, and choosing what to change in the retrospective. If it's too big for one person, split it into slices and give each slice an owner.
 - **Small, reversible releases.** Ship in pieces you can roll back, because some bugs will get through anyway.
 
-None of this is new. Good teams did it before agents. It used to be good practice. Now it's the only thing between you and a codebase full of Gettier code. But it only works for people who already know what a bug looks like. Part 3 is about the people who won't.
+Most of this isn't new. Good teams did it before agents. It used to be good practice. Now it's the only thing between you and a codebase full of Gettier code. But it only works for people who already know what a bug looks like. Part 3 is about the people who won't.
 
 <Series part={2} end />
