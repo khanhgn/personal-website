@@ -1360,44 +1360,403 @@ input[type='email'] {
 }
 
 /* fig: find the bug */
+/* fig: find the bug */
+
+.fb-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.3em 1em;
+  margin-bottom: 0.6em;
+}
+
+.fb-fn {
+  color: var(--ink);
+}
+
+.fb-pips {
+  display: inline-flex;
+  gap: 5px;
+}
+
+.fb-pip {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--hairline);
+  vertical-align: -1px;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+.fb-pip.is-current {
+  border-color: var(--ink);
+}
+
+.fb-pip.is-clean {
+  border-color: var(--ink);
+  background: var(--ink);
+}
+
+.fb-pip.is-hinted {
+  border-color: var(--ink);
+  background: linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+}
+
+.fb-pip.is-missed {
+  border-color: #b3321f;
+}
+
+.dark .fb-pip.is-missed {
+  border-color: #e08a7c;
+}
+
+/* the code: full-width rows that scroll sideways inside the block, never the page */
+
+.post .fig pre.fb-code,
+.fig pre.fb-code {
+  padding: 0.7em 0;
+  margin-bottom: 0.9em;
+  white-space: pre;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.fb-list {
+  display: block;
+  min-width: max-content;
+  outline: none;
+}
 
 .fb-line {
   display: block;
   cursor: pointer;
-  margin: 0 -0.8em;
-  padding: 0 0.8em;
+  padding: 0 0.9em 0 0;
+  transition: background-color 140ms ease, color 140ms ease, box-shadow 220ms ease;
 }
 
-.fb-line:hover,
-.fb-line:focus-visible {
+.fb-code.is-revealed .fb-line {
+  cursor: default;
+}
+
+.fb-line:hover {
   background: var(--hairline);
+}
+
+.fb-code.is-revealed .fb-line:hover {
+  background: transparent;
+}
+
+.fb-list:focus-visible .fb-line.is-active {
+  box-shadow: inset 0 0 0 1px var(--ink);
+}
+
+.fb-list:focus-visible {
   outline: none;
 }
 
-.fb-line.is-picked {
-  background: var(--ink);
-  color: var(--paper);
-}
-
-.fb-line.is-bug {
-  box-shadow: inset 3px 0 0 #b3321f;
+.fb-list:focus-visible .fb-line.is-picked.is-active {
+  box-shadow: inset 0 0 0 2px var(--ink), inset 0 0 0 3px var(--paper);
 }
 
 .fb-no {
   display: inline-block;
-  width: 1.8em;
+  width: 2.2em;
+  padding-right: 0.9em;
+  text-align: right;
+  color: var(--ink-muted);
+  opacity: 0.7;
   user-select: none;
+  -webkit-user-select: none;
 }
 
-.fb-line.is-picked .fb-no {
+.fb-line.is-spec .fb-text {
+  color: var(--ink-muted);
+}
+
+.fb-line.is-picked,
+.fb-line.is-picked:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.fb-line.is-picked .fb-no,
+.fb-line.is-picked .fb-text {
   color: inherit;
+  opacity: 1;
 }
 
-.post .fig pre.fb-code {
+/* the reveal: a muted-red margin mark on the wrong line */
+
+.fb-line.is-bug,
+.fb-code.is-revealed .fb-line.is-bug:hover {
+  background: rgba(179, 50, 31, 0.08);
+  box-shadow: inset 3px 0 0 #b3321f;
+}
+
+.fb-line.is-bug .fb-no {
+  color: #b3321f;
+  opacity: 1;
+}
+
+.fb-line.is-wrong {
+  box-shadow: inset 3px 0 0 var(--hairline);
+}
+
+.dark .fb-line.is-bug,
+.dark .fb-code.is-revealed .fb-line.is-bug:hover {
+  background: rgba(224, 138, 124, 0.1);
+  box-shadow: inset 3px 0 0 #e08a7c;
+}
+
+.dark .fb-line.is-bug .fb-no {
+  color: #e08a7c;
+}
+
+.fb-tag {
+  color: var(--ink-muted);
+  animation: fb-in 320ms ease-out both;
+}
+
+.fb-tag.is-bug-tag {
+  color: #b3321f;
+}
+
+.dark .fb-tag.is-bug-tag {
+  color: #e08a7c;
+}
+
+/* controls and hint */
+
+.fb-controls {
+  align-items: center;
+}
+
+.debt-controls .link-button.fb-hint-button {
+  border: 0;
+  padding: 0.3em 0.2em;
+  background: none;
+  color: var(--ink-muted);
+  text-decoration: underline;
+}
+
+.debt-controls .link-button.fb-hint-button:active {
+  background: none;
+  color: var(--ink);
+}
+
+.fb-label {
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+  margin-right: 0.4em;
+}
+
+.post .fig-note.fb-hint {
+  padding-left: 0.8em;
+  border-left: 1px solid var(--hairline);
+  animation: fb-in 260ms ease-out both;
+}
+
+/* the run: transcript plays back a line at a time */
+
+.fb-result {
+  margin-top: 0.1em;
+}
+
+.fb-o {
+  display: block;
+  min-height: 1.55em;
+  animation: fb-in 240ms ease-out both;
+}
+
+.fb-prompt {
+  color: var(--ink-muted);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.fb-o.is-bad {
+  color: #9b2c1f;
+}
+
+.dark .fb-o.is-bad {
+  color: #e08a7c;
+}
+
+.fb-want {
+  color: var(--ink-muted);
+}
+
+.fb-cursor::before {
+  content: '';
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  vertical-align: -0.15em;
+  background: var(--ink-muted);
+  animation: fb-blink 900ms steps(1) infinite;
+}
+
+.post .fig-note.fb-verdict {
+  animation: fb-in 300ms ease-out both;
+}
+
+.fb-verdict strong {
+  font-weight: 600;
+}
+
+/* the fix, as a diff */
+
+.post .fig p.fb-fix-label {
+  margin: 1.1em 0 0.35em;
+}
+
+.post .fig pre.fb-diff,
+.fig pre.fb-diff {
+  padding: 0.5em 0;
   margin-bottom: 0.9em;
-  white-space: pre;
+  overflow-x: auto;
 }
 
+.fb-diff code {
+  display: block;
+  min-width: max-content;
+}
+
+.fb-d {
+  display: block;
+  padding-right: 0.9em;
+  color: var(--ink-muted);
+  animation: fb-in 260ms ease-out both;
+}
+
+.fb-sign {
+  display: inline-block;
+  width: 1.4em;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.fb-d .fb-no {
+  width: 1.4em;
+  padding-right: 0.8em;
+}
+
+.fb-d.is-del {
+  color: #b3321f;
+  background: rgba(179, 50, 31, 0.08);
+  box-shadow: inset 3px 0 0 #b3321f;
+}
+
+.fb-d.is-add {
+  color: var(--ink);
+  box-shadow: inset 3px 0 0 var(--ink);
+}
+
+.dark .fb-d.is-del {
+  color: #e08a7c;
+  background: rgba(224, 138, 124, 0.1);
+  box-shadow: inset 3px 0 0 #e08a7c;
+}
+
+.fb-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* scorecard */
+
+.post .fig .fb-score {
+  margin: 0 0 0.7em;
+  color: var(--ink);
+}
+
+.fb-big {
+  font-size: 1.9rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  margin-right: 0.15em;
+}
+
+.post .fig .fb-tally {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.4em;
+  border-top: 1px solid var(--hairline);
+}
+
+.post .fig .fb-tally li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2em 0.7em;
+  margin: 0;
+  padding: 0.45em 0;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  border-bottom: 1px solid var(--hairline);
+  animation: fb-in 300ms ease-out both;
+}
+
+.post .fig .fb-tally li:nth-child(2) {
+  animation-delay: 90ms;
+}
+
+.post .fig .fb-tally li:nth-child(3) {
+  animation-delay: 180ms;
+}
+
+.fb-card .debt-controls {
+  margin-top: 1.1em;
+}
+
+.fb-tally-name {
+  color: var(--ink);
+  min-width: 6.5em;
+}
+
+.fb-tally li.is-missed .fb-tally-what {
+  color: #9b2c1f;
+}
+
+.dark .fb-tally li.is-missed .fb-tally-what {
+  color: #e08a7c;
+}
+
+@keyframes fb-in {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+}
+
+@keyframes fb-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fb-line,
+  .fb-pip,
+  .fb-tag,
+  .fb-o,
+  .fb-d,
+  .fb-cursor::before,
+  .post .fig-note.fb-hint,
+  .post .fig-note.fb-verdict,
+  .post .fig .fb-tally li {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* (kept from the old block; belongs to the accept-stream figure) */
 @media (prefers-reduced-motion: reduce) {
   .post .as-item {
     animation: none;
