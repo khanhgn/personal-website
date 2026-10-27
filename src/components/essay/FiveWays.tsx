@@ -432,7 +432,7 @@ function Listing({
     <pre className="fw-code" aria-label={label}>
       <code>
         {lines.map((l, i) => {
-          const c = [cls && cls(i), l === '' ? 'is-blank' : ''].filter(Boolean).join(' ')
+          const c = cls && cls(i)
           return (
             <span key={i} className={c ? `fw-ln ${c}` : 'fw-ln'}>
               <span className="fw-no" aria-hidden="true">
