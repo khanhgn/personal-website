@@ -49,18 +49,54 @@ export async function loadOgImage(src: string | undefined, origin: string): Prom
   }
 }
 
-export function renderOgCard({
+// The site's own typefaces, so a shared link looks like the page it points to.
+// Fetched as TTF from Google Fonts for just the glyphs we draw; if that fails the card
+// still renders, in the default font.
+type OgFont = { name: string; data: ArrayBuffer; weight: 400; style: 'normal' | 'italic' }
+
+async function loadFont(family: string, italic: boolean, text: string, name: string): Promise<OgFont | null> {
+  try {
+    const axis = italic ? 'ital,wght@1,400' : 'wght@400'
+    const css = await (
+      await fetch(`https://fonts.googleapis.com/css2?family=${family}:${axis}&text=${encodeURIComponent(text)}`)
+    ).text()
+    const url = css.match(/src: url\(([^)]+)\) format\('(?:opentype|truetype)'\)/)?.[1]
+    if (!url) return null
+    const res = await fetch(url)
+    if (!res.ok) return null
+    return { name, data: await res.arrayBuffer(), weight: 400, style: italic ? 'italic' : 'normal' }
+  } catch {
+    return null
+  }
+}
+
+async function loadFonts(text: string): Promise<OgFont[]> {
+  const all = await Promise.all([
+    loadFont('Libre+Baskerville', false, text, 'Serif'),
+    loadFont('Libre+Baskerville', true, text, 'Serif'),
+    loadFont('Roboto+Mono', false, text, 'Mono'),
+  ])
+  return all.filter((f): f is OgFont => f !== null)
+}
+
+const serif = 'Serif, Georgia, serif'
+const mono = 'Mono, monospace'
+
+export async function renderOgCard({
   kicker,
   title,
   footer,
+  tagline,
   image,
 }: {
   kicker: string
   title: string
   footer: string
+  tagline?: string
   image?: string | null
 }) {
-  if (image) return renderArtCard({ kicker, title, footer, image })
+  const fonts = await loadFonts(`${kicker}${title}${footer}${tagline ?? ''} .,'-:/∇∴—`)
+  const big = title.length > 30 ? 64 : title.length > 14 ? 84 : 112
   return new ImageResponse(
     (
       <div
@@ -69,85 +105,55 @@ export function renderOgCard({
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'space-between',
-          padding: '72px 80px',
           background: paper,
           color: ink,
         }}
       >
+        {image ? (
+          <div style={{ display: 'flex', width: '100%', height: 232, background: hairline }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={image} width={1200} height={232} style={{ width: 1200, height: 232, objectFit: 'cover' }} alt="" />
+          </div>
+        ) : null}
         <div
           style={{
             display: 'flex',
+            flexDirection: 'column',
             justifyContent: 'space-between',
-            alignItems: 'center',
-            fontSize: 28,
-            color: inkMuted,
+            flexGrow: 1,
+            padding: image ? '36px 88px 44px' : '72px 88px 56px',
           }}
         >
-          <span>{kicker}</span>
-          <BrandMark />
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            fontSize: title.length > 40 ? 64 : 80,
-            lineHeight: 1.15,
-            letterSpacing: '-0.02em',
-          }}
-        >
-          {title}
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            borderTop: `2px solid ${hairline}`,
-            paddingTop: 28,
-            fontSize: 28,
-            color: inkMuted,
-          }}
-        >
-          <span>Gia Khanh Nguyen</span>
-          <span>{footer}</span>
-        </div>
-      </div>
-    ),
-    ogSize,
-  )
-}
-
-// Cover-style card: the post's artwork runs across the top, the title sits under it.
-function renderArtCard({ kicker, title, footer, image }: { kicker: string; title: string; footer: string; image: string }) {
-  return new ImageResponse(
-    (
-      <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', background: paper, color: ink }}>
-        <div style={{ display: 'flex', width: '100%', height: 280, position: 'relative', background: hairline }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={image} width={1200} height={280} style={{ width: 1200, height: 280, objectFit: 'cover', objectPosition: '50% 50%' }} alt="" />
-          <div style={{ display: 'flex', position: 'absolute', left: 0, right: 0, bottom: 0, height: 4, background: ink }} />
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flexGrow: 1, padding: '34px 80px 40px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 26, color: inkMuted }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontFamily: mono, fontSize: 22, color: inkMuted }}>
             <span>{kicker}</span>
             <BrandMark />
           </div>
-          <div
-            style={{
-              display: 'flex',
-              fontSize: title.length > 28 ? 66 : 84,
-              lineHeight: 1.1,
-              letterSpacing: '-0.02em',
-            }}
-          >
-            {title}
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', fontFamily: serif, fontSize: big, lineHeight: 1.12, letterSpacing: '-0.015em' }}>{title}</div>
+            {tagline ? (
+              <div
+                style={{
+                  display: 'flex',
+                  marginTop: 18,
+                  fontFamily: serif,
+                  fontStyle: 'italic',
+                  fontSize: 27,
+                  lineHeight: 1.4,
+                  color: inkMuted,
+                  maxWidth: 920,
+                }}
+              >
+                {tagline}
+              </div>
+            ) : null}
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 26, color: inkMuted }}>
-            <span>Gia Khanh Nguyen</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: mono, fontSize: 20, color: inkMuted }}>
+            <span>gia khanh nguyen</span>
             <span>{footer}</span>
           </div>
         </div>
       </div>
     ),
-    ogSize,
+    { ...ogSize, fonts: fonts.length ? fonts : undefined },
   )
 }

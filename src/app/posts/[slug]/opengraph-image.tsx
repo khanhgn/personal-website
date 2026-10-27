@@ -17,6 +17,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
     kicker: part ? `part ${part[1]} of ${part[2]}` : 'writing',
     title: post?.title ?? 'Writing',
     footer: post ? format(parseISO(post.date), 'yyyy-MM-dd') : '',
+    tagline: part ? post?.description.replace(/^Part \d of \d\.\s*/, '') : post?.description,
     image: art,
   })
 }
