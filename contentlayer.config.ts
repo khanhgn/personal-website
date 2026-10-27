@@ -39,6 +39,16 @@ const Post = defineDocumentType(() => ({
       description: "Set to 'wide' for a landscape lead image shown full width under the title",
       required: false,
     },
+    imageCaption: {
+      type: 'string',
+      description: 'Caption shown under the lead image',
+      required: false,
+    },
+    imageCredit: {
+      type: 'string',
+      description: 'Link to the lead image source, shown after the caption',
+      required: false,
+    },
     imageSource: {
       type: 'string',
       description: 'Where the lead image came from, shown as a credit',

@@ -3,7 +3,7 @@ import Link from 'next/link'
 // The three-part series, shown at the top and bottom of each part.
 const PARTS = [
   { href: '/posts/the-last-programmers', title: 'Gettier Code and the Last Programmers' },
-  { href: '/posts/we-cant-feel-our-own-speed', title: "We Can't Feel Our Own Speed" },
+  { href: '/posts/slot-machine-coding', title: 'Slot-Machine Coding' },
   { href: '/posts/after-us', title: 'After Us' },
 ]
 
