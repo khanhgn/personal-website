@@ -525,7 +525,8 @@ export function AcceptStream() {
         </span>
 
         {phase === 'done' && report ? (
-          <div className="as-sum">
+          // keyed apart from the stream box so it never inherits that box's scroll position
+          <div className="as-sum" key="sum">
             <p className="as-sum-title" tabIndex={-1} ref={sumRef}>
               review closed after {secs(report.ms)} s. you opened{' '}
               <b>
@@ -548,6 +549,7 @@ export function AcceptStream() {
           </div>
         ) : (
           <div
+            key="box"
             className="as-box"
             ref={boxRef}
             onScroll={(e) => {
