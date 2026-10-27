@@ -4521,14 +4521,34 @@ header.post-header.wide .post-header-frame img {
     min-height: 1.2em;
     line-height: 1.2;
   }
+  /* the chart's last line runs under both columns, so it stays on one line */
+  .post .fig .fw .fw-readout {
+    grid-template-areas: 'res title' 'res bars' 'foot foot';
+    grid-template-rows: auto auto auto;
+    row-gap: 0;
+    align-content: start;
+  }
+  .post .fig .fw .fw-readout .fw-result {
+    grid-area: res;
+  }
+  .post .fig .fw .fw-readout .fw-chart {
+    display: contents;
+  }
+  .post .fig .fw .fw-readout .fw-chart-title {
+    grid-area: title;
+  }
+  .post .fig .fw .fw-readout .fw-bars {
+    grid-area: bars;
+  }
   .post .fig .fw .fw-readout .fw-chart-foot {
-    font-size: 0.66rem;
+    grid-area: foot;
+    margin-top: 0.3em;
   }
 }
 
 @media (max-width: 639px) {
   .post .fig .fw {
-    --fw-stage-h: 19rem;
+    --fw-stage-h: 18.6rem;
   }
   .post .fig .fw .fw-stage[data-gen='web'] {
     grid-template-columns: minmax(0, 1fr);
@@ -4547,8 +4567,23 @@ header.post-header.wide .post-header-frame img {
   }
   /* the band keeps one size; the result sits on top, the chart under it */
   .post .fig .fw .fw-readout {
-    height: 6.6rem;
+    height: 6rem;
     padding-bottom: 0.8em;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  /* on a phone the chart comes first and shows all five rows; the lesson scrolls under it */
+  .post .fig .fw .fw-readout {
+    height: 9.9rem;
+  }
+  .post .fig .fw .fw-readout .fw-chart {
+    order: -1;
+    margin: 0 0 0.7em;
+    flex: none;
+  }
+  .post .fig .fw .fw-readout .fw-result {
+    flex: none;
     -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 1.1em), transparent);
     mask-image: linear-gradient(to bottom, #000 calc(100% - 1.1em), transparent);
   }
@@ -4631,7 +4666,7 @@ header.post-header.wide .post-header-frame img {
    fig: accept stream. the summary takes the stream's place at the stream's size. */
 
 .post .fig .as {
-  --as-box-h: 15rem;
+  --as-box-h: 16.2rem;
 }
 
 .post .fig .as .as-sum {
