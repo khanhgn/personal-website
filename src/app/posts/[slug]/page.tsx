@@ -1,29 +1,11 @@
 import { RSS_ALTERNATE, WEBSITE_HOST_URL } from '@/lib/constants'
 import { allPosts } from 'contentlayer/generated'
 import { format, parseISO } from 'date-fns'
-import type { MDXComponents } from 'mdx/types'
 import type { Metadata } from 'next'
-import { useMDXComponent } from 'next-contentlayer/hooks'
 import { FadeImage } from '@/components/FadeImage'
-import Link from 'next/link'
+import { MdxBody } from '@/components/MdxBody'
 import { notFound } from 'next/navigation'
-import {
-  AcceptStream,
-  Autopilot,
-  Break,
-  Debt,
-  FindTheBug,
-  FiveWays,
-  Generations,
-  Indifferent,
-  Literacy,
-  Note,
-  Plausible,
-  Progress,
-  Samples,
-  Series,
-  Term,
-} from '@/components/essay'
+import { Progress } from '@/components/essay'
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({
@@ -68,34 +50,12 @@ export async function generateMetadata({
   }
 }
 
-// Define your custom MDX components.
-const mdxComponents: MDXComponents = {
-  a: ({ href, children }) => <Link href={href as string}>{children}</Link>,
-  Image: (props) => <FadeImage {...(props as any)} />,
-  Break,
-  Generations,
-  Plausible,
-  Samples,
-  Indifferent,
-  Literacy,
-  Autopilot,
-  Debt,
-  Term,
-  Note,
-  FiveWays,
-  AcceptStream,
-  FindTheBug,
-  Series,
-}
-
 const PostLayout = ({ params }: { params: { slug: string } }) => {
   const post = allPosts.find((post) => post._raw.flattenedPath === params.slug)
 
   if (!post) {
     notFound()
   }
-
-  const MDXContent = useMDXComponent(post.body.code)
 
   const postUrl = `${WEBSITE_HOST_URL}${post.url}`
   const blogPosting = {
@@ -163,7 +123,7 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
         ) : null}
       </header>
       <article className="post">
-        <MDXContent components={mdxComponents} />
+        <MdxBody code={post.body.code} />
       </article>
     </div>
   )

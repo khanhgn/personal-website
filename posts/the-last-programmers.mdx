@@ -1,82 +1,36 @@
 ---
-title: Gettier Code and the Last Programmers
-description: Part 1 of 3. Five generations of programmers, and code that's right for the wrong reasons.
+title: Gettier Code
+description: Part 1 of 3. Code that's right for the wrong reasons, why agents make so much of it, and the one question that catches it.
 date: 2026-10-26T00:00:00.000Z
 image: /images/the-last-programmers-cover.png
 imageLayout: wide
-thumbnail: https://upload.wikimedia.org/wikipedia/commons/d/db/Margaret_Hamilton_-_restoration.jpg
+thumbnail: /images/yippie-run-title.png
 ---
 
 <Series part={1} />
 
+<p className="lede">The time between being wrong and finding out used to be a day. Then it was minutes, then seconds. Now it's zero. The agent is wrong, finds out, fixes it, and you never see any of it. Most of what I know about programming I learned inside that gap. This series is about what happens when it closes.</p>
+
+I started university in 2023 and no longer write code by hand, so I'm close enough to the change to feel it. The question I care about is narrower than whether something is being lost. Something is always lost. Nobody misses punch cards. The question is whether what we're losing was load-bearing, and I think I can say which part was.
+
 <ol className="contents">
-  <li><a href="#i-the-kings-complaint">I. The King's Complaint</a></li>
-  <li><a href="#ii-five-generations">II. Five Generations</a></li>
-  <li><a href="#iii-the-seam">III. The Seam</a></li>
-  <li><a href="#iv-gettier-code">IV. Gettier Code</a></li>
+  <li><a href="#i-the-price-of-a-mistake">I. The Price of a Mistake</a></li>
+  <li><a href="#ii-it-feels-like-knowing">II. It Feels Like Knowing</a></li>
+  <li><a href="#iii-right-for-the-wrong-reasons">III. Right for the Wrong Reasons</a></li>
+  <li><a href="#iv-would-i-have-noticed">IV. Would I Have Noticed</a></li>
 </ol>
 
-## I. The King's Complaint
+## I. The Price of a Mistake
 
-<p className="lede">In the <em>Phaedrus</em>, Socrates tells a story about the invention of writing. A god offers it to the king of Egypt as a gift for memory, and the king is unimpressed. People will stop remembering, he says. They will seem to know many things while knowing almost nothing.</p>
+Punch cards charged a day per mistake, so you ran the program in your head before the machine did. Agents charge nothing, and everything in between, terminals, view-source, Stack Overflow, was a shorter version of the same lesson: you learned whatever being wrong cost.
 
-<figure className="photo wide">
-  <Image
-    src="https://upload.wikimedia.org/wikipedia/commons/8/8c/David_-_The_Death_of_Socrates.jpg"
-    alt="Socrates in prison, one arm raised mid-sentence, reaching for the cup of hemlock while his students grieve around him"
-    width={3896}
-    height={2559}
-    sizes="(max-width: 700px) 100vw, 640px"
-  />
-  <figcaption>Jacques-Louis David, <em>The Death of Socrates</em>, 1787. Socrates never wrote anything down. We only know his warning about writing because Plato wrote it down. Public domain, via <a href="https://commons.wikimedia.org/wiki/File:David_-_The_Death_of_Socrates.jpg">Wikimedia Commons</a>.</figcaption>
-</figure>
-
-Every generation makes some version of this complaint about the next. The king had a point. We did lose a kind of memory, and we got law and science for it. We decided the trade was worth it, then forgot we'd made one.
-
-Something always gets lost, so that part isn't very interesting. What I want to know about programming is whether the thing we're losing now was load-bearing (everyone's favourite LLM slop word), meaning whether anything important was resting on it. I started university in 2023 and no longer write code by hand, so I'm close enough to the change to feel it. People tend to say either that nothing is being lost, because agents are one more layer, or that we're raising a generation that can't program. Neither matches what I've seen.
+I started a year into the agent era but learned the Stack Overflow way, because ChatGPT still felt like cheating. There will be another era before I'm 25.
 
 <Break />
 
-## II. Five Generations
+## II. It Feels Like Knowing
 
-So far there have been five generations of programmers, and each learned from whatever the machine charged them for. The price of a mistake kept falling, each drop came sooner than the last, and the lesson changed every time.
-
-**The first generation (1955–1975)** worked with punch cards. You wrote the program on paper, someone punched it onto cards, and you waited hours or a day for the result. A mistake cost you a day, so you ran the program in your head before the machine did. What they learned was precision.
-
-<figure className="photo">
-  <Image
-    src="https://upload.wikimedia.org/wikipedia/commons/d/db/Margaret_Hamilton_-_restoration.jpg"
-    alt="Margaret Hamilton standing beside a stack of printed program listings as tall as she is"
-    width={2294}
-    height={2853}
-    sizes="(max-width: 700px) 70vw, 340px"
-  />
-  <figcaption>Margaret Hamilton beside the printed listings of the Apollo flight software she and her MIT team wrote, around 1969. Photo: Draper Laboratory, public domain, via <a href="https://commons.wikimedia.org/wiki/File:Margaret_Hamilton_-_restoration.jpg">Wikimedia Commons</a>.</figcaption>
-</figure>
-
-**The second generation (1975–1993)** had terminals, and from the mid-70s, computers of their own. A run took seconds, so mistakes got cheap and people made them on purpose. Kernighan and Ritchie's book on C told you to run "hello, world" and then "experiment with leaving out parts of the program". They learned how machines fail by making them fail.
-
-**The third generation (1993–2008)** had the web, where every page came with its source. You learned by copying someone else's work and breaking it until you understood it, and mainstream languages started managing memory for you. Reading became the core skill.
-
-**The fourth generation (2008–2022)** had Stack Overflow, with an answer for almost everything. Copied code still rarely worked the first time (it was always for a slightly different version of the library), and making it fit meant understanding it a little. Most of the learning happened in that adapting.
-
-**The fifth generation (2022 onward)** started with the prompt and moved on to agents. Agents write, run and fix whole features, and catch most mistakes before you see them. The skill left over is judgement, knowing whether what came back is right. I don't know whether you can learn that without making the mistakes yourself. Part 3 is about the people that question is for.
-
-<FiveWays />
-
-The time between being wrong and finding out went from a day, to minutes, to seconds. Now it's zero. The agent is wrong and finds out for you, and you never see it. Each era was shorter than the last, and this one may be the shortest.
-
-Generations no longer line up with careers. The first generation learned and retired in roughly the same world. I started a year into the fifth generation but learned the fourth's way, because using ChatGPT still felt like cheating. Now I work in the fifth. There will be a sixth before I'm 25.
-
-<Break />
-
-## III. The Seam
-
-Each generation passed something on to the next. A senior engineer looks at a diff and knows it's wrong before they can say why, because they wrote that exact wrong thing years ago and lost an afternoon to it. That's scar tissue. I don't think you can write it down. You get it by losing the afternoon yourself.
-
-I got about a year of that before the agents arrived. I learned the fourth generation's way, without ChatGPT, mostly in the computer science club's room at uni. We call it the Duck Lounge. It's musty, and I spent a lot of time there banging my head against assignments.
-
-The one I remember is Yippie Run, a game three of us built in C++ for our object-oriented programming class in first year. A volcano erupts and Yippie runs from the lava across a level that never ends, dodging spikes, lava pits and falling stones. We had a graphics library (SFML) and nothing else, so everything was by hand: the physics, the endless level, the file that kept your high score. We drew every sprite ourselves, one pixel at a time, and the art came out so funny that we spent half the time laughing at it. Those nights are still some of my best coding memories. I did the gravity and the collision, and it took two overnights. Things fell through the floor, then stuck to the ceiling, then fell through the floor again, and every one of those bugs was mine. For a few kids fresh out of high school it was a massive project. We got full marks, and we were really proud of it. That's the lost afternoon I mean.
+I got about a year of paying for my mistakes. First year, the computer science club's room, which we call the Duck Lounge, and a C++ game called Yippie Run that three of us built for our object-oriented programming class. A volcano erupts and Yippie runs from the lava across a level that never ends. We had a graphics library and nothing else. I did the gravity and the collision, and it took two overnights: things fell through the floor, then stuck to the ceiling, then fell through the floor again, and every one of those bugs was mine.
 
 <figure className="photo wide pair">
   <Image
@@ -93,29 +47,35 @@ The one I remember is Yippie Run, a game three of us built in C++ for our object
     height={720}
     sizes="(max-width: 700px) 100vw, 320px"
   />
-  <figcaption>Yippie Run, 2023. The title screen and the how-to-play screen. Every sprite, background and menu was drawn by hand. Code on <a href="https://github.com/spb-59/infinite-platformer">GitHub</a>.</figcaption>
+  <figcaption>Yippie Run, 2023. Every sprite drawn by hand, one pixel at a time. Code on <a href="https://github.com/spb-59/infinite-platformer">GitHub</a>.</figcaption>
 </figure>
 
-Then I started doing research, still in first year, and nothing made sense. RAG had just come out, and I was trying to build it and do LLM research at the same time. It was too hard to do alone, so I used ChatGPT. Then I used it for everything.
+Then I started doing research, still in first year, and it was too hard to do alone, so I used ChatGPT. Then I used it for everything. A feature landed in minutes. A bug that would have cost me a day just disappeared, and I felt smarter than I'd ever felt, which should have been a hint. I had been programming for eleven months. Stopping to read the code felt like slowing down on purpose.
 
-Now I describe problems to agents and judge what comes back. When an agent writes something I wouldn't have, I sometimes read it until I could have written it myself. That habit is the one thing from that year I want to keep, and for a long time I was losing it.
-
-The reason was the euphoria. A feature landed in minutes. A bug that would have cost me a day just disappeared, and I felt smarter than I'd ever felt (which, looking back, should have been a hint). Stopping to read the code felt like slowing down on purpose. It hit harder because I'd never written code before uni. Some of the people around me had been coding since they were seven, and imposter syndrome goes hard when you start that far behind. The agent made the gap disappear, at least on screen.
-
-But a lot of that feeling is borrowed. The model knew how to do it; I was just there when it happened. I used to know what I understood and what I was taking on trust. Now there's a big grey area: code I've skimmed, nodded at and shipped. Some of it I understand, and some I've only seen so often that it feels like I do. I can't tell which is which, because borrowed knowledge feels exactly like the real thing until the day you need it and the agent isn't there.
+A lot of that feeling is borrowed. The model knew how to do it; I was there when it happened. I used to know what I understood and what I was taking on trust. Now there's a grey area of code I've skimmed, nodded at and shipped. Some of it I understand, and some I've only seen so often that it feels like I do. I can't tell which is which, because borrowed knowledge feels exactly like the real thing until the day you need it and the agent isn't there.
 
 <Break />
 
-## IV. Gettier Code
+## III. Right for the Wrong Reasons
 
-The usual answer is that this has happened before. Almost nobody reads assembly anymore, and compilers didn't make us worse engineers. We moved up a level.
+Philosophers have a name for believing something true for a reason that isn't what makes it true: a Gettier case, after a three-page paper from 1963 that they're still arguing about. The stopped clock that happens to show the right time. Code does this constantly. A function passes its tests and looks like code you've seen before, so you believe it's right, and it is, but not for those reasons. The real reason is somewhere nobody looked. Call it <Term id="gettier-code">Gettier code</Term>. James Somers [noticed](https://jsomers.net/blog/gettiers) it in debugging in 2019, before agents, and a paper this month, [From the Gettier Machine to Justified True Output](https://arxiv.org/abs/2610.38112), makes the same point about everything a model produces: fluent output makes you feel justified whether or not you are.
 
-The comparison doesn't hold. A compiler is predictable and almost always right, so you could stop reading what it produced. When it's wrong, the bug can be reproduced, reported and fixed once for everyone. An agent is wrong in a new way each time, in your code, and you're the only one there to catch it. What it gives you is plausible, which means it looks like correct code. Usually that's the same as correct. Not always.
+It is not a fancy name for buggy code, and the difference is the whole point. Buggy code is wrong. Gettier code is right, in production, today, and you don't know why. The first shows up in the tests, eventually. The second never does, because nothing is wrong. It turns into the first the moment something around it moves, and the person who moved it will have no idea what happened, because the reason it worked was never the reason anyone thought.
 
-<Plausible n={2} />
+Programmers have always made some of it. Agents make it by construction. They write the code most likely to look right to a reader and a test suite, and looking right and being right overlap almost everywhere, which is why they're useful; the gap between the two is exactly where Gettier code lives. When they're wrong they find out and fix it before you see the failure, and the failure was the part that told you why the working version works, so you get the fix without the reason. And if the same agent writes the tests, the thing doing the work is also deciding what counts as working. I let mine do that for months. When a test failed, the agent fixed the code, or sometimes the test, and I didn't always check which. Part 2 is about that loop.
 
-Sometimes plausible code is wrong, like an answer to a coding puzzle that passes the example and fails the first hidden test. That's the easy case, because eventually you find out. The hard case is when it's right. Philosophers call being right by luck a Gettier case, where you believe something true for a reason that isn't what makes it true. In 2019, James Somers [wrote about](https://jsomers.net/blog/gettiers) how this shows up in debugging, and code can do it too. You think it's right because the tests pass and it looks like code you've seen before. It is right, but not for those reasons, and nobody knows the real ones. Call it <Term id="gettier-code">Gettier code</Term>. Nothing is wrong, so there's nothing to notice, until something around it changes and nobody can explain why it used to work.
+The usual reply is that compilers did this to us already and we were fine. A compiler is wrong rarely and in the same way for everyone, so a bug gets reproduced and fixed once. An agent is wrong in a new way each time, in your code, and the only person positioned to catch it is you.
 
-So someone still has to read the code. That someone is supposed to be me, and until a month ago, most days I wasn't doing it. I was doing something else, and it felt so much like work that I didn't notice.
+Here is what it looks like. An agent writes a function that handles dates. The tests pass, it ships, and it works for a year. It works because every caller in the codebase happens to pass UTC, and the function quietly assumes that. Nobody wrote the assumption down, because nobody knew it was there, least of all the agent. Then someone adds a caller in Sydney. It's usually Sydney. The function was never wrong. Your reason for trusting it was, and the only person who could have found that out was the one who asked why it worked instead of whether.
+
+<Break />
+
+## IV. Would I Have Noticed
+
+So someone still has to read the code, and reading means something specific now. It doesn't mean looking at every line, which nobody can do at the rate agents write. It means asking one question of the parts you'll have to answer for: had this been false, would I have noticed?
+
+If yes, because a test would have failed or the behaviour would have been visibly wrong, you have knowledge. If no, you have Gettier code, and the honest thing is to go and find the reason it works before you ship it. That's slower. I've stopped minding.
+
+That someone is supposed to be me, and until a month ago, most days I wasn't doing it. I was doing something else, and it felt so much like work that I didn't notice.
 
 <Series part={1} end />

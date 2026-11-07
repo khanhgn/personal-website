@@ -3,7 +3,7 @@ import Link from 'next/link'
 // The three-part series, shown at the top and bottom of each part.
 // `short` is the label used in the compact one-line nav at the top of a post.
 const PARTS = [
-  { href: '/posts/the-last-programmers', title: 'Gettier Code and the Last Programmers', short: 'Gettier Code' },
+  { href: '/posts/the-last-programmers', title: 'Gettier Code', short: 'Gettier Code' },
   { href: '/posts/slot-machine-coding', title: 'Slot-Machine Coding', short: 'Slot-Machine Coding' },
   { href: '/posts/after-us', title: 'After Us', short: 'After Us' },
 ]
