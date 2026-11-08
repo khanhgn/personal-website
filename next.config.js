@@ -3,7 +3,12 @@ const { withContentlayer } = require('next-contentlayer')
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async redirects() {
-    return [{ source: '/posts/we-cant-feel-our-own-speed', destination: '/posts/slot-machine-coding', permanent: true }]
+    return [
+      { source: '/posts/we-cant-feel-our-own-speed', destination: '/posts/gettier-code', permanent: true },
+      { source: '/posts/the-last-programmers', destination: '/posts/gettier-code', permanent: true },
+      { source: '/posts/slot-machine-coding', destination: '/posts/gettier-code', permanent: true },
+      { source: '/posts/after-us', destination: '/posts/gettier-code', permanent: true },
+    ]
   },
   images: {
     formats: ['image/avif', 'image/webp'],

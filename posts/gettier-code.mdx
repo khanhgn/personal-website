@@ -1,0 +1,62 @@
+---
+title: Gettier Code
+description: Gacha, brain rot, and code that's right for reasons nobody knows.
+date: 2026-11-08T00:00:00.000Z
+image: /images/gettier-code-cover.png
+imageLayout: wide
+---
+
+<p className="lede">I learned programming by being wrong and finding out. The gap between those two used to be a day. Now it's zero. The agent is wrong, finds out, fixes it, and I never see any of it. This is what grew in its place.</p>
+
+I ship code I believe is right, and it is, and I don't know why.
+
+## Gacha
+
+Run the prompt, glance at the result, run it again until one looks right. That's <Term id="gacha-coding">gacha coding</Term>. You pull, you wait, you win often enough to keep pulling. Each pull costs nothing. Every win comes with code you didn't read. Nothing on the screen shows the running total.
+
+The pull is the design. A slot machine pays out on a schedule you can't predict, and that is why it works. The agent pays out the same way. Sometimes the first run is perfect. Sometimes it takes nine, and the ninth feels like skill. The near-miss is the hook: almost right, so you nudge it, now you're invested, and the next pull is the one. There is even a pity timer. Keep pulling and it will pass, because it will edit the test until it does.
+
+I let it. For most of a year the agent wrote the tests for its own code. When a test failed it fixed the code, or it fixed the test, and I didn't check which. For weeks I didn't check at all. The thing doing the work decided what counted as working. The one person whose job it was to disagree was waiting on a spinner. I knew. I kept pulling. None of it felt like losing. It felt like being good at my job.
+
+<Break />
+
+## Brain rot
+
+Brain rot is what a feed does to you. You take in more than ever, keep less than ever, and it feels like being informed. The agents were a feed. Code scrolled past. I skimmed, nodded, approved. The approval was the same click as the pull. By every number on the board I was doing more than I ever had. I remember the wins. I don't remember what shipped.
+
+A feature landed in minutes. A bug that would have cost me a day disappeared. I felt sharper than I had ever felt. I wasn't. The model knew how to do it; I was in the room. I used to know what I understood and what I was taking on trust. Now there is a grey area of code I've skimmed and shipped. Some of it I understand. Some I have seen so often it feels like I do. I can't tell which.
+
+The compiler used to tell me which. It was the one part of my education that didn't care what I meant. It did what I said, and I was the one who had to change until what I said was right. A wrong loop cost an afternoon. I paid for hundreds before anyone let me near a product, and every instinct I have is a mistake I made often enough to stop making. The agents do the opposite. They give you what you meant, and they are good at it. That is why they are useful and why they are bad teachers. You can be wrong near an agent for a year and never be told. I was.
+
+The gap was never dead time. It was where you found out which of your beliefs about the code were knowledge and which were luck. Close it and you keep the beliefs and lose the sorting. That is the rot. Not knowing less. No longer knowing which of what you know is real. It doesn't stay in your head. It goes into the codebase.
+
+<Break />
+
+## Gettier code
+
+A Gettier case, after a 1963 paper, is believing something true for a reason that isn't why it's true. The stopped clock that shows the right time. A function passes its tests and looks like code you've seen before, so you believe it's right, and it is, but not for those reasons. That is <Term id="gettier-code">Gettier code</Term>. James Somers [found](https://jsomers.net/blog/gettiers) it in debugging in 2019, before agents. A paper this month, [From the Gettier Machine to Justified True Output](https://arxiv.org/abs/2610.38112), says the same about models: fluent output makes you feel justified whether or not you are.
+
+<figure className="photo wide">
+  <Image
+    src="https://upload.wikimedia.org/wikipedia/commons/3/36/Rembrandt_Harmensz._van_Rijn_038.jpg"
+    alt="Rembrandt, Philosopher in Meditation: an old man sits by a window in a dark room, a wooden spiral staircase curling up into shadow behind him"
+    width={2024}
+    height={1735}
+    sizes="(max-width: 700px) 100vw, 640px"
+  />
+  <figcaption>Rembrandt, <em>Philosopher in Meditation</em>, 1632. The light is on the part he's looking at. The staircase is where the reason is. Public domain, via <a href="https://commons.wikimedia.org/wiki/File:Rembrandt_Harmensz._van_Rijn_038.jpg">Wikimedia Commons</a>.</figcaption>
+</figure>
+
+It is not buggy code. Buggy code is wrong and the tests find it. Gettier code is right, in production, today, and nobody knows why. The moment something around it moves it becomes buggy code, and whoever moved it has no idea what happened.
+
+Gacha produces it by default. The agent writes the code most likely to look right to a reader and a test suite. Looking right and being right overlap almost everywhere; that is why agents are useful. Gettier code is the part that doesn't overlap. When the agent is wrong it fixes it before you see the failure, and the failure was the thing that told you why the working version works. You get the fix without the reason. A test edited until it passes records what the code does, nothing more. Every pull I approved that year shipped as Gettier code with a green tick on it. I can't tell you how many. That is the problem.
+
+An agent writes a function that handles dates. The tests pass, it ships, it works for a year, because every caller passes UTC and the function assumes it. Nobody wrote the assumption down. Nobody knew it was there, least of all the agent. Then someone adds a caller that isn't on UTC. There's always one. The function was fine. What broke was a belief nobody knew they were holding. That is the only kind of mistake the gap used to catch.
+
+<Break />
+
+## Would I have noticed
+
+Someone has to do the sorting. It's me. Not every line; nobody can read at the rate agents write. One question, of every part I'll have to answer for: had this been false, would I have noticed? If yes, because a test would have failed or the behaviour would have been visibly wrong, ship it. If no, it's Gettier code. Go find the reason it works first. That is slower. Fine.
+
+For the past month the agents build small pieces overnight, while I'm asleep and can't pull. The tests come from the spec, before the code, written by a different model from the spec alone, so the checker doesn't share the writer's blind spots. My day is the two ends: deciding what to build, reading what came back. Some of it is boring. I can answer for what shipped. And one afternoon a week the agent is off and I am wrong on purpose, on something small, because it is the only time I am sure what I know.
