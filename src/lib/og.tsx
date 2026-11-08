@@ -107,10 +107,11 @@ export async function renderOgCard({
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={image} width={1200} height={630} style={{ position: 'absolute', top: 0, left: 0, width: 1200, height: 630, objectFit: 'cover', objectPosition: '50% 62%' }} alt="" />
           <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 300, display: 'flex', background: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.72) 100%)' }} />
-          <div style={{ position: 'absolute', top: 44, right: 52, display: 'flex' }}>
+          <div style={{ position: 'absolute', top: 44, left: 52, display: 'flex' }}>
             <svg width="84" height="42" viewBox="0 0 112 56"><path d="M4 6 H52 L28 50 Z" fill="none" stroke={paper} strokeWidth="6" strokeLinejoin="round" /><circle cx="90" cy="18" r="6" fill={paper} /><circle cx="78" cy="40" r="6" fill={paper} /><circle cx="102" cy="40" r="6" fill={paper} /></svg>
           </div>
-          <div style={{ position: 'absolute', left: 64, bottom: 56, display: 'flex', flexDirection: 'column' }}>
+          {/* X draws its own title label bottom left, so ours sits bottom right */}
+          <div style={{ position: 'absolute', right: 64, bottom: 56, display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
             <div style={{ display: 'flex', fontFamily: serif, fontSize: big, lineHeight: 1.1, letterSpacing: '-0.015em', color: paper }}>{title}</div>
             <div style={{ display: 'flex', marginTop: 14, fontFamily: mono, fontSize: 18, color: hairline, letterSpacing: '0.04em' }}>khanhcore.me</div>
           </div>
