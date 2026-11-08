@@ -6,7 +6,7 @@ const useIsoLayoutEffect = typeof window === 'undefined' ? useEffect : useLayout
 
 const DEFS: Record<string, string> = {
   'gettier-code': "Code that's right, but not for the reasons anyone believes it is.",
-  'gacha-coding': 'Rerunning the prompt until something looks right. You win often enough to keep pulling.',
+  'gacha-coding': 'Rerunning the prompt until something looks right. You win often enough to keep pulling. From the loot-box games.',
   'human-agent-orchestration':
     'Running a team that is part people, part agents: deciding what gets built, who builds it, who checks it, and who vouches for it.',
   'gettier-debt':

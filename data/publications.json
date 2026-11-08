@@ -1,18 +1,5 @@
 [
   {
-    "id": 3,
-    "title": "ReCount: Repetition Counting in Rounds of Refinement",
-    "authors": "Gia Khanh Nguyen, Minh Hoai",
-    "venue": "In submission to CVPR",
-    "year": "",
-    "link": "",
-    "abstract": "",
-    "tags": [
-      "counting",
-      "video"
-    ]
-  },
-  {
     "id": 2,
     "title": "CountEx: Fine-Grained Counting via Exemplars and Exclusion",
     "authors": "Yifeng Huang, Gia Khanh Nguyen, Minh Hoai",

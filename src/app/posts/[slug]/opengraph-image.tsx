@@ -11,7 +11,8 @@ export const contentType = 'image/png'
 export default async function Image({ params }: { params: { slug: string } }) {
   const post = allPosts.find((post) => post._raw.flattenedPath === params.slug)
   const part = post?.description.match(/^Part (\d) of (\d)\./)
-  const art = post ? await loadOgImage(post.image ?? post.thumbnail, WEBSITE_HOST_URL) : null
+  // The card plate is portrait, so prefer the post's thumbnail (chosen for the card) over a wide cover.
+  const art = post ? await loadOgImage(post.thumbnail ?? post.image, WEBSITE_HOST_URL) : null
 
   return renderOgCard({
     kicker: part ? `part ${part[1]} of ${part[2]}` : 'writing',
